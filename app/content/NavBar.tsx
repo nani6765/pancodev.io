@@ -9,9 +9,9 @@ function NavBar() {
     },
     {
       label: "Article",
-      path: "/article/1",
+      path: "/article",
     },
-    { label: "Book", path: "/article" },
+    { label: "Book", path: "/book" },
   ];
 
   return (
@@ -19,7 +19,7 @@ function NavBar() {
       <ul className={styles.header}>
         {linkList.map(({ label, path }) => (
           <li key={label}>
-            <NavLink prefetch="render" to={path} className={styles.headerItem}>
+            <NavLink prefetch="render" to={path} className={styles.headerLink}>
               {label}
             </NavLink>
           </li>

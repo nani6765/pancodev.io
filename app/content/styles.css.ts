@@ -9,8 +9,17 @@ export const header = style({
   fontSize: "1rem",
 });
 
-export const headerItem = style({
-  cursor: "pointer",
+export const headerLink = style({
+  color: "white",
+  textDecoration: "none",
+  selectors: {
+    ["&:hover"]: {
+      textDecoration: "underline",
+    },
+    ["&.active"]: {
+      textDecoration: "underline",
+    },
+  },
 });
 
 globalStyle("body", {
