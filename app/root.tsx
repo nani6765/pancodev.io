@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
   Outlet,
 } from "@remix-run/react";
+import * as styles from "./root.css";
 
 export default function App() {
   return (
@@ -17,34 +18,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div id="sidebar">
-          <h1>Remix Contacts</h1>
-          <div>
-            <Form id="search-form" role="search">
-              <input
-                aria-label="Search contacts"
-                id="q"
-                name="q"
-                placeholder="Search"
-                type="search"
-              />
-              <div aria-hidden hidden={true} id="search-spinner" />
-            </Form>
-            <Form method="post">
-              <button type="submit">New</button>
-            </Form>
-          </div>
-          <nav>
-            <ul>
-              <li>
-                <a href={`/contacts/1`}>Your Name</a>
+        <nav>
+          <ul className={styles.header}>
+            {["Home", "Blog", "Book"].map((v) => (
+              <li key={v} className={styles.headerItem}>
+                {v}
               </li>
-              <li>
-                <a href={`/contacts/2`}>Your Friend</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+            ))}
+          </ul>
+        </nav>
         <div id="detail">
           <Outlet />
         </div>
