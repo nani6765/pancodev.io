@@ -4,11 +4,24 @@ import {
   Meta,
   Scripts,
   ScrollRestoration,
+  NavLink,
   Outlet,
 } from "@remix-run/react";
 import * as styles from "./root.css";
 
 export default function App() {
+  const linkList = [
+    {
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Article",
+      path: "/article/1",
+    },
+    { label: "Book", path: "/article" },
+  ];
+
   return (
     <html lang="en">
       <head>
@@ -20,13 +33,20 @@ export default function App() {
       <body>
         <nav>
           <ul className={styles.header}>
-            {["Home", "Blog", "Book"].map((v) => (
-              <li key={v} className={styles.headerItem}>
-                {v}
+            {linkList.map(({ label, path }) => (
+              <li key={label}>
+                <NavLink
+                  prefetch="render"
+                  to={path}
+                  className={styles.headerItem}
+                >
+                  {label}
+                </NavLink>
               </li>
             ))}
           </ul>
         </nav>
+
         <div id="detail">
           <Outlet />
         </div>

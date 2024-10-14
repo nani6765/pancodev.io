@@ -1,7 +1,7 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const header = style({
-  marginTop: "2rem",
+  margin: "2rem 0px",
   display: "flex",
   gap: "1rem",
 
@@ -22,4 +22,6 @@ globalStyle("body", {
 
 globalStyle("ul", {
   listStyle: "none",
+  margin: 0,
+  padding: 0,
 });
