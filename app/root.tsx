@@ -7,9 +7,13 @@ import {
   useRouteError,
   isRouteErrorResponse,
 } from "@remix-run/react";
+import { LinksFunction } from "@remix-run/node";
 
-import DocHead from "./content/DocHead";
 import NavBar from "./content/NavBar";
+import DocHead from "./content/DocHead";
+import faviconLinks from "./content/faviconLinks";
+
+export const links: LinksFunction = () => [...faviconLinks];
 
 export default function App() {
   return (

@@ -1,17 +1,26 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { getFullArticle } from "@/api/getArticle";
+import * as style from "./style.css";
+import blogConfig from "@/blog.config.json";
 
-export const loader = async () => {
-  const articles = json(await getFullArticle());
-  return articles;
+export const loader = () => {
+  return json(blogConfig);
 };
 
 function Home() {
-  const articles = useLoaderData<typeof loader>();
-  console.log(articles);
-  return <div>Home</div>;
+  const { home, author } = useLoaderData<typeof loader>();
+
+  return (
+    <div>
+      <img className={style.profile} src={home.profile} alt={author} />
+      <p className={style.description}>
+        {home.description.map((v) => (
+          <span key={v}>{v}</span>
+        ))}
+      </p>
+    </div>
+  );
 }
 
 export default Home;

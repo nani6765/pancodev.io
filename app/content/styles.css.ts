@@ -26,7 +26,7 @@ globalStyle("body", {
   maxWidth: "640px",
   margin: "0 auto",
   color: "white",
-  backgroundColor: "#003153",
+  backgroundColor: "#2C2C2C",
 });
 
 globalStyle("ul", {
