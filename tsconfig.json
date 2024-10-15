@@ -5,6 +5,5 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx"
-  },
-  "include": ["generate_markdown_to_json.ts"]
+  }
 }

@@ -16,15 +16,13 @@
     "@remix-run/node": "^2.13.1",
     "@remix-run/react": "^2.13.1",
     "@remix-run/serve": "^2.13.1",
-    "@types/node": "^22.7.5",
     "@vanilla-extract/css": "^1.16.0",
     "gray-matter": "^4.0.3",
     "isbot": "4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1",
-    "ts-node": "^10.9.2"
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.13.1",

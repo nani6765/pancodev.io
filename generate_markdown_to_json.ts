@@ -7,30 +7,51 @@ import html from "remark-html";
 const contentDir = path.join(path.resolve(), "content");
 const outputDir = path.join(path.resolve(), "data");
 
-async function buildMarkdownFiles() {
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+function ensureDirectoryExistence(filePath: string) {
+  const dirname = path.dirname(filePath);
+  if (!fs.existsSync(dirname)) {
+    fs.mkdirSync(dirname, { recursive: true });
   }
+}
 
-  const files = fs.readdirSync(contentDir);
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+  const files = fs.readdirSync(dirPath);
+
+  files.forEach((file) => {
+    const filePath = path.join(dirPath, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      arrayOfFiles = getAllFiles(filePath, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(filePath);
+    }
+  });
+
+  return arrayOfFiles;
+}
+
+async function buildMarkdownFiles() {
+  const files = getAllFiles(contentDir);
 
   for (const file of files) {
-    const filePath = path.join(contentDir, file);
-    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const fileContent = fs.readFileSync(file, "utf-8");
     const { data: metadata, content } = matter(fileContent);
 
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
+
+    const relativePath = path.relative(contentDir, file);
+    const outputFilePath = path.join(
+      outputDir,
+      `${relativePath.replace(/\.md$/, ".json")}`
+    );
+
+    ensureDirectoryExistence(outputFilePath);
 
     const output = {
       metadata,
       contentHtml,
     };
 
-    const outputFilePath = path.join(
-      outputDir,
-      `${path.basename(file, ".md")}.json`
-    );
     fs.writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
   }
 }
