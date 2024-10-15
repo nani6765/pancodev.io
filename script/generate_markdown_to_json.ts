@@ -1,12 +1,15 @@
 import fs from "fs-extra";
 import path from "node:path";
-import matter from "gray-matter";
-import { remark } from "remark";
 import html from "remark-html";
-import getAllFiles from "../function/getAllFiles";
+import { remark } from "remark";
+import matter from "gray-matter";
 
-const contentDir = path.join(path.resolve(), "content");
-const outputDir = path.join(path.resolve(), "data");
+import blogConfig from "@/blog.config.json";
+import getAllFiles from "@/function/getAllFiles";
+
+const basePath = path.resolve();
+const contentDir = path.join(basePath, blogConfig.contentDir);
+const outputDir = path.join(basePath, blogConfig.generateDir);
 
 function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);

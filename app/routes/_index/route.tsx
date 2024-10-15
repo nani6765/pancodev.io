@@ -1,9 +1,10 @@
 import { json } from "@remix-run/node";
-import { test } from "../../../api/getArticle";
 import { useLoaderData } from "@remix-run/react";
 
+import { getFullArticle } from "@/api/getArticle";
+
 export const loader = async () => {
-  const articles = json(await test());
+  const articles = json(await getFullArticle());
   return articles;
 };
 
