@@ -15,7 +15,7 @@ function NavBar() {
   ];
 
   return (
-    <nav>
+    <nav className="root-section">
       <ul className={styles.header}>
         {linkList.map(({ label, path }) => (
           <li key={label}>

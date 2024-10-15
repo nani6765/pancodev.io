@@ -12,8 +12,13 @@ function Home() {
   const { home, author } = useLoaderData<typeof loader>();
 
   return (
-    <div>
-      <img className={style.profile} src={home.profile} alt={author} />
+    <div className="root-section">
+      <img
+        className={style.profile}
+        src={home.profile}
+        alt={author}
+        draggable={false}
+      />
       <p className={style.description}>
         {home.description.map((v) => (
           <span key={v}>{v}</span>

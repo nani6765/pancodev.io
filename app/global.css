@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-ExtraLight.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Light.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Medium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Semibold.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Bold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-ExtraBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/fonts/NotoSerifKR-Black.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+body {
+  color: white;
+  background-color: #2c2c2c;
+  font-family: "NotoSerifKR", "Open Sans", sans-serif;
+}
+
+.root-section {
+  max-width: 640px;
+  margin: 0 auto;
+}

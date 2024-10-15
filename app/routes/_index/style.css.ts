@@ -5,9 +5,14 @@ export const profile = style({
   height: "30px",
   borderRadius: "50%",
   backgroundColor: "wheat",
+  marginBottom: "1rem",
+  userSelect: "none",
+  pointerEvents: "none",
 });
 
 export const description = style({
   fontSize: "1rem",
   lineHeight: "1.5rem",
+  fontWeight: 400,
+  userSelect: "none",
 });
