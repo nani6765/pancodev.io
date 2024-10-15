@@ -6,7 +6,7 @@ import getAllFiles from "../function/getAllFiles";
 const outputDir = path.join(path.resolve(), "data");
 
 const generateFileName = (fullPath: string) => {
-  const lastElement = fullPath.split("\\").slice(-1)[0];
+  const lastElement = fullPath.split(/[\\/]/).slice(-1)[0];
   return lastElement.split(".")[0];
 };
 
