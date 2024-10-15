@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "fs-extra";
+import path from "node:path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
@@ -14,7 +14,7 @@ function ensureDirectoryExistence(filePath: string) {
   }
 }
 
-function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+export function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
