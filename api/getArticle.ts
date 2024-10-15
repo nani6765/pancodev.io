@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import path from "node:path";
-import { getAllFiles } from "../script/generate_markdown_to_json";
+import getAllFiles from "../function/getAllFiles";
 
 // JSON 파일이 저장된 디렉터리
 const outputDir = path.join(path.resolve(), "data");

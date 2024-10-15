@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import getAllFiles from "../function/getAllFiles";
 
 const contentDir = path.join(path.resolve(), "content");
 const outputDir = path.join(path.resolve(), "data");
@@ -12,21 +13,6 @@ function ensureDirectoryExistence(filePath: string) {
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname, { recursive: true });
   }
-}
-
-export function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
-  const files = fs.readdirSync(dirPath);
-
-  files.forEach((file) => {
-    const filePath = path.join(dirPath, file);
-    if (fs.statSync(filePath).isDirectory()) {
-      arrayOfFiles = getAllFiles(filePath, arrayOfFiles);
-    } else {
-      arrayOfFiles.push(filePath);
-    }
-  });
-
-  return arrayOfFiles;
 }
 
 async function buildMarkdownFiles() {
