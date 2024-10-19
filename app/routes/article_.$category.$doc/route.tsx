@@ -16,12 +16,15 @@ export const links: LinksFunction = () => [
 function Article() {
   const { category, doc } = useParams();
   const articles = useLoaderData<typeof loader>();
-  console.log(articles);
+  // console.log(articles[0].data.contentHtml);
 
   return (
     <div className="root-section">
       {articles.map(({ data }) => (
-        <article dangerouslySetInnerHTML={{ __html: data.contentHtml }} />
+        <article
+          key={1}
+          dangerouslySetInnerHTML={{ __html: data.contentHtml }}
+        />
       ))}
     </div>
   );

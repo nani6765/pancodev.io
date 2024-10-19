@@ -1,9 +1,12 @@
 import fs from "fs-extra";
 import path from "node:path";
-import html from "remark-html";
-import { remark } from "remark";
-import matter from "gray-matter";
 
+import matter from "gray-matter";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import { remarkCallout } from "./remarkPlugins";
 import blogConfig from "@/blog.config.json";
 import getAllFiles from "@/function/getAllFiles";
 
@@ -21,11 +24,17 @@ function ensureDirectoryExistence(filePath: string) {
 async function buildMarkdownFiles() {
   const files = getAllFiles(contentDir);
 
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(remarkCallout)
+    .use(rehypeStringify);
+
   for (const file of files) {
     const fileContent = fs.readFileSync(file, "utf-8");
     const { data: metadata, content } = matter(fileContent);
 
-    const processedContent = await remark().use(html).process(content);
+    const processedContent = await processor.process(content);
     const contentHtml = processedContent.toString();
 
     const relativePath = path.relative(contentDir, file);

@@ -4,7 +4,11 @@
 
 React에서는 이러한 문제들을 보다 쉽게 해결하기 위하여 `useMemo` , `useCallback` 과 같은 Hook을 이용해 리랜더링을 제어할 수 있고, `memo` 를 사용해 불필요한 랜더링을 방지할 수 있다. 만약 파일을 다루거나 복잡한 로직이 필요한 경우 Web Worker등을 사용하여 task를 병렬 처리하여 메인 스레드의 부하를 방지하는 것도 좋은 방법일 것이다.
 
-프로그래밍 기술은 양면을 가지고 있다. 리랜더링 최적화를 위해서 포기해야 하는 측면도 있는 것이다. 소개할 게시글은 [useMemo의 필요성을 탐구한 아티클을 번역한 글](https://github.com/yeonjuan/dev-blog/blob/master/JavaScript/should-you-really-use-usememo.md)인데 읽어보자. ~~해당 게시글의 번역이 껄끄럽지 못한 편이 있는데 복잡성을 볼륨으로 생각하면 이해하기 쉽다.~~ 이 게시글의 벤치마크 결과는 단순히 `string[]` 을 다루었기 때문에, `useMemo` 가 다루는 배열안의 요소가 복잡한 object의 형태를 띄고 있다면 그 결과가 더 두드러진다. 다시 useMemo의 필요성으로 돌아가서 이 아티클은 아래 사진 한장으로 요약될 수 있다.
+프로그래밍 기술은 양면을 가지고 있다. 리랜더링 최적화를 위해서 포기해야 하는 측면도 있는 것이다. 소개할 게시글은 [useMemo의 필요성을 탐구한 아티클을 번역한 글](https://github.com/yeonjuan/dev-blog/blob/master/JavaScript/should-you-really-use-usememo.md)인데 읽어보자.
+
+[!note]해당 게시글의 번역에서는 복잡성을 메모리제이션하고자 하는 변수의 볼륨으로 생각하면 이해하기 쉽다. 필요하다면 [원문](https://medium.com/swlh/should-you-use-usememo-in-react-a-benchmarked-analysis-159faf6609b7)을 읽어보자.
+
+이 게시글의 벤치마크 결과는 단순히 `string[]` 을 다루었기 때문에, `useMemo` 가 다루는 배열안의 요소가 복잡한 object의 형태를 띄고 있다면 그 결과가 더 두드러진다. 다시 useMemo의 필요성으로 돌아가서 이 아티클은 아래 사진 한장으로 요약될 수 있다.
 
 ![image.png](image.png)
 
@@ -15,7 +19,7 @@ React에서는 이러한 문제들을 보다 쉽게 해결하기 위하여 `useM
 
 글쌔. 대부분의 볼륨, 대부분의 케이스에선 useMemo를 사용하지 않는 것이 더 효율적이지 않겠는가. 이제 눈치를 챘겠지만 내가 말하고자 하는 바는 “리랜더링 충분히 중요하지만, 더 중요한건 초기랜더링이지 않을까?” 이다.
 
-2004년, 인간의 평균적인 주의 집중력 지속 시간은 2분 30초, 현재에 이르러서는 평균 47초로 측정되었다고 한다. ([https://product.kyobobook.co.kr/detail/S000211899532](https://product.kyobobook.co.kr/detail/S000211899532)) ~~시청자가 TV화면을 보다가 같은 장면이 지속된다면 몇초 이내에 TV채널을 바꿀 것 같은가?~~ 시간이 된다면 다음 [포브스의 기고문](https://www.forbes.com/advisor/business/software/website-statistics/#sources_section)도 읽어보자. 2024년 기준 웹사이트와 관련된 전반적인 통계이다. 내가 이 글에서 인상적으로 읽은 부분은 다음과 같다.
+[2004년, 인간의 평균적인 주의 집중력 지속 시간은 2분 30초, 현재에 이르러서는 평균 47초로 측정](https://product.kyobobook.co.kr/detail/S000211899532)되었다고 한다. ~~시청자가 TV화면을 보다가 같은 장면이 지속된다면 몇초 이내에 TV채널을 바꿀 것 같은가?~~ 시간이 된다면 다음 [포브스의 기고문](https://www.forbes.com/advisor/business/software/website-statistics/#sources_section)도 읽어보자. 2024년 기준 웹사이트와 관련된 전반적인 통계이다. 내가 이 글에서 인상적으로 읽은 부분은 다음과 같다.
 
 1. 중소기업의 43%가 웹사이트 성능에 투자할 계획이다.
 2. 사용자는 0.05초 안에 웹사이트에 대한 첫 인상을 형성한다.

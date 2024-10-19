@@ -54,9 +54,11 @@ li {
 code {
   padding: 0.2em 0.4em;
   background: rgba(135, 131, 120, 0.15);
-  color: #eb5757;
   border-radius: 4px;
+
+  color: #eb5757;
   font-size: 0.75rem;
+  font-family: Open Sans;
 }
 
 a {
@@ -65,4 +67,21 @@ a {
 
 a:visited {
   color: inherit;
+}
+
+.callout {
+  padding: 1rem;
+  background: rgba(135, 131, 120, 0.15);
+  border-radius: 4px;
+
+  display: flex;
+  gap: 1rem;
+}
+
+.callout p {
+  margin: 0;
+}
+
+.callout .emoji {
+  margin-top: 4px;
 }
