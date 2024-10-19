@@ -1205,7 +1205,7 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.11.tgz#11af57b127e32487774841f7a4e54eab166d03c4"
   integrity sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==
 
-"@ungap/structured-clone@^1.0.0", "@ungap/structured-clone@^1.2.0":
+"@ungap/structured-clone@^1.0.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
@@ -2471,15 +2471,6 @@ hasown@^2.0.0, hasown@^2.0.2:
   integrity sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==
   dependencies:
     function-bind "^1.1.2"
-
-hast-util-sanitize@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-5.0.1.tgz#8e90068cd68e651c569960b77a1b25076579b4cf"
-  integrity sha512-IGrgWLuip4O2nq5CugXy4GI2V8kx4sFVy5Hd4vF7AR2gxS0N9s7nEAVUyeMtZKZvzrxVsHt73XdTsno1tClIkQ==
-  dependencies:
-    "@types/hast" "^3.0.0"
-    "@ungap/structured-clone" "^1.2.0"
-    unist-util-position "^5.0.0"
 
 hast-util-to-estree@^2.0.0:
   version "2.3.3"
@@ -4272,17 +4263,6 @@ remark-frontmatter@4.0.1:
     mdast-util-frontmatter "^1.0.0"
     micromark-extension-frontmatter "^1.0.0"
     unified "^10.0.0"
-
-remark-html@^16.0.1:
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/remark-html/-/remark-html-16.0.1.tgz#9246d0cf22254c208a86531cbeb26203ae2dd34c"
-  integrity sha512-B9JqA5i0qZe0Nsf49q3OXyGvyXuZFDzAP2iOFLEumymuYJITVpiH1IgsTEwTpdptDmZlMDMWeDmSawdaJIGCXQ==
-  dependencies:
-    "@types/mdast" "^4.0.0"
-    hast-util-sanitize "^5.0.0"
-    hast-util-to-html "^9.0.0"
-    mdast-util-to-hast "^13.0.0"
-    unified "^11.0.0"
 
 remark-mdx-frontmatter@^1.0.1:
   version "1.1.1"

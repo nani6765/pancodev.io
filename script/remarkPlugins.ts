@@ -69,3 +69,5 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
     });
   };
 }
+
+export function remarkStrikethrough() {}

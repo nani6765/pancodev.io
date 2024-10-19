@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "yarn run generate && remix vite:dev",
-    "build": "yarn run clear:content && run generate && remix vite:build",
+    "build": "yarn run clear:content && yarn run generate && remix vite:build",
     "start": "remix-serve ./build/server/index.js",
     "generate": "npx tsx ./script/generate_markdown_to_json.ts",
     "clear:content": "rm -rf _generate"
@@ -27,7 +27,6 @@
     "react-dom": "^18.3.1",
     "rehype-stringify": "^10.0.1",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1",
     "remark-rehype": "^11.1.1",
     "unist-util-visit": "^5.0.0",
     "vite-tsconfig-paths": "^5.0.1"
