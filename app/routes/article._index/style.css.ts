@@ -1,12 +1,17 @@
 import { style } from "@vanilla-extract/css";
 
-export const ArticleList = style({
+export const articleList = style({
   position: "relative",
 });
 
-export const ArticleItem = style({
+export const articleItem = style({
   marginBottom: "2rem",
   cursor: "pointer",
+});
+
+export const articleLink = style({
+  color: "inherit",
+  textDecoration: "none",
 
   display: "grid",
   gridTemplateAreas: `
@@ -15,25 +20,37 @@ export const ArticleItem = style({
   `,
   columnGap: "1rem",
   rowGap: "0.25rem",
+
+  selectors: {
+    "&:visited": {
+      color: "inherit",
+    },
+    "&:hover": {
+      color: "inherit",
+    },
+    "&:active": {
+      color: "inherit",
+    },
+  },
 });
 
-export const ArticleName = style({
+export const articleName = style({
   gridArea: "name",
   whiteSpace: "break-spaces",
   wordBreak: "keep-all",
   selectors: {
-    [`${ArticleItem}:hover &`]: {
+    [`${articleItem}:hover &`]: {
       textDecoration: "underline",
     },
   },
 });
 
-export const ArticleDate = style({
+export const articleDate = style({
   gridArea: "date",
   color: "#c6c6c6",
 });
 
-export const ArticleEstRead = style({
+export const articleEstRead = style({
   gridArea: "estRead",
   fontSize: "0.75rem",
   color: "#c6c6c6",
