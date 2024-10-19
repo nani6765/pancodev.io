@@ -1,31 +1,41 @@
-// // @see: https://tinloof.com/blog/how-to-dynamically-create-a-sitemap-with-sanity-and-remix
-// import { LoaderFunction } from "@remix-run/node";
-// // import { getSlugs } from "~/services";
+// @see:https://ericnish.io/blog/sitemap-xml-with-remix
+import { LoaderFunction } from "@remix-run/node";
 
-// export const loader: LoaderFunction = async ({ request }) => {
-//   //   const slugs = await getSlugs();
+import blogConfig from "@/blog.config.json";
+import { getAllArticles } from "@/api/getArticle";
 
-//   return new Response(renderXML(slugs), {
-//     headers: {
-//       "Content-Type": "application/xml; charset=utf-8",
-//       "x-content-type-options": "nosniff",
-//       "Cache-Control": `public, max-age=${60 * 10}, s-maxage=${60 * 60 * 24}`,
-//     },
-//   });
-// };
+export const loader: LoaderFunction = async () => {
+  try {
+    const articles = await getAllArticles("preview");
+    const sitemap = toXmlSitemap([
+      "/article",
+      ...articles.map((path) => `/article/${path}`),
+    ]);
+    return new Response(sitemap, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/xml",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  } catch (e) {
+    throw new Response("Internal Server Error", { status: 500 });
+  }
+};
 
-// const renderXML = (slugs: { slug?: string }[]) => {
-//   const url = "https://www.heavyibt.com";
+export const toXmlSitemap = (urls: string[]) => {
+  const urlsAsXml = urls
+    .map((url) => `<url><loc>${blogConfig.siteUrl}/${url}</loc></url>`)
+    .join("\n");
 
-//   const sourceXML = `<?xml version="1.0" encoding="UTF-8"?>
-//   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-//     ${slugs.filter(Boolean).map(
-//       (item) => `<url>
-//       <loc>${url}/${item.slug}</loc>
-//     </url>`
-//     )}
-//   </urlset>`;
-
-//   return sourceXML;
-// };
-// ``;
+  return `<?xml version="1.0" encoding="UTF-8"?>
+        <urlset
+          xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        >
+          ${urlsAsXml}
+        </urlset>
+      `.trim();
+};

@@ -9,8 +9,9 @@ const basePath = path.resolve();
 const outputDir = path.join(basePath, blogConfig.generateDir);
 
 const generateFileName = (fullPath: string) => {
-  const lastElement = fullPath.split(/[\\/]/).slice(-1)[0];
-  return lastElement.split(".")[0];
+  const categoryAndFilePath = fullPath.split(/[\\/]/).slice(-2);
+
+  return `${categoryAndFilePath[0]}/${categoryAndFilePath[1].split(".")[0]}`;
 };
 
 type FlagByGetArticles = "preview" | "withData";
