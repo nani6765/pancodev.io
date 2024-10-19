@@ -29,8 +29,12 @@ h3 {
 p {
   font-size: 1rem;
   line-height: 1.5rem;
-  font-weight: 300;
+  font-weight: 200;
   margin: 1rem 0rem;
+}
+
+strong {
+  font-weight: 700;
 }
 
 ul,
@@ -41,6 +45,7 @@ ol {
   flex-direction: column;
   gap: 0.5rem;
   margin: 1rem 0px;
+  font-weight: 200;
 }
 
 ol {
@@ -62,6 +67,7 @@ code {
 }
 
 a {
+  font-weight: 400;
   color: inherit;
 }
 

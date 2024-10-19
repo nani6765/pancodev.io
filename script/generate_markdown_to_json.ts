@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import path from "node:path";
 
 import matter from "gray-matter";
+import remarkGfm from "remark-gfm";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -27,6 +28,7 @@ async function buildMarkdownFiles() {
 
   const processor = unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(remarkCallout)
     .use(rehypeStringify);
