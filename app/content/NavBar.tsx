@@ -18,7 +18,7 @@ function NavBar() {
     <nav className="root-section">
       <ul className={styles.header}>
         {linkList.map(({ label, path }) => (
-          <li key={label}>
+          <li key={label} className={styles.headerItem}>
             <NavLink prefetch="render" to={path} className={styles.headerLink}>
               {label}
             </NavLink>
