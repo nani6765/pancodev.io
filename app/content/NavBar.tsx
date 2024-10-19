@@ -11,7 +11,7 @@ function NavBar() {
       label: "Article",
       path: "/article",
     },
-    { label: "Book", path: "/book" },
+    // { label: "Book", path: "/book" },
   ];
 
   return (

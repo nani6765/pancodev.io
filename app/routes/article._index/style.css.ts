@@ -16,7 +16,7 @@ export const articleLink = style({
   display: "grid",
   gridTemplateAreas: `
     "name date"
-    "estRead estRead"
+    "info info"
   `,
   columnGap: "1rem",
   rowGap: "0.25rem",
@@ -50,8 +50,8 @@ export const articleDate = style({
   color: "#c6c6c6",
 });
 
-export const articleEstRead = style({
-  gridArea: "estRead",
+export const articleInfo = style({
+  gridArea: "info",
   fontSize: "0.75rem",
   color: "#c6c6c6",
 });

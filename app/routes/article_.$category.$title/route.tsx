@@ -1,12 +1,13 @@
-import { useLoaderData, useParams } from "@remix-run/react";
-import { getAllArticle } from "@/api/getArticle";
+import { json, useLoaderData } from "@remix-run/react";
+import { getSpecificArticle } from "@/api/getArticle";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 import articleCSS from "./article.css?url";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { category, doc } = params;
-  return await getAllArticle();
+  const { category, title } = params;
+  const file = await getSpecificArticle({ category, title });
+  return json(file);
 }
 
 export const links: LinksFunction = () => [
@@ -14,18 +15,11 @@ export const links: LinksFunction = () => [
 ];
 
 function Article() {
-  const { category, doc } = useParams();
-  const articles = useLoaderData<typeof loader>();
-  // console.log(articles[0].data.contentHtml);
+  const article = useLoaderData<typeof loader>();
 
   return (
     <div className="root-section">
-      {articles.map(({ data }) => (
-        <article
-          key={1}
-          dangerouslySetInnerHTML={{ __html: data.contentHtml }}
-        />
-      ))}
+      <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
     </div>
   );
 }

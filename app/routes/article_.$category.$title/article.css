@@ -29,7 +29,7 @@ h3 {
 p {
   font-size: 1rem;
   line-height: 1.5rem;
-  font-weight: 200;
+  font-weight: 100;
   margin: 1rem 0rem;
 }
 
@@ -45,7 +45,7 @@ ol {
   flex-direction: column;
   gap: 0.5rem;
   margin: 1rem 0px;
-  font-weight: 200;
+  font-weight: 100;
 }
 
 ol {

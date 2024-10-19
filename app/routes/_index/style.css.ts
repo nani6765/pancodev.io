@@ -13,6 +13,6 @@ export const profile = style({
 export const description = style({
   fontSize: "1rem",
   lineHeight: "1.5rem",
-  fontWeight: 400,
+  fontWeight: 200,
   userSelect: "none",
 });

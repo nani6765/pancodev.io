@@ -2,15 +2,16 @@ import fs from "fs-extra";
 import path from "node:path";
 
 import matter from "gray-matter";
+import { unified } from "unified";
 import remarkGfm from "remark-gfm";
-import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import { unified } from "unified";
+import rehypeStringify from "rehype-stringify";
+import readingTimeGenerator from "reading-time";
 
-import { remarkCallout } from "./remarkPlugins";
 import blogConfig from "@/blog.config.json";
-import getAllFiles from "@/function/getAllFiles";
+import { remarkCallout } from "./remarkPlugins";
+import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
 const contentDir = path.join(basePath, blogConfig.contentDir);
@@ -24,7 +25,7 @@ function ensureDirectoryExistence(filePath: string) {
 }
 
 async function buildMarkdownFiles() {
-  const files = getAllFiles({ dirPath: contentDir, exp: "md" });
+  const files = getFilePathsByExtension({ dirPath: contentDir, ext: "md" });
 
   const processor = unified()
     .use(remarkParse)
@@ -39,6 +40,7 @@ async function buildMarkdownFiles() {
 
     const processedContent = await processor.process(content);
     const contentHtml = processedContent.toString();
+    const readingTime = readingTimeGenerator(contentHtml);
 
     const relativePath = path.relative(contentDir, file);
     const outputFilePath = path.join(
@@ -49,7 +51,10 @@ async function buildMarkdownFiles() {
     ensureDirectoryExistence(outputFilePath);
 
     const output = {
-      metadata,
+      metadata: {
+        ...metadata,
+        readingTime: readingTime.text,
+      },
       contentHtml,
     };
 

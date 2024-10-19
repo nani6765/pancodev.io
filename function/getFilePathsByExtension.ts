@@ -1,20 +1,28 @@
 import fs from "fs-extra";
 import path from "node:path";
 
-type GetAllFilesParams = {
+type ListFilesByExtension = {
   dirPath: string;
   arrayOfFiles?: string[];
-  exp: string;
+  ext: string;
 };
 
-function getAllFiles({ dirPath, arrayOfFiles = [], exp }: GetAllFilesParams) {
+function getFilePathsByExtension({
+  dirPath,
+  arrayOfFiles = [],
+  ext,
+}: ListFilesByExtension) {
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
     const filePath = path.join(dirPath, file);
     if (fs.statSync(filePath).isDirectory()) {
-      arrayOfFiles = getAllFiles({ dirPath: filePath, arrayOfFiles, exp });
-    } else if (filePath.endsWith(exp)) {
+      arrayOfFiles = getFilePathsByExtension({
+        dirPath: filePath,
+        arrayOfFiles,
+        ext,
+      });
+    } else if (filePath.endsWith(ext)) {
       arrayOfFiles.push(filePath);
     }
   });
@@ -22,4 +30,4 @@ function getAllFiles({ dirPath, arrayOfFiles = [], exp }: GetAllFilesParams) {
   return arrayOfFiles;
 }
 
-export default getAllFiles;
+export default getFilePathsByExtension;
