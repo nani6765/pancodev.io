@@ -12,15 +12,17 @@ const generateFileName = (fullPath: string) => {
   return lastElement.split(".")[0];
 };
 
-export const getFullArticle = async () => {
+export const getAllArticlePath = async () => {
   try {
     const paths = getAllFiles(outputDir);
     return await Promise.all(
-      paths.map(async (path) => {
+      paths.map(async (path, index) => {
         const fileData = await fs.readJSON(path);
         return {
           fileName: generateFileName(path),
+          key: index,
           data: fileData,
+          path,
         };
       })
     );
