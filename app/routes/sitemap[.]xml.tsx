@@ -8,8 +8,8 @@ export const loader: LoaderFunction = async () => {
   try {
     const articles = await getAllArticles("preview");
     const sitemap = toXmlSitemap([
-      "/article",
-      ...articles.map((path) => `/article/${path}`),
+      "article",
+      ...articles.map((path) => `article/${path}`),
     ]);
     return new Response(sitemap, {
       status: 200,
