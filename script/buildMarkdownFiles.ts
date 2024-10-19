@@ -34,7 +34,8 @@ async function buildMarkdownFiles() {
     .use(remarkCallout)
     .use(rehypeStringify);
 
-  for (const file of files) {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
     const fileContent = fs.readFileSync(file, "utf-8");
     const { data: metadata, content } = matter(fileContent);
 
@@ -53,6 +54,7 @@ async function buildMarkdownFiles() {
     const output = {
       metadata: {
         ...metadata,
+        index: i,
         readingTime: readingTime.text,
       },
       contentHtml,

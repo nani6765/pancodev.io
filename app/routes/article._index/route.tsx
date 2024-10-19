@@ -3,11 +3,13 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { getAllArticles } from "@/api/getArticle";
+import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
+
 import * as style from "./style.css";
 
 export const loader = async () => {
   const response = await getAllArticles();
-  return json(response);
+  return json(sortingArticlesByCreate(response));
 };
 
 function ArticleList() {
@@ -16,12 +18,12 @@ function ArticleList() {
   return (
     <div className="root-section">
       <ul>
-        {articles.map(({ key, data }) => {
-          const { metadata } = data;
-          const { title, category, readingTime, created_at, path } = metadata;
+        {articles.map(({ metadata }) => {
+          const { index, title, category, readingTime, created_at, path } =
+            metadata;
 
           return (
-            <li key={key} className={style.articleItem}>
+            <li key={index} className={style.articleItem}>
               <Link
                 to={`/article/${category}/${path}`}
                 className={style.articleLink}

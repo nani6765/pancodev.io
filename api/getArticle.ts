@@ -2,8 +2,8 @@ import fs from "fs-extra";
 import path from "node:path";
 
 import blogConfig from "@/blog.config.json";
-import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 import hasFileWithName from "@/function/hasFileWithName";
+import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
 const outputDir = path.join(basePath, blogConfig.generateDir);
@@ -13,41 +13,24 @@ const generateFileName = (fullPath: string) => {
   return lastElement.split(".")[0];
 };
 
-type ArticlePreview = {
-  fileName: string;
-  key: number;
-};
-
-type ArticleWithData = {
-  key: number;
-  data: Article;
-};
-
 type FlagByGetArticles = "preview" | "withData";
 
 async function getArticleByPaths(paths: string[], flag: FlagByGetArticles) {
   return await Promise.all(
     paths.map(async (path, index) => {
       if (flag === "preview") {
-        return {
-          fileName: generateFileName(path),
-          key: index,
-        } as ArticlePreview;
+        return generateFileName(path);
       }
 
       const fileData: Article = await fs.readJSON(path);
-
-      return {
-        key: index,
-        data: fileData,
-      } as ArticleWithData;
+      return fileData;
     })
   );
 }
 
-export function getAllArticles(): Promise<ArticleWithData[]>;
-export function getAllArticles(flag: "preview"): Promise<ArticlePreview[]>;
-export function getAllArticles(flag: "withData"): Promise<ArticleWithData[]>;
+export function getAllArticles(): Promise<Article[]>;
+export function getAllArticles(flag: "preview"): Promise<string[]>;
+export function getAllArticles(flag: "withData"): Promise<Article[]>;
 export async function getAllArticles(
   flag: "withData" | "preview" = "withData"
 ) {
@@ -59,17 +42,15 @@ export async function getAllArticles(
   }
 }
 
-export function getArticlesByCategory(
-  category: string
-): Promise<ArticleWithData[]>;
+export function getArticlesByCategory(category: string): Promise<Article[]>;
 export function getArticlesByCategory(
   category: string,
   flag: "preview"
-): Promise<ArticlePreview[]>;
+): Promise<string[]>;
 export function getArticlesByCategory(
   category: string,
   flag: "withData"
-): Promise<ArticleWithData[]>;
+): Promise<Article[]>;
 export async function getArticlesByCategory(
   category: string,
   flag: "withData" | "preview" = "withData"

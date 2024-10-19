@@ -1,4 +1,5 @@
 declare type Metadata = {
+  index: number;
   title: string;
   category: string;
   path: string;
