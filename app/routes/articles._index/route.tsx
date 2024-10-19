@@ -1,11 +1,21 @@
 import dayjs from "dayjs";
-import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 
+import blogConfig from "@/blog.config.json";
 import { getAllArticles } from "@/api/getArticle";
+import generateMetaTag from "@/function/generateMetaTag";
 import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
 
 import * as style from "./style.css";
+
+export const meta = () =>
+  generateMetaTag({
+    title: ["Articles", blogConfig.title],
+    description: blogConfig.description,
+    author: blogConfig.author,
+    url: `${blogConfig.siteUrl}/articles`,
+  });
 
 export const loader = async () => {
   const response = await getAllArticles();

@@ -3,8 +3,14 @@ import { getArticlesByCategory, getSpecificArticle } from "@/api/getArticle";
 
 import * as styles from "./style.css";
 import articleCSS from "./article.css?url";
+import blogConfig from "@/blog.config.json";
+import generateMetaTag from "@/function/generateMetaTag";
 
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -22,6 +28,20 @@ export async function loader({ params }: LoaderFunctionArgs) {
   });
 }
 
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { category, article } = data;
+  const { metadata } = article;
+  const { title, description, path, keywords } = metadata;
+
+  return generateMetaTag({
+    title: [title, blogConfig.title],
+    description: description,
+    author: blogConfig.author,
+    url: `${blogConfig.siteUrl}/${category}/${path}`,
+    keywords: [...keywords],
+  });
+};
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: articleCSS },
 ];
@@ -38,7 +58,7 @@ function Article() {
           <span>{article.metadata.readingTime}</span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
-        <Link to="/article" className={styles.goList}>
+        <Link to="/articles" className={styles.goList}>
           목록으로
         </Link>
         {recentFiles.length > 0 && (

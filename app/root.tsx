@@ -29,12 +29,13 @@ export const links: LinksFunction = () => [
   },
   { rel: "stylesheet", href: resetCSS },
   { rel: "stylesheet", href: globalCSS },
+  { rel: "alternate", type: "application/rss+xml", href: "/rss.xml" },
   ...faviconLinks,
 ];
 
 export default function App() {
   return (
-    <html lang="en">
+    <html lang="ko">
       <DocHead />
       <body>
         <NavBar />

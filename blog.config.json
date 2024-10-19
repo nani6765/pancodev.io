@@ -1,5 +1,8 @@
 {
-  "author": "판다코딩",
+  "title": "Panco",
+  "description": "Is a tech blog for software developer Jaewon a.k.a Panco, who is mainly developing the Frontend domain.",
+
+  "author": "판다코딩(panco)",
   "siteUrl": "https://panco-io.vercel.app",
   "created_at": "",
   "home": {

@@ -1,5 +1,7 @@
 ---
 title: 여러분들은 리랜더링 최적화가 얼마나 중요하다고 생각하나요?
+description: This article examines the optimization of re-rendering in React. We will be wary of the misuse of 'useMemo' and, based on a Forbes article, remind ourselves of the importance of initial rendering.
+keywords: ["useMemo", "리랜더링", "최적화"]
 category: react
 path: importance-of-re-rendering-optimization
 created_at: 2024-07-01

@@ -9,9 +9,8 @@ function NavBar() {
     },
     {
       label: "Article",
-      path: "/article",
+      path: "/articles",
     },
-    // { label: "Book", path: "/book" },
   ];
 
   return (

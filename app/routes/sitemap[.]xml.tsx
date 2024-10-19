@@ -8,7 +8,7 @@ export const loader: LoaderFunction = async () => {
   try {
     const articles = await getAllArticles("preview");
     const sitemap = toXmlSitemap([
-      "article",
+      "articles",
       ...articles.map((path) => `article/${path}`),
     ]);
     return new Response(sitemap, {
