@@ -75,6 +75,11 @@ a:visited {
   color: inherit;
 }
 
+img {
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
 .callout {
   padding: 1rem;
   background: rgba(135, 131, 120, 0.15);

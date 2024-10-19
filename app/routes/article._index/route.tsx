@@ -1,10 +1,10 @@
-import { getAllArticlePath } from "@/api/getArticle";
+import { getAllArticle } from "@/api/getArticle";
 import { Link, useLoaderData } from "@remix-run/react";
 import * as style from "./style.css";
 import dayjs from "dayjs";
 
 export const loader = async () => {
-  return await getAllArticlePath();
+  return await getAllArticle();
 };
 
 function ArticleList() {

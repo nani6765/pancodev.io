@@ -24,7 +24,7 @@ function ensureDirectoryExistence(filePath: string) {
 }
 
 async function buildMarkdownFiles() {
-  const files = getAllFiles(contentDir);
+  const files = getAllFiles({ dirPath: contentDir, exp: "md" });
 
   const processor = unified()
     .use(remarkParse)
@@ -57,8 +57,4 @@ async function buildMarkdownFiles() {
   }
 }
 
-// 스크립트 실행
-buildMarkdownFiles().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+export default buildMarkdownFiles;

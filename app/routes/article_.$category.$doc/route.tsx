@@ -1,12 +1,12 @@
 import { useLoaderData, useParams } from "@remix-run/react";
-import { getAllArticlePath } from "@/api/getArticle";
+import { getAllArticle } from "@/api/getArticle";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 import articleCSS from "./article.css?url";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, doc } = params;
-  return await getAllArticlePath();
+  return await getAllArticle();
 }
 
 export const links: LinksFunction = () => [
