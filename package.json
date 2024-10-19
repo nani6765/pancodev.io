@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "yarn run generate && remix vite:dev",
-    "build": "yarn run generate && remix vite:build",
+    "build": "yarn run clear:content && run generate && remix vite:build",
     "start": "remix-serve ./build/server/index.js",
-    "generate": "npx tsx ./script/generate_markdown_to_json.ts"
+    "generate": "npx tsx ./script/generate_markdown_to_json.ts",
+    "clear:content": "rm -rf _generate"
   },
   "keywords": [],
   "author": "",
