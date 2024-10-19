@@ -4,7 +4,7 @@ description: This article examines the optimization of re-rendering in React. We
 keywords: ["useMemo", "리랜더링", "최적화"]
 category: react
 path: importance-of-re-rendering-optimization
-created_at: 2024-07-01
+created_at: 2024-07-01 22:00
 ---
 
 # 여러분들은 리랜더링 최적화가 얼마나 중요하다고 생각하나요?

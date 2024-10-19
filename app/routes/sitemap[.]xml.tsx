@@ -1,4 +1,4 @@
-// @see:https://ericnish.io/blog/sitemap-xml-with-remix
+// @see https://ericnish.io/blog/sitemap-xml-with-remix
 import { LoaderFunction } from "@remix-run/node";
 
 import blogConfig from "@/blog.config.json";

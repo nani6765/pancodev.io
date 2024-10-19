@@ -1,25 +1,36 @@
+//@see https://camchenry.com/blog/how-to-add-a-rss-feed-to-a-remix-app
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
+
+import blogConfig from "@/blog.config.json";
+import { getAllArticles } from "@/api/getArticle";
+
 import type { LoaderFunction } from "@remix-run/node";
 
 export const loader: LoaderFunction = async () => {
-  //   const posts = await getPosts();
-  //   const feed = generateRss({
-  //     title: "My Blog",
-  //     description: "My Blog",
-  //     link: "https://YOUR_SITE_HERE.com/blog",
-  //     entries: posts.map((post) => ({
-  //       description: post.metadata.summary,
-  //       pubDate: new Date(post.metadata.publishedAt).toUTCString(),
-  //       title: post.metadata.title,
-  //       link: `https://YOUR_SITE_HERE.com/blog/${post.id}`,
-  //       guid: `https://YOUR_SITE_HERE.com/blog/${post.id}`,
-  //     })),
-  //   });
-  //   return new Response(feed, {
-  //     headers: {
-  //       "Content-Type": "application/xml",
-  //       "Cache-Control": "public, max-age=2419200",
-  //     },
-  //   });
+  const articles = await getAllArticles();
+
+  const rss = generateRss({
+    title: blogConfig.title,
+    description: blogConfig.description,
+    link: blogConfig.siteUrl,
+    entries: articles.map(({ metadata }) => ({
+      title: metadata.title,
+      link: `${blogConfig.siteUrl}/article/${metadata.category}/${metadata.path}`,
+      pubDate: dayjs(metadata.created_at).utc().format(),
+      description: metadata.description,
+      author: blogConfig.author,
+      guid: `${blogConfig.siteUrl}/article/${metadata.category}/${metadata.path}`,
+    })),
+  });
+
+  return new Response(rss, {
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=2419200",
+    },
+  });
 };
 
 type RssEntry = {
@@ -27,8 +38,8 @@ type RssEntry = {
   link: string;
   pubDate: string;
   description: string;
-  author?: string;
-  guid?: string;
+  author: string;
+  guid: string;
 };
 
 export function generateRss({
