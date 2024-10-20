@@ -18,4 +18,55 @@ pre {
   padding: 0px;
   background-color: inherit;
   border-radius: 0px;
+  color: white;
+}
+
+.language-bash,
+.language-json,
+.blockstring,
+.blockstring {
+  color: #ce9178;
+}
+
+.blockkeyword {
+  color: #c678dd;
+}
+
+.blockcomment {
+  color: #7f9f7f;
+}
+
+.blockselector-class,
+.blocktitle.function_ {
+  color: #e5c07b;
+}
+
+.blockattribute,
+.blockattr,
+.blockproperty,
+.blockvariable.language_ {
+  color: #a0d2ff;
+}
+
+.blockname,
+.blockliteral,
+.blocktitle.class_ {
+  color: #569cd6;
+}
+
+.blockparams {
+  color: #4caf50;
+}
+
+.blocknumber {
+  color: #5cc84a;
+}
+
+.blocktag {
+  color: #3b7eae;
+}
+
+.blockpunctuation,
+.blockbuilt_in {
+  color: #f8c94b;
 }
