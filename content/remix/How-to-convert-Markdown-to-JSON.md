@@ -82,7 +82,7 @@ buildMarkdownFiles().catch((error) => {
 });
 ```
 
-기본적인 사용방법이다. 만약 MD파일이 root디렉토리를 기준으로 ‘content/react/How_to_use_useEffect.md’ 와 같은 경로로 저장되어 있다면, `_generate/react/How_to_use_useEffect.json`의 경로로 저장되도록 설계하였다. 이를 통해 중간에 저장되는 폴더명 (지금의 예시에서는 react)이 카테고리의 역할을 담당할 수 있도록 확장할 계획이다. 위 코드에서 쉐도 코드로 작성된 `getFiles` 가 프로젝트에 존재하는 모든 MD파일을 가져오는 역할을 담당하는 데 이 부분도 마저 구현해보자.
+기본적인 사용방법이다. 만약 MD파일이 root디렉토리를 기준으로 ‘content/react/How_to_use_useEffect.md’ 와 같은 경로로 저장되어 있다면, ‘\_generate/react/How_to_use_useEffect.json’의 경로로 저장되도록 설계하였다. 이를 통해 중간에 저장되는 폴더명 (지금의 예시에서는 react)이 카테고리의 역할을 담당할 수 있도록 확장할 계획이다. 위 코드에서 쉐도 코드로 작성된 `getFiles` 가 프로젝트에 존재하는 모든 MD파일을 가져오는 역할을 담당하는 데 이 부분도 마저 구현해보자.
 
 ```tsx
 import fs from "fs-extra";
@@ -368,4 +368,4 @@ function Article() {
 export default Article;
 ```
 
-`getSpecificArticle`의 동작은 파일 path를 인자로 받아 그 path에 파일이 존재하는지 `hasFileWithName`로 확인하고, 존재한다면 파일을 읽어 return하도록 설계하였다. remox에서는 이를 `loader` 로 읽어 사용한다. 안에 내용을 확인해보면 `file` 내부에 `metadata` 로 Markdown의 메타데이터가, `contentHtml` 으로 마크다운 안의 내용이 HTML로 변환되어 저장된 것을 확인할 수 있다. 파일의 고유한 path를 가져오는 방법은 사용자에게 먼저 파일의 목록을 보여주고, 그것을 선택하면 해당 페이지를 보여주는 방법으로 [route 구조를 설계](https://remix.run/docs/en/main/discussion/routes)하면 될 것이다. 다음에는 remix에서 SEO를 위한 sitemap, rss, robots를 구상하는 방법에 대해 정리하고자 한다.
+`getSpecificArticle`의 동작은 파일 path를 인자로 받아 그 path에 파일이 존재하는지 `hasFileWithName`로 확인하고, 존재한다면 파일을 읽어 return하도록 설계하였다. remix에서는 이를 `loader` 로 읽어 사용한다. 안에 내용을 확인해보면 `file` 내부에 `metadata` 로 Markdown의 메타데이터가, `contentHtml` 으로 마크다운 안의 내용이 HTML로 변환되어 저장된 것을 확인할 수 있다. 파일의 고유한 path를 가져오는 방법은 사용자에게 먼저 파일의 목록을 보여주고, 그것을 선택하면 해당 페이지를 보여주는 방법으로 [route 구조를 설계](https://remix.run/docs/en/main/discussion/routes)하면 될 것이다. 다음에는 remix에서 SEO를 위한 sitemap, rss, robots를 구상하는 방법에 대해 정리하고자 한다.
