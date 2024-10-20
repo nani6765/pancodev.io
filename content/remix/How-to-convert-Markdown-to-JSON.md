@@ -13,7 +13,7 @@ Remix는 서버사이드 동적 컨텐츠를 처리하기 위해 `loader` 라는
 
 MD파일을 직접 파싱 라이브러리를 통해 사용하는 방법도 있지만, [unifiedjs](https://unifiedjs.com)를 통해 MD파일을 JSON포맷으로 변경하여 이를 `loader` 를 통해 보여줄 계획이다. 이후 프로젝트를 build할 때, 특정 폴더에 담긴 MD파일을 JSON파일로 변환해주는 스크립트를 실행하여 컨텐츠를 준비한다.
 
-```
+```bash
 yarn add gray-matter remark remark-rehype rehype-stringify
 (optional) yarn add -D tsx
 (optional) yarn add  fast-glob fs-extra remark-gfm hastscript unist-util-visit reading-time
@@ -23,7 +23,7 @@ yarn add gray-matter remark remark-rehype rehype-stringify
 
 `tsx` 는 typescript로 생성될 스크립트 파일을 Node환경에서 실행시켜주기 위해 설치하였다. `fs-glob` 과 `fs-extra` 는 보다 빠른 속도로 파일을 다루기 위해 설치하였다. `remark` 는 필요에 따라 여러 플러그인을 추가할 수 있다. 나는 ~~취소선~~을 지원해주고자 `remark-gfm` 을 추가로 설치하였고, 커스텀 플러그인을 제작하기 위해 `hastscript` 와 `unist-util-visit` 도 추가적으로 설치해주었다. `reading-time` 은 문서의 텍스트 양을 기반으로 예상 읽을 시간을 추정해주는 라이브러리인데, Meta 데이터에 이를 추가해주고자 설치하였다.
 
-```
+```tsx
 import fs from "fs-extra";
 import path from "node:path";
 
@@ -84,14 +84,14 @@ buildMarkdownFiles().catch((error) => {
 
 기본적인 사용방법이다. 만약 MD파일이 root디렉토리를 기준으로 ‘content/react/How_to_use_useEffect.md’ 와 같은 경로로 저장되어 있다면, `_generate/react/How_to_use_useEffect.json`의 경로로 저장되도록 설계하였다. 이를 통해 중간에 저장되는 폴더명 (지금의 예시에서는 react)이 카테고리의 역할을 담당할 수 있도록 확장할 계획이다. 위 코드에서 쉐도 코드로 작성된 `getFiles` 가 프로젝트에 존재하는 모든 MD파일을 가져오는 역할을 담당하는 데 이 부분도 마저 구현해보자.
 
-```
+```tsx
 import fs from "fs-extra";
 import path from "node:path";
 
 type ListFilesByExtension = {
-  dirPath: string,
-  arrayOfFiles?: string[],
-  ext: string,
+  dirPath: string;
+  arrayOfFiles?: string[];
+  ext: string;
 };
 
 function getFilePathsByExtension({
@@ -122,7 +122,7 @@ export default getFilePathsByExtension;
 
 추후 확장성을 위해 특정 확장자의 파일만 선택하기 위하여 `ext` 라는 인자를 추가하였다. `ext` 로 넘겨받은 값에 해당하는 파일만 선택될 수 있도록 설계하였고, content폴더에 저장된 폴더 구조 그대로 \_generate 폴더로 이관하기 위하여 재귀적으로 폴더 계층을 모두 탐색할 수 있도록 구상하였다.
 
-```
+```tsx
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 /* ... */
 
@@ -144,7 +144,7 @@ async function buildMarkdownFiles() {
 
 이제 `files` 에는 `contentDir` 에 존재하는 모든 `.md` 파일의 path가 배열 형태로 저장되어 있다. 이후 이전에 구현하였던 `processor` 를 통하여 마크다운 파일의 컨텐츠를 메타데이터와 본문으로 구분하고, 본문의 경우는 HTML로 변환한다. 그 데이터를 JSON형태로 변환되는 과정을 거치게 될 것이다. 다만 `writeFileSync` 를 통해 파일을 저장하고자 할 때, 만약 존재하지 않는 폴더라면 ENOENT에러가 발생하게 된다. 그걸 방지하기 위하여 파일을 저장하기 이전에 폴더가 생성될 필요가 있다면, 폴더를 생성하는 로직을 추가할 필요성이 있다.
 
-```
+```tsx
 function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);
   if (!fs.existsSync(dirname)) {
@@ -177,7 +177,7 @@ async function buildMarkdownFiles() {
 
 이 과정까지만 해도 만족할만한 결과를 얻을 수 있겠지만, 실제 변환된 컨텐츠를 확인해보면 여러 공식문서에 지원해주는 취소선, 콜아웃과 같은 기능을 구현해주고자 하는 욕심이 생길 수 있다. 만약 그러한 욕심이 생긴다면 파일을 변환해주는 과정에서 적절하게 플러그인을 추가해주면 된다. 현재 지원되는 플러그인 목록은 [이 곳](https://unifiedjs.com/explore/)에서 확인할 수 있다.
 
-```
+```tsx
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
@@ -195,7 +195,7 @@ const processor = unified()
 
 </aside>
 
-```
+```tsx
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
 import classNames from "classnames";
@@ -260,7 +260,7 @@ remark의 커스텀 플러그인을 만들기 위한 기본적인 방법은 [이
 
 `isCalloutElement` 를 통해 콜아웃으로 변경할 element를 선택하고, 그 element가 가지고 있는 값에서 prefix로 사용된 값을 제거한다. 이후 element의 부모 (p태그가 될 것이다.)의 className에 필요로 한 값을 부여하고, 원래 부모가 가지고 있던 모든 children들을 p태그에 담아 새롭게 부모의 children으로 등록해주면 내가 원하는 영역의 컨텐츠를 내가 원하는 className으로 감쌀 수 있다.
 
-```
+```css
 .callout {
   padding: 1rem;
   background: rgba(135, 131, 120, 0.15);
@@ -277,20 +277,19 @@ remark의 커스텀 플러그인을 만들기 위한 기본적인 방법은 [이
 .callout .emoji {
   margin-top: 4px;
 }
-
 ```
 
 이제 할 일은 간단하다. 우리가 만든 JSON 포멧의 파일을 remix에서 `loader`를 통해 가져오기만 하면 된다. 먼저, 지금까지의 과정은 MD파일을 JSON 포멧으로 변경하는 것에 불과하기 때문에, `loader` 에서 JSON 포멧의 파일을 가져오도록 만드는 작업이 필요하다. 만약 파일 목록을 보여주는 페이지라면 이전에 개발하였던 `getFilePathsByExtension` 를 확장해도 좋을 것이고, 특정 파일이 가져오는 것이 목표라면 아래처럼 사용해볼 수 있을 것 같다.
 
-```
+```tsx
 import fs from "fs-extra";
 import path from "node:path";
 
 const outputDir = path.join(basePath, "_generate");
 
 type HasFileWithNameParams = {
-  dirPath: string,
-  name: string,
+  dirPath: string;
+  name: string;
 };
 
 async function hasFileWithName({ dirPath, name }: HasFileWithNameParams) {
@@ -302,8 +301,8 @@ async function hasFileWithName({ dirPath, name }: HasFileWithNameParams) {
 }
 
 type GetSpecificArticleParams = {
-  category: string,
-  title: string,
+  category: string;
+  title: string;
 };
 
 export async function getSpecificArticle({
@@ -330,7 +329,7 @@ export async function getSpecificArticle({
 }
 ```
 
-```
+```tsx
 import { json, Link, useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 

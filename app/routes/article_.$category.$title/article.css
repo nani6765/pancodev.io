@@ -56,16 +56,6 @@ li {
   padding-left: 1rem;
 }
 
-code {
-  padding: 0.2em 0.4em;
-  background: rgba(135, 131, 120, 0.15);
-  border-radius: 4px;
-
-  color: #eb5757;
-  font-size: 0.75rem;
-  font-family: Open Sans;
-}
-
 a {
   font-weight: 400;
   color: inherit;

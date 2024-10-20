@@ -6,6 +6,7 @@ import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import highlight from "rehype-highlight";
 import rehypeStringify from "rehype-stringify";
 import readingTimeGenerator from "reading-time";
 
@@ -32,6 +33,7 @@ async function buildMarkdownFiles() {
     .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(remarkCallout)
+    .use(highlight, { prefix: "block" })
     .use(rehypeStringify);
 
   for (let i = 0; i < files.length; i++) {

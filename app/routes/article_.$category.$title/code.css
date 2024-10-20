@@ -1,0 +1,21 @@
+code {
+  padding: 0.2em 0.4em;
+  background: rgba(135, 131, 120, 0.15);
+  border-radius: 4px;
+  color: #eb5757;
+
+  font-size: 0.75rem;
+  font-family: Open Sans;
+}
+
+pre {
+  padding: 2rem;
+  border-radius: 4px;
+  background-color: rgb(25, 25, 25);
+}
+
+.block {
+  padding: 0px;
+  background-color: inherit;
+  border-radius: 0px;
+}

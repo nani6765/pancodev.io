@@ -1,6 +1,7 @@
 import { json, Link, useLoaderData } from "@remix-run/react";
 import { getArticlesByCategory, getSpecificArticle } from "@/api/getArticle";
 
+import codeCSS from "./code.css?url";
 import * as styles from "./style.css";
 import articleCSS from "./article.css?url";
 import blogConfig from "@/blog.config.json";
@@ -43,6 +44,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: codeCSS },
   { rel: "stylesheet", href: articleCSS },
 ];
 
