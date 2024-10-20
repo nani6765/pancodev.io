@@ -6,11 +6,11 @@ function sortingArticlesByCreate(articles: Article[]) {
     const nextCreatedAt = dayjs(next.metadata.created_at);
 
     if (prevCreatedAt.diff(nextCreatedAt, "days") > 0) {
-      return 1;
+      return -1;
     }
 
     if (prevCreatedAt.diff(nextCreatedAt, "days") < 0) {
-      return -1;
+      return 1;
     }
 
     return 0;

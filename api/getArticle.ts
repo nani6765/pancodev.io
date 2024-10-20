@@ -67,7 +67,7 @@ export async function getArticlesByCategory(
   }
 }
 
-type GetSpecificArticle = {
+type GetSpecificArticleParams = {
   category: string;
   title: string;
 };
@@ -75,7 +75,7 @@ type GetSpecificArticle = {
 export async function getSpecificArticle({
   category,
   title,
-}: GetSpecificArticle) {
+}: GetSpecificArticleParams) {
   try {
     const hasFile = await hasFileWithName({
       dirPath: `${outputDir}/${category}`,

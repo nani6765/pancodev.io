@@ -48,6 +48,7 @@ export const articleName = style({
 export const articleDate = style({
   gridArea: "date",
   color: "#c6c6c6",
+  textAlign: "right",
 });
 
 export const articleInfo = style({

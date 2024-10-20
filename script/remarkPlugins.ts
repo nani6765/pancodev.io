@@ -49,6 +49,8 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
             emojiElement,
             makeCalloutContentElement(node.children),
           ];
+        } else {
+          node.children = [makeCalloutContentElement(node.children)];
         }
       }
     });
