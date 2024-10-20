@@ -188,12 +188,7 @@ const processor = unified()
 
 나는 `remarkGfm` 을 통해 “~~”으로 감싸져 있는 컨텐츠를 `del` tag로 변환해주는 과정을 추가해주었으며, ~~(이 것 말고도 다른 기능도 제공해주지만, 내 컨텐츠에선 이것만 필요했다.)~~ Note로 시작하는 컨텐츠를 콜아웃으로 만들어주는 `remarkCallout` 이라는 커스텀 플러그인도 만들었다.
 
-<aside>
-💡
-
-콜아웃을 만들어주는 플러그인도 현재 라이브러리로 나와있는 [reamark-callout-directives](https://github.com/Microflash/remark-callout-directives)를 사용해도 되지만 나는 주로 노션으로 문서 작업을 하기에, 노션 느낌이 나도록 콜아웃을 커스터마이징하고 싶어서, 직접 만들기로 선택하였다.
-
-</aside>
+[!note] 콜아웃을 만들어주는 플러그인도 현재 라이브러리로 나와있는 [reamark-callout-directives](https://github.com/Microflash/remark-callout-directives)를 사용해도 되지만 나는 주로 노션으로 문서 작업을 하기에, 노션 느낌이 나도록 콜아웃을 커스터마이징하고 싶어서, 직접 만들기로 선택하였다.
 
 ```tsx
 import { visit } from "unist-util-visit";
