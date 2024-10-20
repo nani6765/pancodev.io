@@ -19,7 +19,7 @@ React에서는 이러한 문제들을 보다 쉽게 해결하기 위하여 `useM
 
 이 게시글의 벤치마크 결과는 단순히 `string[]` 을 다루었기 때문에, `useMemo` 가 다루는 배열안의 요소가 복잡한 object의 형태를 띄고 있다면 그 결과가 더 두드러진다. 다시 useMemo의 필요성으로 돌아가서 이 아티클은 아래 사진 한장으로 요약될 수 있다.
 
-![benchmarked-summary.png](benchmarked-summary.png)
+![benchmarked-summary.png](image/importance-of-re-rendering-optimization/benchmarked-summary.png)
 
 위 이미지를 살펴보면, 볼륨이 적은(통상적으로 100미만) 경우는 `useMemo` 가 초기랜더링과 리랜더링 모두 더 큰 성능 손실을 보이고 있다. 복잡도가 1000인 경우는 어떨까. 초기 랜더링은 183%의 성능 손실을 보이고, 이후 리랜더링에서는 37%가 빠르다. 복잡도가 5000인 경우는 초기 랜더링 속도가 545% 느려지고, 후속 랜더링 성능은 609%까지 성장한다. 컴포넌트가 얼마나 많은 리랜더링 과정을 거치느냐에 따라 선택할 수 있는 옵션이 달라지겠지만 아래 두가지를 다시 한 번 생각해보자.
 

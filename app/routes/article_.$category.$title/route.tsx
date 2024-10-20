@@ -65,7 +65,7 @@ function Article() {
         </Link>
         {recentFiles.length > 0 && (
           <section className="recent-category">
-            <p className={styles.recentTitle}>{category} 카테고리의 최신글</p>
+            <strong>{category} 카테고리의 최신글</strong>
             <ul className={styles.recentList}>
               {recentFiles.map(({ metadata }) => (
                 <li key={metadata.index} className={styles.recentItem}>

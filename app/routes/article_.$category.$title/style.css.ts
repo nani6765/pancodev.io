@@ -10,13 +10,13 @@ export const metaData = style({
 });
 
 export const goList = style({
-  margin: "2rem 0px",
+  margin: "2rem 0px 3rem",
   display: "flex",
   justifyContent: "flex-end",
 });
 
 export const recentTitle = style({
-  fontWeight: 400,
+  fontWeight: 500,
 });
 
 export const recentList = style({
@@ -28,6 +28,7 @@ export const recentItem = style({
 });
 
 export const recentLink = style({
+  fontWeight: 400,
   textDecoration: "none",
   selectors: {
     [`${recentItem}:hover &`]: {
