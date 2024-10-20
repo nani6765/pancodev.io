@@ -41,7 +41,7 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
         node.tagName = hasEmoji ? "div" : "p";
         node.properties = {
           ...node.properties,
-          class: makeNewClassName(String(originClassName)),
+          class: makeNewClassName(String(originClassName ?? "")),
         };
 
         if (hasEmoji) {
