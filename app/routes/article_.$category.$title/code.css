@@ -16,6 +16,12 @@ pre {
   margin: 1rem 0rem;
 }
 
+@media (max-width: 640px) {
+  pre {
+    overflow-x: auto;
+  }
+}
+
 .block {
   padding: 0px;
   background-color: inherit;
