@@ -16,3 +16,17 @@ export const description = style({
   fontWeight: 200,
   userSelect: "none",
 });
+
+export const linkList = style({
+  display: "flex",
+  margin: "2rem 0",
+  gap: "1rem",
+});
+
+export const linkIcon = style({
+  border: "1px solid #fff",
+  borderRadius: "50%",
+  backgroundColor: "#fff",
+  width: "24px",
+  height: "24px",
+});

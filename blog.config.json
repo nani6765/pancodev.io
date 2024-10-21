@@ -14,5 +14,22 @@
     ]
   },
   "contentDir": "content",
-  "generateDir": "_generate"
+  "generateDir": "_generate",
+  "links": [
+    {
+      "type": "github",
+      "url": "https://github.com/nani6765",
+      "icon": "/icon/github-mark.svg"
+    },
+    {
+      "type": "linkedin",
+      "url": "https://www.linkedin.com/in/pandacoding",
+      "icon": "/icon/linkedin.svg"
+    },
+    {
+      "type": "email",
+      "url": "mailto://co?to=nani6765@gmail.com",
+      "icon": "/icon/gmail.svg"
+    }
+  ]
 }
