@@ -27,7 +27,7 @@ function Home() {
 
       <div className={style.linkList}>
         {blogConfig.links.map(({ type, url, icon }) => (
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <a href={url} target="_blank" rel="noopener noreferrer" key={type}>
             <img
               className={style.linkIcon}
               src={icon}

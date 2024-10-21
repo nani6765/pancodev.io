@@ -6,8 +6,9 @@ import {
   Outlet,
   useRouteError,
   isRouteErrorResponse,
+  useLoaderData,
 } from "@remix-run/react";
-import { LinksFunction } from "@remix-run/node";
+import { json, LinksFunction } from "@remix-run/node";
 
 import resetCSS from "./reset.css?url";
 import globalCSS from "./global.css?url";
@@ -15,6 +16,14 @@ import globalCSS from "./global.css?url";
 import NavBar from "./content/NavBar";
 import DocHead from "./content/DocHead";
 import faviconLinks from "./content/faviconLinks";
+
+export async function loader() {
+  return json({
+    ENV: {
+      GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+    },
+  });
+}
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -34,9 +43,11 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const { ENV } = useLoaderData<typeof loader>();
+
   return (
     <html lang="ko">
-      <DocHead />
+      <DocHead gaId={ENV.GA_TRACKING_ID} />
       <body>
         <NavBar />
 
