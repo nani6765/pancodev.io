@@ -1,5 +1,5 @@
 ---
-title: 여러분들은 리랜더링 최적화는 얼마나 중요하게 여겨야할까?
+title: 여러분들은 리랜더링 최적화는 얼마나 중요하게 여기시나요?
 description: This article examines the optimization of re-rendering in React. We will be wary of the misuse of 'useMemo' and, based on a Forbes article, remind ourselves of the importance of initial rendering.
 keywords: ["useMemo", "리랜더링", "최적화"]
 category: react
@@ -7,7 +7,7 @@ path: importance-of-re-rendering-optimization
 created_at: 2024-07-01 22:00
 ---
 
-# 여러분들은 리랜더링 최적화는 얼마나 중요하게 여겨야할까?
+# 여러분들은 리랜더링 최적화는 얼마나 중요하게 여기시나요?
 
 리랜더링 최적화는 프론트엔드에서 매우 중요한 요소임은 틀림없으며 대규모 애플리케이션을 개발하게 된다면 그 중요성은 더욱 두드러진다. 리랜더링이 비효율적으로 이루어지면 불필요한 성능 저하가 발생할 뿐더러 데이터가 많고 복잡한 트리일 경우 잦은 리랜더링이 랜더링 성능을 크게 저하시킬 수 있다. 애니메이션이 끊기거나 사용자의 상호작용이 느려지며 이는 개발자들에게 가장 직관적인 성능 문제로 다가올 것이다.
 
