@@ -75,6 +75,7 @@ a:visited {
 }
 
 img {
+  width: 100%;
   max-inline-size: 100%;
   max-block-size: 100%;
 }
