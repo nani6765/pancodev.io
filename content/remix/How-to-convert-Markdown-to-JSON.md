@@ -1,10 +1,10 @@
 ---
 title: Node환경에서 Markdown파일을 JSON으로 변환하는 방법 For Remix
 description: In a Node environment, convert Markdown to JSON using Remix loaders with unifiedjs and gray-matter. Parse Markdown, extract metadata, and transform content to HTML, then serve the JSON via Remix loaders.
-keywords: ["remix", "마크다운", "변환"]
+keywords: ["unified", "remark", "마크다운", "변환"]
 category: remix
 path: how-to-convert-markdown-to-json
-created_at: 2024-10-20 16:40
+created_at: 2024-10-01 16:40
 ---
 
 # Node환경에서 Markdown파일을 JSON으로 변환하는 방법 For Remix
