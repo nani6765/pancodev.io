@@ -1,57 +1,84 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/subsets/AppleSDGothicNeo-dynamic-subset.css");
+
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-ExtraLight.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 100;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Thin.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Thin.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-Light.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 200;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-ExtraLight.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-ExtraLight.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-Regular.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Light.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Light.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-Medium.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Regular.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-SemiBold.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Medium.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Medium.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-Bold.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-SemiBold.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-SemiBold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-ExtraBold.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Bold.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/fonts/NotoSerifKR-Black.ttf") format("truetype");
+  font-family: "Apple SD Gothic Neo";
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-ExtraBold.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/AppleSDGothicNeo-Black.woff2") format("woff2"),
+    url("/fonts/AppleSDGothicNeo-Black.ttf") format("truetype");
 }
 
 html {
@@ -61,7 +88,7 @@ html {
 body {
   color: white;
   background-color: #2c2c2c;
-  font-family: "NotoSerifKR", "Open Sans", sans-serif;
+  font-family: "Apple SD Gothic Neo", "Open Sans", sans-serif;
 }
 
 .root-section {
