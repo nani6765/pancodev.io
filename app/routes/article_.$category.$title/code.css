@@ -14,12 +14,22 @@ pre {
   border-radius: 4px;
   background-color: rgb(25, 25, 25);
   margin: 1rem 0rem;
+  overflow-x: auto;
 }
 
-@media (max-width: 640px) {
-  pre {
-    overflow-x: auto;
-  }
+pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Track */
+pre::-webkit-scrollbar-track {
+  background: rgb(25, 25, 25);
+}
+
+/* Handle */
+pre::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 1rem;
 }
 
 .block {
