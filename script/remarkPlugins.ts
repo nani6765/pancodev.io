@@ -30,7 +30,17 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
 
     const emojiElement = h("span.emoji", [emoji]);
     const makeCalloutContentElement = (parentChildren: ElementContent[]) =>
-      h("p", [...parentChildren]);
+      h("p", [
+        ...parentChildren.map((child) => {
+          if (child.type === "text") {
+            return {
+              ...child,
+              value: child.value.replace("[break]", "\n\n"),
+            };
+          }
+          return child;
+        }),
+      ]);
 
     visit(tree, "element", function (node) {
       if (isCalloutElement(node.children[0])) {
