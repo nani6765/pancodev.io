@@ -3,6 +3,7 @@ h1 {
   line-height: 2.5rem;
   margin: 2rem 0px;
   font-weight: 800;
+  word-break: break-all;
 }
 
 h2 {
