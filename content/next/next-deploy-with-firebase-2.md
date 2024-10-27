@@ -21,7 +21,7 @@ firebase deploy --only hosting:hosting-alias
 
 #### Cloud Functions Authentication
 
-이렇게 최초로 firebase hosting을 진행하게 되면 그에 따른 gcp project가 생성될 것이다. 아마 자동으로 설정이 되는 것으로 짐작하지만 혹시 server-side 단에서 404에러가 발생한다면 clud run funtions탭에서 권한을 추가해주면 된다. 추가해주고자 하는 구성원은 **allUsers**, 추가해야 할 권한은 **Cloud Functions 호출자**이다.
+이렇게 최초로 firebase hosting을 진행하게 되면 그에 따른 gcp project가 생성될 것이다. 아마 자동으로 설정이 되는 것으로 짐작하지만 혹시 server-side 단에서 404에러가 발생한다면 cloud run functions탭에서 권한을 추가해주면 된다. 추가해주고자 하는 구성원은 **allUsers**, 추가해야 할 권한은 **Cloud Functions 호출자**이다.
 
 ![cloud-functions-authentication.png](image/next-deploy-with-firebase-2/cloud-functions-authentication.png)
 
