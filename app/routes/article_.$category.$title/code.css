@@ -17,6 +17,13 @@ pre {
   overflow-x: auto;
 }
 
+pre code {
+  padding: 0;
+  background: inherit;
+  border-radius: 0px;
+  color: #fff;
+}
+
 pre::-webkit-scrollbar {
   height: 6px;
 }
