@@ -11,6 +11,7 @@ function NavBar() {
       label: "Article",
       path: "/articles",
     },
+    // { label: "Talk", path: "/small_talk" },
   ];
 
   return (

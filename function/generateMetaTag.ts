@@ -23,8 +23,8 @@ function generateMetaTag({
 }: generateMetaTagParams): MetaDescriptor[] {
   const defaultMetaTags = [
     { title: title.join(DELIMITER) },
-    meta("author", author),
-    meta("description", description),
+    metaName("author", author),
+    metaName("description", description),
     prefixMeta("og", "type", "website"),
     prefixMeta("og", "title", title[0]),
     prefixMeta("og", "description", description),
@@ -35,7 +35,7 @@ function generateMetaTag({
   ];
 
   const keywordMetaTag =
-    keywords.length > 0 ? [meta("keywords", keywords.join(", "))] : [];
+    keywords.length > 0 ? [metaName("keywords", keywords.join(", "))] : [];
 
   const imageMetaTag = image
     ? [
@@ -55,8 +55,8 @@ function generateMetaTag({
   ];
 }
 
-function meta(property: string, content: string) {
-  return { property, content };
+function metaName(name: string, content: string) {
+  return { name, content };
 }
 
 function prefixMeta(prefix: string, property: string, content: string) {
