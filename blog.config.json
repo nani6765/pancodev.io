@@ -14,7 +14,7 @@
     ]
   },
   "contentDir": "content",
-  "generateDir": "_generate",
+  "contentGenerateDir": "_generate_content",
   "links": [
     {
       "type": "github",

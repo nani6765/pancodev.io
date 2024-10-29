@@ -1,5 +1,5 @@
 node_modules
 build
-_generate
+_generate_content
 public/article
 .env

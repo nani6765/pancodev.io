@@ -16,7 +16,7 @@ import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
 const contentDir = path.join(basePath, blogConfig.contentDir);
-const outputDir = path.join(basePath, blogConfig.generateDir);
+const outputDir = path.join(basePath, blogConfig.contentGenerateDir);
 
 function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);

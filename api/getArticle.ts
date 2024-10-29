@@ -6,7 +6,7 @@ import hasFileWithName from "@/function/hasFileWithName";
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
-const outputDir = path.join(basePath, blogConfig.generateDir);
+const outputDir = path.join(basePath, blogConfig.contentGenerateDir);
 
 const generateFileName = (fullPath: string) => {
   const categoryAndFilePath = fullPath.split(/[\\/]/).slice(-2);
