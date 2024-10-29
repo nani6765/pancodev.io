@@ -65,12 +65,6 @@ async function buildMarkdownFiles() {
         `${relativePath.replace(/\.md$/, ".json")}`
       );
 
-      console.log("input : ", input);
-      // if (input === blogConfig.smallTalkDir) {
-      console.log("output : ", output);
-      console.log("outputFilePath : ", outputFilePath);
-      // }
-
       ensureDirectoryExistence(outputFilePath);
 
       fs.writeFileSync(
