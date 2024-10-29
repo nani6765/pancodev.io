@@ -16,7 +16,20 @@ import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
 const contentDir = path.join(basePath, blogConfig.contentDir);
-const outputDir = path.join(basePath, blogConfig.contentGenerateDir);
+const contentGenerateDir = path.join(basePath, blogConfig.contentGenerateDir);
+const smallTalkDir = path.join(basePath, blogConfig.smallTalkDir);
+const smallTalkGenerateDir = path.join(
+  basePath,
+  blogConfig.smallTalkGenerateDir
+);
+
+const paths = [
+  {
+    input: contentDir,
+    output: contentGenerateDir,
+  },
+  { input: smallTalkDir, output: smallTalkGenerateDir },
+];
 
 function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);
@@ -25,44 +38,57 @@ function ensureDirectoryExistence(filePath: string) {
   }
 }
 
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(remarkCallout)
+  .use(highlight, { prefix: "block" })
+  .use(rehypeStringify);
+
 async function buildMarkdownFiles() {
-  const files = getFilePathsByExtension({ dirPath: contentDir, ext: "md" });
+  for (const { input, output } of paths) {
+    const files = getFilePathsByExtension({ dirPath: input, ext: "md" });
 
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(remarkCallout)
-    .use(highlight, { prefix: "block" })
-    .use(rehypeStringify);
+    for (let i = 0; i < files.length; i++) {
+      const filePath = files[i];
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      const { data: metadata, content } = matter(fileContent);
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const fileContent = fs.readFileSync(file, "utf-8");
-    const { data: metadata, content } = matter(fileContent);
+      const processedContent = await processor.process(content);
+      const contentHtml = processedContent.toString();
+      const readingTime = readingTimeGenerator(contentHtml);
 
-    const processedContent = await processor.process(content);
-    const contentHtml = processedContent.toString();
-    const readingTime = readingTimeGenerator(contentHtml);
+      const relativePath = path.relative(input, filePath);
+      const outputFilePath = path.join(
+        output,
+        `${relativePath.replace(/\.md$/, ".json")}`
+      );
 
-    const relativePath = path.relative(contentDir, file);
-    const outputFilePath = path.join(
-      outputDir,
-      `${relativePath.replace(/\.md$/, ".json")}`
-    );
+      console.log("input : ", input);
+      // if (input === blogConfig.smallTalkDir) {
+      console.log("output : ", output);
+      console.log("outputFilePath : ", outputFilePath);
+      // }
 
-    ensureDirectoryExistence(outputFilePath);
+      ensureDirectoryExistence(outputFilePath);
 
-    const output = {
-      metadata: {
-        ...metadata,
-        index: i,
-        readingTime: readingTime.text,
-      },
-      contentHtml,
-    };
-
-    fs.writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
+      fs.writeFileSync(
+        outputFilePath,
+        JSON.stringify(
+          {
+            metadata: {
+              ...metadata,
+              index: i,
+              readingTime: readingTime.text,
+            },
+            contentHtml,
+          },
+          null,
+          2
+        )
+      );
+    }
   }
 }
 

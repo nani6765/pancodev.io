@@ -1,5 +1,6 @@
 node_modules
 build
 _generate_content
+_generate_small_talk
 public/article
 .env
