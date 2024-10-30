@@ -31,11 +31,54 @@ const paths = [
   { input: smallTalkDir, output: smallTalkGenerateDir },
 ];
 
-function ensureDirectoryExistence(filePath: string) {
+async function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);
   if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname, { recursive: true });
+    await fs.mkdirSync(dirname, { recursive: true });
   }
+}
+
+async function writeJsonFile({
+  outputFilePath,
+  metadata,
+  index,
+  contentHtml,
+  withReadingTime = true,
+}: {
+  outputFilePath: string;
+  metadata: { [key: string]: any };
+  index: number;
+  contentHtml: string;
+  withReadingTime?: boolean;
+}) {
+  const makeMetaData = () => {
+    const base = {
+      ...metadata,
+      index,
+    };
+    if (withReadingTime) {
+      const { text } = readingTimeGenerator(contentHtml);
+      return {
+        ...base,
+        readingTime: text,
+      };
+    }
+    return base;
+  };
+
+  await ensureDirectoryExistence(outputFilePath);
+
+  fs.writeFileSync(
+    outputFilePath,
+    JSON.stringify(
+      {
+        metadata: makeMetaData(),
+        contentHtml,
+      },
+      null,
+      2
+    )
+  );
 }
 
 const processor = unified()
@@ -46,7 +89,15 @@ const processor = unified()
   .use(highlight, { prefix: "block" })
   .use(rehypeStringify);
 
-async function buildMarkdownFiles() {
+async function buildMarkdownFiles({
+  inputPath,
+  outputPath,
+  withReadingTime,
+}: {
+  inputPath: string;
+  outputPath: string;
+  withReadingTime: boolean;
+}) {
   for (const { input, output } of paths) {
     const files = getFilePathsByExtension({ dirPath: input, ext: "md" });
 
@@ -56,32 +107,17 @@ async function buildMarkdownFiles() {
       const { data: metadata, content } = matter(fileContent);
 
       const processedContent = await processor.process(content);
-      const contentHtml = processedContent.toString();
-      const readingTime = readingTimeGenerator(contentHtml);
-
       const relativePath = path.relative(input, filePath);
-      const outputFilePath = path.join(
-        output,
-        `${relativePath.replace(/\.md$/, ".json")}`
-      );
 
-      ensureDirectoryExistence(outputFilePath);
-
-      fs.writeFileSync(
-        outputFilePath,
-        JSON.stringify(
-          {
-            metadata: {
-              ...metadata,
-              index: i,
-              readingTime: readingTime.text,
-            },
-            contentHtml,
-          },
-          null,
-          2
-        )
-      );
+      await writeJsonFile({
+        outputFilePath: path.join(
+          output,
+          `${relativePath.replace(/\.md$/, ".json")}`
+        ),
+        metadata,
+        index: i,
+        contentHtml: processedContent.toString(),
+      });
     }
   }
 }
