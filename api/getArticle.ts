@@ -23,15 +23,15 @@ async function getArticleByPaths(paths: string[], flag: FlagByGetArticles) {
         return generateFileName(path);
       }
 
-      const fileData: Article = await fs.readJSON(path);
+      const fileData: Content = await fs.readJSON(path);
       return fileData;
     })
   );
 }
 
-export function getAllArticles(): Promise<Article[]>;
+export function getAllArticles(): Promise<Content[]>;
 export function getAllArticles(flag: "preview"): Promise<string[]>;
-export function getAllArticles(flag: "withData"): Promise<Article[]>;
+export function getAllArticles(flag: "withData"): Promise<Content[]>;
 export async function getAllArticles(
   flag: "withData" | "preview" = "withData"
 ) {
@@ -43,7 +43,7 @@ export async function getAllArticles(
   }
 }
 
-export function getArticlesByCategory(category: string): Promise<Article[]>;
+export function getArticlesByCategory(category: string): Promise<Content[]>;
 export function getArticlesByCategory(
   category: string,
   flag: "preview"
@@ -51,7 +51,7 @@ export function getArticlesByCategory(
 export function getArticlesByCategory(
   category: string,
   flag: "withData"
-): Promise<Article[]>;
+): Promise<Content[]>;
 export async function getArticlesByCategory(
   category: string,
   flag: "withData" | "preview" = "withData"
@@ -85,7 +85,7 @@ export async function getSpecificArticle({
       throw new Error("no File");
     }
     const path = `${outputDir}/${category}/${title}.json`;
-    const fileData: Article = await fs.readJSON(path);
+    const fileData: Content = await fs.readJSON(path);
     return fileData;
   } catch (error) {
     if (error instanceof Error && error.message === "no File") {

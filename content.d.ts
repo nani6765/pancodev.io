@@ -7,9 +7,11 @@ declare type Metadata = {
   path: string;
   created_at: string;
   readingTime: string;
+  prev_content_path: string;
+  next_content_path: string;
 };
 
-declare type Article = {
+declare type Content = {
   metadata: Metadata;
   contentHtml: string;
 };

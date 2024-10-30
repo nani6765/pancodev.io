@@ -8,7 +8,7 @@ function NavBar() {
       path: "/",
     },
     {
-      label: "Article",
+      label: "Content",
       path: "/articles",
     },
     { label: "Talk", path: "/small_talk" },

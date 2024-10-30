@@ -313,7 +313,7 @@ export async function getSpecificArticle({
       throw new Error("no File");
     }
     const path = `${outputDir}/${category}/${title}.json`;
-    const fileData: Article = await fs.readJSON(path);
+    const fileData: Content = await fs.readJSON(path);
     return fileData;
   } catch (error) {
     if (error instanceof Error && error.message === "no File") {
@@ -345,7 +345,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: articleCSS },
 ];
 
-function Article() {
+function Content() {
   const { article, category } = useLoaderData<typeof loader>();
 
   return (
@@ -365,7 +365,7 @@ function Article() {
   );
 }
 
-export default Article;
+export default Content;
 ```
 
 `getSpecificArticle`의 동작은 파일 path를 인자로 받아 그 path에 파일이 존재하는지 `hasFileWithName`로 확인하고 존재한다면 파일을 읽어 return하도록 설계하였다. remix에서는 이를 `loader` 로 읽어 사용한다. 안에 내용을 확인해보면 `file` 내부에 `metadata` 로 Markdown의 메타데이터가 `contentHtml` 으로 마크다운 안의 내용이 HTML로 변환되어 저장된 것을 확인할 수 있다. 파일의 고유한 path를 가져오는 방법은 사용자에게 먼저 파일의 목록을 보여주고 그것을 선택하면 해당 페이지를 보여주는 방법으로 [route 구조를 설계](https://remix.run/docs/en/main/discussion/routes)하면 될 것이다. 다음에는 remix에서 SEO를 위한 sitemap, rss, robots를 구상하는 방법에 대해 정리하고자 한다.

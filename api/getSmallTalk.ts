@@ -11,13 +11,13 @@ const outputDir = path.join(basePath, blogConfig.contentGenerateDir);
 async function getSmallTalksByPaths(paths: string[]) {
   return await Promise.all(
     paths.map(async (path) => {
-      const fileData: Article = await fs.readJSON(path);
+      const fileData: Content = await fs.readJSON(path);
       return fileData;
     })
   );
 }
 
-export function getAllSmallTalks(): Promise<Article[]>;
+export function getAllSmallTalks(): Promise<Content[]>;
 export async function getAllSmallTalks() {
   try {
     const paths = getFilePathsByExtension({ dirPath: outputDir, ext: "json" });
@@ -37,7 +37,7 @@ export async function getSpecificSmallTalk(title: string) {
       throw new Error("no File");
     }
     const path = `${outputDir}/${title}.json`;
-    const fileData: Article = await fs.readJSON(path);
+    const fileData: Content = await fs.readJSON(path);
     return fileData;
   } catch (error) {
     if (error instanceof Error && error.message === "no File") {

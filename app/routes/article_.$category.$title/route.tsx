@@ -48,7 +48,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: articleCSS },
 ];
 
-function Article() {
+function Content() {
   const { article, recentFiles, category } = useLoaderData<typeof loader>();
 
   return (
@@ -85,4 +85,4 @@ function Article() {
   );
 }
 
-export default Article;
+export default Content;

@@ -14,9 +14,9 @@
     ]
   },
   "contentDir": "content",
-  "contentGenerateDir": "_generate_content",
+  "contentGenerateDir": "_generate/_content",
   "smallTalkDir": "small_talk",
-  "smallTalkGenerateDir": "_generate_small_talk",
+  "smallTalkGenerateDir": "_generate/_small_talk",
   "links": [
     {
       "type": "github",

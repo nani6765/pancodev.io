@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import fs from "fs-extra";
 import path from "node:path";
 
@@ -10,26 +11,39 @@ import highlight from "rehype-highlight";
 import rehypeStringify from "rehype-stringify";
 import readingTimeGenerator from "reading-time";
 
-import blogConfig from "@/blog.config.json";
 import { remarkCallout } from "./remarkPlugins";
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
-const basePath = path.resolve();
-const contentDir = path.join(basePath, blogConfig.contentDir);
-const contentGenerateDir = path.join(basePath, blogConfig.contentGenerateDir);
-const smallTalkDir = path.join(basePath, blogConfig.smallTalkDir);
-const smallTalkGenerateDir = path.join(
-  basePath,
-  blogConfig.smallTalkGenerateDir
-);
+const prepareSortedMarkdownFiles = (inputPath: string) => {
+  const filePaths = getFilePathsByExtension({ dirPath: inputPath, ext: "md" });
+  const files = filePaths.map((filePath) => {
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const { data: metadata, content } = matter(fileContent);
+    return {
+      filePath,
+      metadata,
+      content,
+    };
+  });
 
-const paths = [
-  {
-    input: contentDir,
-    output: contentGenerateDir,
-  },
-  { input: smallTalkDir, output: smallTalkGenerateDir },
-];
+  const sortFilesByCreatedAt = files.sort(
+    ({ metadata: prevMetaData }, { metadata: nextMetaData }) => {
+      const prevCreatedAt = dayjs(prevMetaData["created_at"] ?? "");
+      const nextCreatedAt = dayjs(nextMetaData["created_at"] ?? "");
+      return prevCreatedAt.isAfter(nextCreatedAt) ? 1 : -1;
+    }
+  );
+
+  return sortFilesByCreatedAt;
+};
+
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(remarkCallout)
+  .use(highlight, { prefix: "block" })
+  .use(rehypeStringify);
 
 async function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);
@@ -43,13 +57,13 @@ async function writeJsonFile({
   metadata,
   index,
   contentHtml,
-  withReadingTime = true,
+  withReadingTime,
 }: {
   outputFilePath: string;
   metadata: { [key: string]: any };
   index: number;
   contentHtml: string;
-  withReadingTime?: boolean;
+  withReadingTime: boolean;
 }) {
   const makeMetaData = () => {
     const base = {
@@ -81,44 +95,41 @@ async function writeJsonFile({
   );
 }
 
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(remarkCallout)
-  .use(highlight, { prefix: "block" })
-  .use(rehypeStringify);
-
 async function buildMarkdownFiles({
   inputPath,
   outputPath,
-  withReadingTime,
+  withReadingTime = true,
 }: {
   inputPath: string;
   outputPath: string;
-  withReadingTime: boolean;
+  withReadingTime?: boolean;
 }) {
-  for (const { input, output } of paths) {
-    const files = getFilePathsByExtension({ dirPath: input, ext: "md" });
+  const files = prepareSortedMarkdownFiles(inputPath);
 
-    for (let i = 0; i < files.length; i++) {
-      const filePath = files[i];
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data: metadata, content } = matter(fileContent);
+  for (let i = 0; i < files.length; i++) {
+    const { filePath, metadata, content } = files[i];
 
-      const processedContent = await processor.process(content);
-      const relativePath = path.relative(input, filePath);
+    const processedContent = await processor.process(content);
+    const relativePath = path.relative(inputPath, filePath);
+    const outputFilePath = path.join(
+      outputPath,
+      `${relativePath.replace(/\.md$/, ".json")}`
+    );
 
-      await writeJsonFile({
-        outputFilePath: path.join(
-          output,
-          `${relativePath.replace(/\.md$/, ".json")}`
-        ),
-        metadata,
-        index: i,
-        contentHtml: processedContent.toString(),
-      });
-    }
+    const hasPrev = i !== 0;
+    const hasNext = i !== files.length - 1;
+
+    await writeJsonFile({
+      outputFilePath,
+      metadata: {
+        ...metadata,
+        prev_content_path: hasPrev ? files[i - 1].metadata["path"] : "",
+        next_content_path: hasNext ? files[i + 1].metadata["path"] : "",
+      },
+      index: i,
+      contentHtml: processedContent.toString(),
+      withReadingTime,
+    });
   }
 }
 
