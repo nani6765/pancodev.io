@@ -101,6 +101,41 @@ const validatePublicationDate = (createdAt: string) => {
   return today.isAfter(publish);
 };
 
+type JsonFile = {
+  filePath: string;
+  metadata: {
+    [key: string]: any;
+  };
+  content: string;
+};
+
+const generateMetaData = ({
+  inputPath,
+  metadata,
+  files,
+  index,
+}: {
+  inputPath: string;
+  metadata: {
+    [key: string]: any;
+  };
+  files: JsonFile[];
+  index: number;
+}) => {
+  const isArticleProcess = inputPath.includes("article");
+  if (isArticleProcess) {
+    return metadata;
+  }
+
+  const hasPrev = index !== 0;
+  const hasNext = index !== files.length - 1;
+  return {
+    ...metadata,
+    prev_content_path: hasPrev ? files[index - 1].metadata["path"] : "",
+    next_content_path: hasNext ? files[index + 1].metadata["path"] : "",
+  };
+};
+
 async function buildMarkdownFiles({
   inputPath,
   outputPath,
@@ -110,7 +145,7 @@ async function buildMarkdownFiles({
   outputPath: string;
   withReadingTime?: boolean;
 }) {
-  const files = prepareSortedMarkdownFiles(inputPath);
+  const files: JsonFile[] = prepareSortedMarkdownFiles(inputPath);
 
   for (let i = 0; i < files.length; i++) {
     const { filePath, metadata, content } = files[i];
@@ -125,16 +160,9 @@ async function buildMarkdownFiles({
       `${relativePath.replace(/\.md$/, ".json")}`
     );
 
-    const hasPrev = i !== 0;
-    const hasNext = i !== files.length - 1;
-
     await writeJsonFile({
       outputFilePath,
-      metadata: {
-        ...metadata,
-        prev_content_path: hasPrev ? files[i - 1].metadata["path"] : "",
-        next_content_path: hasNext ? files[i + 1].metadata["path"] : "",
-      },
+      metadata: generateMetaData({ inputPath, metadata, files, index: i }),
       index: i,
       contentHtml: processedContent.toString(),
       withReadingTime,
