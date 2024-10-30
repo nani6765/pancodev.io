@@ -18,7 +18,7 @@ type FlagByGetArticles = "preview" | "withData";
 
 async function getArticleByPaths(paths: string[], flag: FlagByGetArticles) {
   return await Promise.all(
-    paths.map(async (path, index) => {
+    paths.map(async (path) => {
       if (flag === "preview") {
         return generateFileName(path);
       }
