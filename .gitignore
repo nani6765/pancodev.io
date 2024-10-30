@@ -2,3 +2,5 @@ node_modules
 build
 _generate
 .env
+public/article
+public/small_talk
