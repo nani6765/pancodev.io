@@ -1,3 +1,11 @@
+type JsonFile = {
+  filePath: string;
+  metadata: {
+    [key: string]: any;
+  };
+  content: string;
+};
+
 type Metadata = {
   index: number;
   title: string;
