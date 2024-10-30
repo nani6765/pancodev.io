@@ -52,12 +52,20 @@ const generateJsonContent = async ({
 
   const hasPrev = index !== 0;
   const hasNext = index !== files.length - 1;
+
   return {
     contentHtml,
     metadata: {
       ...baseMetaData,
-      prev_content_path: hasPrev ? files[index - 1].metadata["path"] : "",
-      next_content_path: hasNext ? files[index + 1].metadata["path"] : "",
+      prev: {
+        content_path: hasPrev ? extractFileName(files[index - 1].filePath) : "",
+        content_title: hasPrev ? files[index - 1].metadata["title"] : "",
+      },
+      next: {
+        content_path: hasNext ? extractFileName(files[index + 1].filePath) : "",
+        content_title: hasNext ? files[index + 1].metadata["title"] : "",
+      },
+      hasCloseContent: hasPrev || hasNext,
     },
   };
 };

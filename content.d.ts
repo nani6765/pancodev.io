@@ -7,22 +7,29 @@ type JsonFile = {
 };
 
 type Metadata = {
-  index: number;
+  index: number; // 빌드과정에서 주입됨
   title: string;
   description: string;
-  path: string;
+  path: string; // 빌드과정에서 주입됨
   created_at: string;
 };
 
 declare type ArticleMetadata = Metadata & {
   category: string;
   keywords: string[];
-  readingTime: string;
+  readingTime: string; // 빌드과정에서 주입됨
 };
 
 declare type SmallTalkMetaData = Metadata & {
-  prev_content_path: string;
-  next_content_path: string;
+  prev: {
+    content_path: string;
+    content_title: string;
+  }; // 빌드과정에서 주입됨
+  next: {
+    content_path: string;
+    content_title: string;
+  }; // 빌드과정에서 주입됨
+  hasCloseContent: boolean; // 빌드과정에서 주입됨
 };
 
 declare type Content = {

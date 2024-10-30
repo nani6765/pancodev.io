@@ -29,7 +29,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { smallTalk } = data;
   const { metadata } = smallTalk;
-  const { title, description, path } = metadata;
+  const { title, description, path, created_at } = metadata;
 
   return generateMetaTag({
     title: [title, blogConfig.title],
@@ -46,14 +46,42 @@ export const links: LinksFunction = () => [
 
 function SmallTalk() {
   const { smallTalk } = useLoaderData<typeof loader>();
+  const { created_at, prev, next, hasCloseContent } = smallTalk.metadata;
 
   return (
     <div className="root-section">
       <div className={styles.wrapper}>
+        <p className={styles.metaData}>{created_at}</p>
         <article dangerouslySetInnerHTML={{ __html: smallTalk.contentHtml }} />
         <Link to="/small_talk" className={styles.goList}>
           목록으로
         </Link>
+        {hasCloseContent && (
+          <section className="recent-small-talk">
+            <ul className={styles.recentList}>
+              {prev.content_path && (
+                <li className={styles.recentItem}>
+                  <Link
+                    to={`/small_talk/${prev.content_path}`}
+                    className={styles.recentLink}
+                  >
+                    [이전글] {prev.content_title}
+                  </Link>
+                </li>
+              )}
+              {next.content_path && (
+                <li className={styles.recentItem}>
+                  <Link
+                    to={`/small_talk/${next.content_path}`}
+                    className={styles.recentLink}
+                  >
+                    [다음글] {next.content_title}
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   );
