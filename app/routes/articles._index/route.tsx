@@ -7,7 +7,7 @@ import { getAllArticles } from "@/api/getArticle";
 import generateMetaTag from "@/function/generateMetaTag";
 import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
 
-import * as style from "./style.css";
+import * as style from "@app/content/styles.css";
 
 export const meta = () =>
   generateMetaTag({
@@ -33,16 +33,16 @@ function ArticleList() {
             metadata;
 
           return (
-            <li key={index} className={style.articleItem}>
+            <li key={index} className={style.contentItem}>
               <Link
                 to={`/article/${category}/${path}`}
-                className={style.articleLink}
+                className={style.contentLink}
               >
-                <p className={style.articleName}>{title}</p>
-                <span className={style.articleInfo}>
+                <p className={style.contentName}>{title}</p>
+                <span className={style.contentInfo}>
                   <span>{category}</span> / <span>{readingTime}</span>
                 </span>
-                <span className={style.articleDate}>
+                <span className={style.contentInfo}>
                   {dayjs(created_at).format("YYYY-MM-DD")}
                 </span>
               </Link>
