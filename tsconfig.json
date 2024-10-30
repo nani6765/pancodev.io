@@ -7,7 +7,8 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./*"],
-      "@app/*": ["./app/*"]
+      "@app/*": ["./app/*"],
+      "@commonStyle/*": ["./app/common/style/*"]
     }
   }
 }

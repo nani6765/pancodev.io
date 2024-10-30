@@ -1,35 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export const header = style({
-  margin: "2rem 0px",
-  padding: "0px",
-  display: "flex",
-  flexDirection: "row",
-  gap: "1rem",
-  listStyle: "none",
-
-  fontWeight: "bold",
-  fontSize: "1rem",
-});
-
-export const headerItem = style({
-  listStyle: "none",
-  padding: "0px",
-});
-
-export const headerLink = style({
-  color: "white",
-  textDecoration: "none",
-  selectors: {
-    ["&:hover"]: {
-      textDecoration: "underline",
-    },
-    ["&.active"]: {
-      textDecoration: "underline",
-    },
-  },
-});
-
 export const contentList = style({
   position: "relative",
 });
@@ -45,9 +15,9 @@ export const contentLink = style({
 
   display: "grid",
   gridTemplateAreas: `
-    "name date"
-    "info info"
-  `,
+      "name date"
+      "info info"
+    `,
   gridTemplateColumns: "8fr 2fr",
   columnGap: "1rem",
   rowGap: "0.25rem",

@@ -5,9 +5,10 @@ import {
   getSpecificContent,
 } from "@/api/getContent";
 
-import codeCSS from "./code.css?url";
-import * as styles from "./style.css";
-import articleCSS from "./article.css?url";
+import codeCSS from "@commonStyle/code.css?url";
+import * as styles from "@commonStyle/content.css";
+import articleCSS from "@commonStyle/article.css?url";
+
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
 

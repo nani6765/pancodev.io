@@ -13,9 +13,9 @@ import { json, LinksFunction } from "@remix-run/node";
 import resetCSS from "./reset.css?url";
 import globalCSS from "./global.css?url";
 
-import NavBar from "./content/NavBar";
-import DocHead from "./content/DocHead";
-import faviconLinks from "./content/faviconLinks";
+import NavBar from "./common/NavBar";
+import DocHead from "./common/DocHead";
+import faviconLinks from "./common/faviconLinks";
 
 export async function loader() {
   return json({

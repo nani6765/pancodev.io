@@ -7,7 +7,7 @@ import generateMetaTag from "@/function/generateMetaTag";
 import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 import { smallTalkGenerateDir, getContentsInDir } from "@/api/getContent";
 
-import * as style from "@app/content/styles.css";
+import * as style from "@commonStyle/list.css";
 
 export const meta = () =>
   generateMetaTag({
