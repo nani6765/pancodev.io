@@ -1,55 +1,43 @@
 import { json, Link, useLoaderData } from "@remix-run/react";
-import {
-  articleGenerateDir,
-  getContentsInDir,
-  getSpecificContent,
-} from "@/api/getContent";
+import { smallTalkGenerateDir, getSpecificContent } from "@/api/getContent";
+
+import blogConfig from "@/blog.config.json";
+import generateMetaTag from "@/function/generateMetaTag";
 
 import codeCSS from "@commonStyle/code.css?url";
 import * as styles from "@commonStyle/content.css";
 import articleCSS from "@commonStyle/article.css?url";
 
-import blogConfig from "@/blog.config.json";
-import generateMetaTag from "@/function/generateMetaTag";
-
 import type {
+  MetaFunction,
   LinksFunction,
   LoaderFunctionArgs,
-  MetaFunction,
 } from "@remix-run/node";
-import sortingContentsByCreate from "@/function/sortingContentsByCreate";
-
-export async function loader({ params }: LoaderFunctionArgs) {
-  const { category, title } = params;
-  const dirPath = `${articleGenerateDir}/${category}`;
-  const file = await getSpecificContent({ dirPath, title });
-  const categoryFiles = await getContentsInDir({
-    dirPath,
-  });
-
-  const currentIndex = file.metadata.index;
-  return json({
-    article: file,
-    recentFiles: sortingContentsByCreate(categoryFiles)
-      .filter((v) => v.metadata.index !== currentIndex)
-      .slice(0, 5),
-    category,
-  });
-}
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const { category, article } = data;
-  const { metadata } = article;
-  const { title, description, path, keywords } = metadata;
+  const { smallTalk } = data;
+  const { metadata } = smallTalk;
+  const { title, description, path } = metadata;
 
   return generateMetaTag({
     title: [title, blogConfig.title],
     description: description,
     author: blogConfig.author,
-    url: `${blogConfig.siteUrl}/${category}/${path}`,
-    keywords: [category, ...keywords],
+    url: `${blogConfig.siteUrl}/${path}`,
   });
 };
+
+export async function loader({ params }: LoaderFunctionArgs) {
+  const { title } = params;
+  const file = await getSpecificContent({
+    dirPath: smallTalkGenerateDir,
+    title,
+  });
+
+  return json({
+    smallTalk: file,
+  });
+}
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: codeCSS },
@@ -57,37 +45,15 @@ export const links: LinksFunction = () => [
 ];
 
 function SmallTalk() {
-  const { article, recentFiles, category } = useLoaderData<typeof loader>();
+  const { smallTalk } = useLoaderData<typeof loader>();
 
   return (
     <div className="root-section">
       <div className={styles.wrapper}>
-        <p className={styles.metaData}>
-          category : <strong>{article.metadata.category}</strong>
-          <span> / </span>
-          <span>{article.metadata.readingTime}</span>
-        </p>
-        <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
-        <Link to="/articles" className={styles.goList}>
+        <article dangerouslySetInnerHTML={{ __html: smallTalk.contentHtml }} />
+        <Link to="/small_talk" className={styles.goList}>
           목록으로
         </Link>
-        {recentFiles.length > 0 && (
-          <section className="recent-category">
-            <strong>{category} 카테고리의 최신글</strong>
-            <ul className={styles.recentList}>
-              {recentFiles.map(({ metadata }) => (
-                <li key={metadata.index} className={styles.recentItem}>
-                  <Link
-                    to={`/article/${category}/${metadata.path}`}
-                    className={styles.recentLink}
-                  >
-                    {metadata.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
       </div>
     </div>
   );

@@ -29,15 +29,11 @@ function SmallTalkList() {
     <div className="root-section">
       <ul className={style.contentList}>
         {smallTalks.map(({ metadata }) => {
-          const { index, title, category, description, created_at, path } =
-            metadata;
+          const { index, title, description, created_at, path } = metadata;
 
           return (
             <li key={index} className={style.contentItem}>
-              <Link
-                to={`/article/${category}/${path}`}
-                className={style.contentLink}
-              >
+              <Link to={`/small_talk/${path}`} className={style.contentLink}>
                 <p className={style.contentName}>{title}</p>
                 <span className={style.contentInfo}>{description}</span>
                 <span className={style.contentDate}>

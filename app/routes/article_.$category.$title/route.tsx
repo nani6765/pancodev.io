@@ -5,19 +5,33 @@ import {
   getSpecificContent,
 } from "@/api/getContent";
 
+import blogConfig from "@/blog.config.json";
+import generateMetaTag from "@/function/generateMetaTag";
+import sortingContentsByCreate from "@/function/sortingContentsByCreate";
+
 import codeCSS from "@commonStyle/code.css?url";
 import * as styles from "@commonStyle/content.css";
 import articleCSS from "@commonStyle/article.css?url";
 
-import blogConfig from "@/blog.config.json";
-import generateMetaTag from "@/function/generateMetaTag";
-
 import type {
+  MetaFunction,
   LinksFunction,
   LoaderFunctionArgs,
-  MetaFunction,
 } from "@remix-run/node";
-import sortingContentsByCreate from "@/function/sortingContentsByCreate";
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const { category, article } = data;
+  const { metadata } = article;
+  const { title, description, path, keywords } = metadata;
+
+  return generateMetaTag({
+    title: [title, blogConfig.title],
+    description: description,
+    author: blogConfig.author,
+    url: `${blogConfig.siteUrl}/${category}/${path}`,
+    keywords: [category, ...keywords],
+  });
+};
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
@@ -36,20 +50,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
     category,
   });
 }
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const { category, article } = data;
-  const { metadata } = article;
-  const { title, description, path, keywords } = metadata;
-
-  return generateMetaTag({
-    title: [title, blogConfig.title],
-    description: description,
-    author: blogConfig.author,
-    url: `${blogConfig.siteUrl}/${category}/${path}`,
-    keywords: [category, ...keywords],
-  });
-};
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: codeCSS },
