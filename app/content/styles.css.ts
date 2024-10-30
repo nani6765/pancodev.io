@@ -69,7 +69,7 @@ export const contentName = style({
   whiteSpace: "break-spaces",
   wordBreak: "keep-all",
   selectors: {
-    [`$ contentItem}:hover &`]: {
+    [`${contentItem}:hover &`]: {
       textDecoration: "underline",
     },
   },

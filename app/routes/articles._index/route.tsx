@@ -27,7 +27,7 @@ function ArticleList() {
 
   return (
     <div className="root-section">
-      <ul>
+      <ul className={style.contentList}>
         {articles.map(({ metadata }) => {
           const { index, title, category, readingTime, created_at, path } =
             metadata;
