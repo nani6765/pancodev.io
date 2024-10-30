@@ -3,7 +3,6 @@ title: Remix SEO 설정을 위한 sitemap, rss, robots
 description: This article explains how to set up sitemap, RSS, and robots.txt for a Remix blog. It covers creating dynamic XML and text responses, leveraging Remix's routing capabilities, and ensuring proper content delivery to search engines like Google and naver.
 keywords: ["sitemap", "rss", "robots"]
 category: remix
-path: remix-seo
 created_at: 2024-10-03 19:54
 ---
 

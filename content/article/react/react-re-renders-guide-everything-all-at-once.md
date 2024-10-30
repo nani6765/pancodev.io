@@ -3,7 +3,6 @@ title: "React 리랜더링 가이드 : 모든 것을 한 번에"
 description: "[Korean] React re-renders cheat-sheet. Short descriptions with visual aid and code examples of: what re-renders are, what triggers them, most important re-renders related patterns and anti-patterns to remember"
 keywords: ["re-render", "composition", "reconciliation"]
 category: react
-path: react-re-renders-guide-everything-all-at-once
 created_at: 2024-10-25 22:00
 ---
 

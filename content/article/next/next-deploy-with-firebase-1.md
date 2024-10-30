@@ -3,7 +3,6 @@ title: "Firebase로 Next 프로젝트 배포하기 : page router / next-auth / n
 description: This article provides a step-by-step guide for deploying a Next.js project to Firebase Hosting, covering essential points when migrating from Vercel. It details compatibility considerations for using Next Page Router and next-auth, setting up Firebase hosting, and handling configurations for libraries like next-i18next and tanstack-query DevTools to ensure a seamless deployment process.
 keywords: ["firebase", "hosting", "next-auth", "next-i18next"]
 category: next
-path: next-deploy-with-firebase-1
 created_at: 2024-08-25 10:25
 ---
 

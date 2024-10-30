@@ -3,7 +3,6 @@ title: "Firebase로 Next 프로젝트 배포하기 : GCP setting / CI/CD"
 description: This guide explains how to deploy a Next.js project to Firebase Hosting, covering GCP setup, CI/CD integration, and managing authentication. It also addresses common deployment issues and necessary API configurations.
 keywords: ["firebase", "hosting", "gcp", "CI/CD"]
 category: next
-path: next-deploy-with-firebase-2
 created_at: 2024-09-14 15:15
 ---
 

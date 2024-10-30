@@ -3,7 +3,6 @@ title: Vercel + Cloudflare 환경에서의 “err_too_many_redirects” 해결
 description: Fixing the “err_too_many_redirects” error between Vercel and Cloudflare by adjusting SSL/TLS settings and proxy status.
 keywords: ["vercel", "cloudflare", "dns", "proxy"]
 category: web
-path: resolve-err-too-many-redirects-with-vercel-and-cloudflare
 created_at: 2024-10-09 20:30
 ---
 

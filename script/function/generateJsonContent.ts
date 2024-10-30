@@ -16,6 +16,12 @@ const processor = unified()
   .use(highlight, { prefix: "block" })
   .use(rehypeStringify);
 
+const extractFileName = (filePath: string) => {
+  const splitPaths = filePath.split(/[\\/]/);
+  // .md제거
+  return splitPaths[splitPaths.length - 1].slice(0, -3);
+};
+
 const generateJsonContent = async ({
   files,
   index,
@@ -25,12 +31,14 @@ const generateJsonContent = async ({
 }) => {
   const target = files[index];
   const { filePath, metadata, content } = target;
-  const processedContent = await processor.process(content);
 
+  const processedContent = await processor.process(content);
   const contentHtml = processedContent.toString();
+
   const baseMetaData = {
     ...metadata,
     index,
+    path: extractFileName(filePath),
   };
 
   const isArticleProcess = filePath.includes("article");

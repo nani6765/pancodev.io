@@ -3,7 +3,6 @@ title: Browser war
 description: Explore the evolution of web browsers, from early innovations like Mosaic to today's landscape dominated by Chrome. Delve into the ongoing browser wars and their impact on user experience.
 keywords: ["Chrome", "NetScape", "Firefox", "Mosaic"]
 category: web
-path: browser-war
 created_at: 2024-07-20 23:40
 ---
 
