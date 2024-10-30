@@ -95,6 +95,12 @@ async function writeJsonFile({
   );
 }
 
+const validatePublicationDate = (createdAt: string) => {
+  const today = dayjs();
+  const publish = dayjs(createdAt);
+  return today.isAfter(publish);
+};
+
 async function buildMarkdownFiles({
   inputPath,
   outputPath,
@@ -108,6 +114,9 @@ async function buildMarkdownFiles({
 
   for (let i = 0; i < files.length; i++) {
     const { filePath, metadata, content } = files[i];
+    if (!validatePublicationDate(metadata["created_at"])) {
+      return;
+    }
 
     const processedContent = await processor.process(content);
     const relativePath = path.relative(inputPath, filePath);
