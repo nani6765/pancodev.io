@@ -14,6 +14,18 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 
+export async function loader({ params }: LoaderFunctionArgs) {
+  const { title } = params;
+  const file = await getSpecificContent<SmallTalk>({
+    dirPath: smallTalkGenerateDir,
+    title,
+  });
+
+  return json({
+    smallTalk: file,
+  });
+}
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { smallTalk } = data;
   const { metadata } = smallTalk;
@@ -26,18 +38,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     url: `${blogConfig.siteUrl}/${path}`,
   });
 };
-
-export async function loader({ params }: LoaderFunctionArgs) {
-  const { title } = params;
-  const file = await getSpecificContent({
-    dirPath: smallTalkGenerateDir,
-    title,
-  });
-
-  return json({
-    smallTalk: file,
-  });
-}
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: codeCSS },

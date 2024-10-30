@@ -9,6 +9,13 @@ import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 
 import * as style from "@commonStyle/list.css";
 
+export const loader = async () => {
+  const response = await getContentsInDir<Article>({
+    dirPath: articleGenerateDir,
+  });
+  return json(sortingContentsByCreate(response));
+};
+
 export const meta = () =>
   generateMetaTag({
     title: ["Articles", blogConfig.title],
@@ -16,11 +23,6 @@ export const meta = () =>
     author: blogConfig.author,
     url: `${blogConfig.siteUrl}/articles`,
   });
-
-export const loader = async () => {
-  const response = await getContentsInDir({ dirPath: articleGenerateDir });
-  return json(sortingContentsByCreate(response));
-};
 
 function ArticleList() {
   const articles = useLoaderData<typeof loader>();

@@ -19,6 +19,24 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 
+export async function loader({ params }: LoaderFunctionArgs) {
+  const { category, title } = params;
+  const dirPath = `${articleGenerateDir}/${category}`;
+  const file = await getSpecificContent<Article>({ dirPath, title });
+  const categoryFiles = await getContentsInDir<Article>({
+    dirPath,
+  });
+
+  const currentIndex = file.metadata.index;
+  return json({
+    article: file,
+    recentFiles: sortingContentsByCreate(categoryFiles)
+      .filter((v) => v.metadata.index !== currentIndex)
+      .slice(0, 5),
+    category,
+  });
+}
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { category, article } = data;
   const { metadata } = article;
@@ -32,24 +50,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     keywords: [category, ...keywords],
   });
 };
-
-export async function loader({ params }: LoaderFunctionArgs) {
-  const { category, title } = params;
-  const dirPath = `${articleGenerateDir}/${category}`;
-  const file = await getSpecificContent({ dirPath, title });
-  const categoryFiles = await getContentsInDir({
-    dirPath,
-  });
-
-  const currentIndex = file.metadata.index;
-  return json({
-    article: file,
-    recentFiles: sortingContentsByCreate(categoryFiles)
-      .filter((v) => v.metadata.index !== currentIndex)
-      .slice(0, 5),
-    category,
-  });
-}
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: codeCSS },

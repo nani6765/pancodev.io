@@ -27,39 +27,39 @@ const generateFileName = (fullPath: string) => {
 
 type FlagByGetContents = "preview" | "withData";
 
-async function getContentByPaths(paths: string[], flag: FlagByGetContents) {
+async function getContentByPaths<T>(paths: string[], flag: FlagByGetContents) {
   return await Promise.all(
     paths.map(async (path) => {
       if (flag === "preview") {
         return generateFileName(path);
       }
 
-      const fileData: Content = await fs.readJSON(path);
+      const fileData: T = await fs.readJSON(path);
       return fileData;
     })
   );
 }
 
-export function getContentsInDir({
+export function getContentsInDir<T>({
   dirPath,
 }: {
   dirPath: string;
-}): Promise<Content[]>;
-export function getContentsInDir({
+}): Promise<T[]>;
+export function getContentsInDir<T>({
   dirPath,
   flag,
 }: {
   dirPath: string;
   flag: "preview";
 }): Promise<string[]>;
-export function getContentsInDir({
+export function getContentsInDir<T>({
   dirPath,
   flag,
 }: {
   dirPath: string;
   flag: "withData";
-}): Promise<Content[]>;
-export async function getContentsInDir({
+}): Promise<T[]>;
+export async function getContentsInDir<T>({
   dirPath,
   flag = "withData",
 }: {
@@ -71,7 +71,7 @@ export async function getContentsInDir({
       dirPath: dirPath,
       ext: "json",
     });
-    return getContentByPaths(paths, flag);
+    return getContentByPaths<T>(paths, flag);
   } catch (error) {
     console.log(error);
     throw new Response("Failed to load JSON files", { status: 500 });
@@ -83,7 +83,7 @@ type GetSpecificContentParams = {
   title: string;
 };
 
-export async function getSpecificContent({
+export async function getSpecificContent<T>({
   dirPath,
   title,
 }: GetSpecificContentParams) {
@@ -96,7 +96,7 @@ export async function getSpecificContent({
       throw new Error("no File");
     }
     const path = `${dirPath}/${title}.json`;
-    const fileData: Content = await fs.readJSON(path);
+    const fileData: T = await fs.readJSON(path);
     return fileData;
   } catch (error) {
     if (error instanceof Error && error.message === "no File") {

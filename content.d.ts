@@ -1,17 +1,33 @@
-declare type Metadata = {
+type Metadata = {
   index: number;
   title: string;
-  category: string;
   description: string;
-  keywords: string[];
   path: string;
   created_at: string;
+};
+
+declare type ArticleMetadata = Metadata & {
+  category: string;
+  keywords: string[];
   readingTime: string;
+};
+
+declare type SmallTalkMetaData = Metadata & {
   prev_content_path: string;
   next_content_path: string;
 };
 
 declare type Content = {
-  metadata: Metadata;
+  metadata: ArticleMetadata | SmallTalkMetaData;
+  contentHtml: string;
+};
+
+declare type Article = {
+  metadata: ArticleMetadata;
+  contentHtml: string;
+};
+
+declare type SmallTalk = {
+  metadata: SmallTalkMetaData;
   contentHtml: string;
 };

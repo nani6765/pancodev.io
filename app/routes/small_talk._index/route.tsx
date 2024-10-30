@@ -9,6 +9,13 @@ import { smallTalkGenerateDir, getContentsInDir } from "@/api/getContent";
 
 import * as style from "@commonStyle/list.css";
 
+export const loader = async () => {
+  const response = await getContentsInDir<SmallTalk>({
+    dirPath: smallTalkGenerateDir,
+  });
+  return json(sortingContentsByCreate(response));
+};
+
 export const meta = () =>
   generateMetaTag({
     title: ["Articles", blogConfig.title],
@@ -16,11 +23,6 @@ export const meta = () =>
     author: blogConfig.author,
     url: `${blogConfig.siteUrl}/small_talk`,
   });
-
-export const loader = async () => {
-  const response = await getContentsInDir({ dirPath: smallTalkGenerateDir });
-  return json(sortingContentsByCreate(response));
-};
 
 function SmallTalkList() {
   const smallTalks = useLoaderData<typeof loader>();
