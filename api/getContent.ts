@@ -6,7 +6,14 @@ import hasFileWithName from "@/function/hasFileWithName";
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
-const outputDir = path.join(basePath, blogConfig.contentGenerateDir);
+export const articleGenerateDir = path.join(
+  basePath,
+  blogConfig.articleGenerateDir
+);
+export const smallTalkGenerateDir = path.join(
+  basePath,
+  blogConfig.smallTalkGenerateDir
+);
 
 const generateFileName = (fullPath: string) => {
   const categoryAndFilePath = fullPath.split(/[\\/]/).slice(-2);
@@ -29,36 +36,35 @@ async function getContentByPaths(paths: string[], flag: FlagByGetContents) {
   );
 }
 
-export function getAllContents(): Promise<Content[]>;
-export function getAllContents(flag: "preview"): Promise<string[]>;
-export function getAllContents(flag: "withData"): Promise<Content[]>;
-export async function getAllContents(
-  flag: "withData" | "preview" = "withData"
-) {
-  try {
-    const paths = getFilePathsByExtension({ dirPath: outputDir, ext: "json" });
-    return getContentByPaths(paths, flag);
-  } catch (error) {
-    throw new Response("Failed to load JSON files", { status: 500 });
-  }
-}
-
-export function getContentsByCategory(category: string): Promise<Content[]>;
-export function getContentsByCategory(
-  category: string,
-  flag: "preview"
-): Promise<string[]>;
-export function getContentsByCategory(
-  category: string,
-  flag: "withData"
-): Promise<Content[]>;
-export async function getContentsByCategory(
-  category: string,
-  flag: "withData" | "preview" = "withData"
-) {
+export function getContentsInDir({
+  dirPath,
+}: {
+  dirPath: string;
+}): Promise<Content[]>;
+export function getContentsInDir({
+  dirPath,
+  flag,
+}: {
+  dirPath: string;
+  flag: "preview";
+}): Promise<string[]>;
+export function getContentsInDir({
+  dirPath,
+  flag,
+}: {
+  dirPath: string;
+  flag: "withData";
+}): Promise<Content[]>;
+export async function getContentsInDir({
+  dirPath,
+  flag = "withData",
+}: {
+  dirPath: string;
+  flag?: FlagByGetContents;
+}) {
   try {
     const paths = getFilePathsByExtension({
-      dirPath: `${outputDir}/${category}`,
+      dirPath: dirPath,
       ext: "json",
     });
     return getContentByPaths(paths, flag);
@@ -68,23 +74,23 @@ export async function getContentsByCategory(
 }
 
 type GetSpecificContentParams = {
-  category: string;
+  dirPath: string;
   title: string;
 };
 
 export async function getSpecificContent({
-  category,
+  dirPath,
   title,
 }: GetSpecificContentParams) {
   try {
     const hasFile = await hasFileWithName({
-      dirPath: `${outputDir}/${category}`,
+      dirPath,
       name: `${title}.json`,
     });
     if (!hasFile) {
       throw new Error("no File");
     }
-    const path = `${outputDir}/${category}/${title}.json`;
+    const path = `${dirPath}/${title}.json`;
     const fileData: Content = await fs.readJSON(path);
     return fileData;
   } catch (error) {
