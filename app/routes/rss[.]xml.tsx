@@ -4,12 +4,12 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 import blogConfig from "@/blog.config.json";
-import { getAllArticles } from "@/api/getArticle";
+import { getAllContents } from "@/api/getContent";
 
 import type { LoaderFunction } from "@remix-run/node";
 
 export const loader: LoaderFunction = async () => {
-  const articles = await getAllArticles();
+  const articles = await getAllContents();
 
   const rss = generateRss({
     title: blogConfig.title,

@@ -1,5 +1,5 @@
 import { json, Link, useLoaderData } from "@remix-run/react";
-import { getArticlesByCategory, getSpecificArticle } from "@/api/getArticle";
+import { getContentsByCategory, getSpecificContent } from "@/api/getContent";
 
 import codeCSS from "./code.css?url";
 import * as styles from "./style.css";
@@ -16,8 +16,8 @@ import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
-  const file = await getSpecificArticle({ category, title });
-  const categoryFiles = await getArticlesByCategory(category);
+  const file = await getSpecificContent({ category, title });
+  const categoryFiles = await getContentsByCategory(category);
 
   const currentIndex = file.metadata.index;
   return json({

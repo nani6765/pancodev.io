@@ -2,11 +2,11 @@
 import { LoaderFunction } from "@remix-run/node";
 
 import blogConfig from "@/blog.config.json";
-import { getAllArticles } from "@/api/getArticle";
+import { getAllContents } from "@/api/getContent";
 
 export const loader: LoaderFunction = async () => {
   try {
-    const articles = await getAllArticles("preview");
+    const articles = await getAllContents("preview");
     const sitemap = toXmlSitemap([
       "articles",
       ...articles.map((path) => `article/${path}`),

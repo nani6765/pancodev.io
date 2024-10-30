@@ -14,9 +14,9 @@ const generateFileName = (fullPath: string) => {
   return `${categoryAndFilePath[0]}/${categoryAndFilePath[1].split(".")[0]}`;
 };
 
-type FlagByGetArticles = "preview" | "withData";
+type FlagByGetContents = "preview" | "withData";
 
-async function getArticleByPaths(paths: string[], flag: FlagByGetArticles) {
+async function getContentByPaths(paths: string[], flag: FlagByGetContents) {
   return await Promise.all(
     paths.map(async (path) => {
       if (flag === "preview") {
@@ -29,30 +29,30 @@ async function getArticleByPaths(paths: string[], flag: FlagByGetArticles) {
   );
 }
 
-export function getAllArticles(): Promise<Content[]>;
-export function getAllArticles(flag: "preview"): Promise<string[]>;
-export function getAllArticles(flag: "withData"): Promise<Content[]>;
-export async function getAllArticles(
+export function getAllContents(): Promise<Content[]>;
+export function getAllContents(flag: "preview"): Promise<string[]>;
+export function getAllContents(flag: "withData"): Promise<Content[]>;
+export async function getAllContents(
   flag: "withData" | "preview" = "withData"
 ) {
   try {
     const paths = getFilePathsByExtension({ dirPath: outputDir, ext: "json" });
-    return getArticleByPaths(paths, flag);
+    return getContentByPaths(paths, flag);
   } catch (error) {
     throw new Response("Failed to load JSON files", { status: 500 });
   }
 }
 
-export function getArticlesByCategory(category: string): Promise<Content[]>;
-export function getArticlesByCategory(
+export function getContentsByCategory(category: string): Promise<Content[]>;
+export function getContentsByCategory(
   category: string,
   flag: "preview"
 ): Promise<string[]>;
-export function getArticlesByCategory(
+export function getContentsByCategory(
   category: string,
   flag: "withData"
 ): Promise<Content[]>;
-export async function getArticlesByCategory(
+export async function getContentsByCategory(
   category: string,
   flag: "withData" | "preview" = "withData"
 ) {
@@ -61,21 +61,21 @@ export async function getArticlesByCategory(
       dirPath: `${outputDir}/${category}`,
       ext: "json",
     });
-    return getArticleByPaths(paths, flag);
+    return getContentByPaths(paths, flag);
   } catch (error) {
     throw new Response("Failed to load JSON files", { status: 500 });
   }
 }
 
-type GetSpecificArticleParams = {
+type GetSpecificContentParams = {
   category: string;
   title: string;
 };
 
-export async function getSpecificArticle({
+export async function getSpecificContent({
   category,
   title,
-}: GetSpecificArticleParams) {
+}: GetSpecificContentParams) {
   try {
     const hasFile = await hasFileWithName({
       dirPath: `${outputDir}/${category}`,
