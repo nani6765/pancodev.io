@@ -13,9 +13,11 @@
       " 🗺️ IT 문화의 성장은 '나눔'에 있었습니다. 저 역시 이 문화의 수혜자로 개발자가 되었습니다. 이에 미약하나마 그 문화에 기여하기 위하여 n년차 블로그를 운영하고 있습니다. 이 아름다운 문화가 더욱 지속되길 바랍니다."
     ]
   },
-  "contentDir": "content",
-  "contentGenerateDir": "_generate/_content",
-  "smallTalkDir": "small_talk",
+  "default_content_dir": "content",
+  "default_generate_dir": "_generate",
+  "articleDir": "content/article",
+  "articleGenerateDir": "_generate/_article",
+  "smallTalkDir": "content/small_talk",
   "smallTalkGenerateDir": "_generate/_small_talk",
   "links": [
     {
