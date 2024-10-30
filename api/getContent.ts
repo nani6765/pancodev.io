@@ -6,6 +6,10 @@ import hasFileWithName from "@/function/hasFileWithName";
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
+export const defaultGenerateDir = path.join(
+  basePath,
+  blogConfig.default_generate_dir
+);
 export const articleGenerateDir = path.join(
   basePath,
   blogConfig.articleGenerateDir

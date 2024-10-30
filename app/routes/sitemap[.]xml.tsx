@@ -2,11 +2,14 @@
 import { LoaderFunction } from "@remix-run/node";
 
 import blogConfig from "@/blog.config.json";
-import { getAllContents } from "@/api/getContent";
+import { defaultGenerateDir, getContentsInDir } from "@/api/getContent";
 
 export const loader: LoaderFunction = async () => {
   try {
-    const articles = await getAllContents("preview");
+    const articles = await getContentsInDir({
+      dirPath: defaultGenerateDir,
+      flag: "preview",
+    });
     const sitemap = toXmlSitemap([
       "articles",
       ...articles.map((path) => `article/${path}`),

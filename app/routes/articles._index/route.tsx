@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 
 import blogConfig from "@/blog.config.json";
-import { contentGenerateDir, getContentsInDir } from "@/api/getContent";
+import { articleGenerateDir, getContentsInDir } from "@/api/getContent";
 import generateMetaTag from "@/function/generateMetaTag";
 import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
 
@@ -18,7 +18,7 @@ export const meta = () =>
   });
 
 export const loader = async () => {
-  const response = await getContentsInDir({ dirPath: contentGenerateDir });
+  const response = await getContentsInDir({ dirPath: articleGenerateDir });
   return json(sortingArticlesByCreate(response));
 };
 
