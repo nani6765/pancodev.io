@@ -16,7 +16,7 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
-import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
+import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
@@ -29,7 +29,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const currentIndex = file.metadata.index;
   return json({
     article: file,
-    recentFiles: sortingArticlesByCreate(categoryFiles)
+    recentFiles: sortingContentsByCreate(categoryFiles)
       .filter((v) => v.metadata.index !== currentIndex)
       .slice(0, 5),
     category,

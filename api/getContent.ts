@@ -73,6 +73,7 @@ export async function getContentsInDir({
     });
     return getContentByPaths(paths, flag);
   } catch (error) {
+    console.log(error);
     throw new Response("Failed to load JSON files", { status: 500 });
   }
 }

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
-function sortingArticlesByCreate(articles: Content[]) {
-  return articles.sort((prev, next) => {
+function sortingContentsByCreate(contents: Content[]) {
+  return contents.sort((prev, next) => {
     const prevCreatedAt = dayjs(prev.metadata.created_at);
     const nextCreatedAt = dayjs(next.metadata.created_at);
 
@@ -17,4 +17,4 @@ function sortingArticlesByCreate(articles: Content[]) {
   });
 }
 
-export default sortingArticlesByCreate;
+export default sortingContentsByCreate;

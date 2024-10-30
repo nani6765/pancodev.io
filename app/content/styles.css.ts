@@ -48,6 +48,7 @@ export const contentLink = style({
     "name date"
     "info info"
   `,
+  gridTemplateColumns: "8fr 2fr",
   columnGap: "1rem",
   rowGap: "0.25rem",
 
@@ -85,4 +86,5 @@ export const contentInfo = style({
   gridArea: "info",
   fontSize: "0.75rem",
   color: "#c6c6c6",
+  wordBreak: "keep-all",
 });

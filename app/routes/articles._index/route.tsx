@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
-import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import blogConfig from "@/blog.config.json";
-import { articleGenerateDir, getContentsInDir } from "@/api/getContent";
 import generateMetaTag from "@/function/generateMetaTag";
-import sortingArticlesByCreate from "@/function/sortingArticlesByCreate";
+import { articleGenerateDir, getContentsInDir } from "@/api/getContent";
+import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 
 import * as style from "@app/content/styles.css";
 
@@ -19,7 +19,7 @@ export const meta = () =>
 
 export const loader = async () => {
   const response = await getContentsInDir({ dirPath: articleGenerateDir });
-  return json(sortingArticlesByCreate(response));
+  return json(sortingContentsByCreate(response));
 };
 
 function ArticleList() {
