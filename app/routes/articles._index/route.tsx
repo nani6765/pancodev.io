@@ -42,7 +42,7 @@ function ArticleList() {
                 <span className={style.contentInfo}>
                   <span>{category}</span> / <span>{readingTime}</span>
                 </span>
-                <span className={style.contentInfo}>
+                <span className={style.contentDate}>
                   {dayjs(created_at).format("YYYY-MM-DD")}
                 </span>
               </Link>
