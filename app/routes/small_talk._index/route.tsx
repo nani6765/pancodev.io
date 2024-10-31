@@ -26,7 +26,7 @@ export const meta = () =>
 
 function SmallTalkList() {
   const smallTalks = useLoaderData<typeof loader>();
-  console.log(smallTalks);
+
   return (
     <div className="root-section">
       <ul className={style.contentList}>
