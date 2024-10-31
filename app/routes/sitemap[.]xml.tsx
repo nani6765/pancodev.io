@@ -6,14 +6,20 @@ import { defaultGenerateDir, getContentsInDir } from "@/api/getContent";
 
 export const loader: LoaderFunction = async () => {
   try {
-    const articles = await getContentsInDir({
+    const contents = await getContentsInDir({
       dirPath: defaultGenerateDir,
-      flag: "preview",
+      flag: 'preview',
     });
+
     const sitemap = toXmlSitemap([
-      "articles",
-      ...articles.map((path) => `article/${path}`),
+      'articles',
+      'small_talk',
+      ...contents.map((path) => {
+        const isArticle = path.includes('/');
+        return isArticle ? `article/${path}` : `small_talk/${path}`;
+      }),
     ]);
+
     return new Response(sitemap, {
       status: 200,
       headers: {
