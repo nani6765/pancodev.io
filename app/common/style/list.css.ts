@@ -33,6 +33,18 @@ export const contentLink = style({
       color: "inherit",
     },
   },
+  
+  '@media': {
+    'screen and (max-width: 768px)': {
+      gridTemplateAreas: `
+      "date"
+      "name" 
+      "info"
+    `,
+      gridTemplateColumns: '1fr',
+      rowGap: '0.5rem',
+    },
+  },
 });
 
 export const contentName = style({
@@ -55,6 +67,6 @@ export const contentDate = style({
 export const contentInfo = style({
   gridArea: "info",
   fontSize: "0.75rem",
-  color: "#c6c6c6",
+  color: "#c9c9c9",
   wordBreak: "keep-all",
 });
