@@ -10,7 +10,11 @@ dayjs.tz.setDefault('Asia/Seoul');
 
 const validatePublicationDate = (createdAt: string) => {
   const today = dayjs();
-  const publish = dayjs(createdAt);
+  const publish = dayjs(createdAt)
+  
+  console.log('today : ', today.format('YYYY-MM-DD HH:mm'));
+  console.log('publish : ', publish.format('YYYY-MM-DD HH:mm'));
+  
   return today.isAfter(publish);
 };
 
