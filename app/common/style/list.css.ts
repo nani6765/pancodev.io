@@ -62,6 +62,12 @@ export const contentDate = style({
   gridArea: "date",
   color: "#c6c6c6",
   textAlign: "right",
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      textAlign: 'left',
+    },
+  },
 });
 
 export const contentInfo = style({
