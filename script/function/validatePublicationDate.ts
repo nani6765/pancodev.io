@@ -7,6 +7,7 @@ import 'dayjs/locale/ko';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Seoul');
+dayjs.locale('ko');
 
 const validatePublicationDate = (createdAt: string) => {
   const today = dayjs();
