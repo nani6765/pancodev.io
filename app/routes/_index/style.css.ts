@@ -17,9 +17,35 @@ export const description = style({
   userSelect: "none",
 });
 
+export const title = style({
+  fontSize: "1.1rem",
+  fontWeight: "bold",
+  marginBottom: "1.25rem",
+});
+
+export const section = style({
+  margin: "2rem 0",
+});
+
+export const resumeLink = style({
+  fontWeight: 400,
+  color: "inherit",
+  textDecoration: "none",
+  selectors: {
+    ["&:hover"]: {
+      textDecoration: "underline",
+    },
+    ["&:active"]: {
+      textDecoration: "underline",
+    },
+    ["&:visited"]: {
+      color: "inherit",
+    },
+  },
+});
+
 export const linkList = style({
   display: "flex",
-  margin: "2rem 0",
   gap: "1rem",
 });
 

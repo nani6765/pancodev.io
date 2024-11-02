@@ -13,9 +13,10 @@
       "🐼 Happy, Codding! 주로 Frontend 도메인을 개발하고 있는 Software Developer 이재원 a.k.a 판다코딩, 판코입니다.",
       "📚 교육은 이 세상에서 가장 중요하고 강력한 도구입니다. 개발 지식과 함께 방향성을 제시해줄 수 있는 지식 공유자가 되기를 소망합니다. 저와 인연이 닿은 많은 분들에게 배운 만큼 나누고자 합니다.",
       "🌏 IT 문화의 성장은 '나눔'에 있었습니다. 저 역시 이 문화의 수혜자로 개발자가 되었습니다. 이에 미약하나마 그 문화에 기여하기 위하여 n년차 블로그를 운영하고 있습니다. 이 아름다운 문화가 더욱 지속되길 바랍니다.",
-      "✍️ 한 달에 두 번 아티클, 한 주에 두 번 small talk을 올리는 걸 목표로 하고 있습니다. 제 블로그를 방문하시는 분들께 자그마한 인사이트라도 되었으면 좋겠습니다."
+      "✍️ 한 달에 두 개의 아티클, 한 주에 두 개의 small talk을 올리는 걸 목표로 하고 있습니다. 제 블로그를 방문하시는 분들께 자그마한 인사이트라도 되었으면 좋겠습니다."
     ]
   },
+  "resume": "https://docs.google.com/document/d/1l59ZTGBDcmjF6GM3AxD8fe4bdrUn59PcfDjr7cxb8a4/edit?usp=sharing",
   "default_content_dir": "content",
   "default_generate_dir": "_generate",
   "article_dir": "content/article",

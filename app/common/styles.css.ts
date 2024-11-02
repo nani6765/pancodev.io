@@ -24,7 +24,7 @@ export const headerLink = style({
     ["&:hover"]: {
       textDecoration: "underline",
     },
-    ["&.active"]: {
+    ["&:active"]: {
       textDecoration: "underline",
     },
   },
