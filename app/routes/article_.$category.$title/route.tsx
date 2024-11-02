@@ -18,6 +18,7 @@ import type {
   LinksFunction,
   LoaderFunctionArgs,
 } from "@remix-run/node";
+import Giscus from "@/app/common/Giscus";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
@@ -34,6 +35,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
       .filter((v) => v.metadata.index !== currentIndex)
       .slice(0, 5),
     category,
+    DATA_REPO_ID: process.env.DATA_REPO_ID,
+    DATA_CATEGORY_ID: process.env.DATA_CATEGORY_ID,
+    SHOW_GISCUS: process.env.SHOW_GISCUS,
   });
 }
 
@@ -57,7 +61,14 @@ export const links: LinksFunction = () => [
 ];
 
 function Content() {
-  const { article, recentFiles, category } = useLoaderData<typeof loader>();
+  const {
+    article,
+    recentFiles,
+    category,
+    DATA_REPO_ID,
+    DATA_CATEGORY_ID,
+    SHOW_GISCUS,
+  } = useLoaderData<typeof loader>();
 
   return (
     <div className="root-section">
@@ -68,6 +79,9 @@ function Content() {
           <span>{article.metadata.readingTime}</span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+        {SHOW_GISCUS === "show" && (
+          <Giscus dataRepoId={DATA_REPO_ID} dataCategoryId={DATA_CATEGORY_ID} />
+        )}
         <Link to="/articles" className={styles.goList}>
           목록으로
         </Link>
