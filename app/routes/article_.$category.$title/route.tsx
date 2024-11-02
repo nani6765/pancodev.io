@@ -1,6 +1,6 @@
 import { json, Link, useLoaderData } from "@remix-run/react";
 import {
-  articleGenerateDir,
+  article_generate_dir,
   getContentsInDir,
   getSpecificContent,
 } from "@/api/getContent";
@@ -21,7 +21,7 @@ import type {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
-  const dirPath = `${articleGenerateDir}/${category}`;
+  const dirPath = `${article_generate_dir}/${category}`;
   const file = await getSpecificContent<Article>({ dirPath, title });
   const categoryFiles = await getContentsInDir<Article>({
     dirPath,

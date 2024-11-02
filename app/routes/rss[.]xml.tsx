@@ -4,7 +4,7 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 import blogConfig from "@/blog.config.json";
-import { articleGenerateDir, getContentsInDir } from "@/api/getContent";
+import { article_generate_dir, getContentsInDir } from "@/api/getContent";
 
 import type { LoaderFunction } from "@remix-run/node";
 
@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async () => {
   /**
    * article이 구독되었을 경우에만 RSS업데이트
    */
-  const articles = await getContentsInDir({ dirPath: articleGenerateDir });
+  const articles = await getContentsInDir({ dirPath: article_generate_dir });
 
   const rss = generateRss({
     title: blogConfig.title,

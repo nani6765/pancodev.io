@@ -4,25 +4,28 @@ import copyImageToPublic from "./copyImageToPublic";
 import blogConfig from "@/blog.config.json";
 
 const basePath = path.resolve();
-const articleDir = path.join(basePath, blogConfig.articleDir);
-const articleGenerateDir = path.join(basePath, blogConfig.articleGenerateDir);
-const smallTalkDir = path.join(basePath, blogConfig.smallTalkDir);
-const smallTalkGenerateDir = path.join(
+const article_dir = path.join(basePath, blogConfig.article_dir);
+const article_generate_dir = path.join(
   basePath,
-  blogConfig.smallTalkGenerateDir
+  blogConfig.article_generate_dir
+);
+const small_talk_dir = path.join(basePath, blogConfig.small_talk_dir);
+const small_talk_generate_dir = path.join(
+  basePath,
+  blogConfig.small_talk_generate_dir
 );
 
 buildMarkdownFiles({
-  inputPath: articleDir,
-  outputPath: articleGenerateDir,
+  inputPath: article_dir,
+  outputPath: article_generate_dir,
 }).catch((error) => {
   console.error(error);
   process.exit(1);
 });
 
 buildMarkdownFiles({
-  inputPath: smallTalkDir,
-  outputPath: smallTalkGenerateDir,
+  inputPath: small_talk_dir,
+  outputPath: small_talk_generate_dir,
 }).catch((error) => {
   console.error(error);
   process.exit(1);

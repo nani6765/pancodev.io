@@ -5,13 +5,13 @@ import { Link, useLoaderData } from "@remix-run/react";
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
 import sortingContentsByCreate from "@/function/sortingContentsByCreate";
-import { smallTalkGenerateDir, getContentsInDir } from "@/api/getContent";
+import { small_talk_generate_dir, getContentsInDir } from "@/api/getContent";
 
 import * as style from "@commonStyle/list.css";
 
 export const loader = async () => {
   const response = await getContentsInDir<SmallTalk>({
-    dirPath: smallTalkGenerateDir,
+    dirPath: small_talk_generate_dir,
   });
   return json(sortingContentsByCreate(response));
 };
@@ -19,7 +19,7 @@ export const loader = async () => {
 export const meta = () =>
   generateMetaTag({
     title: ["Articles", blogConfig.title],
-    description: blogConfig.description,
+    description: blogConfig.small_talk_description,
     author: blogConfig.author,
     url: `${blogConfig.siteUrl}/small_talk`,
   });

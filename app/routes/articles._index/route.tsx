@@ -4,14 +4,14 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
-import { articleGenerateDir, getContentsInDir } from "@/api/getContent";
+import { article_generate_dir, getContentsInDir } from "@/api/getContent";
 import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 
 import * as style from "@commonStyle/list.css";
 
 export const loader = async () => {
   const response = await getContentsInDir<Article>({
-    dirPath: articleGenerateDir,
+    dirPath: article_generate_dir,
   });
   return json(sortingContentsByCreate(response));
 };
@@ -19,7 +19,7 @@ export const loader = async () => {
 export const meta = () =>
   generateMetaTag({
     title: ["Articles", blogConfig.title],
-    description: blogConfig.description,
+    description: blogConfig.article_description,
     author: blogConfig.author,
     url: `${blogConfig.siteUrl}/articles`,
   });

@@ -10,19 +10,19 @@ export const defaultGenerateDir = path.join(
   basePath,
   blogConfig.default_generate_dir
 );
-export const articleGenerateDir = path.join(
+export const article_generate_dir = path.join(
   basePath,
-  blogConfig.articleGenerateDir
+  blogConfig.article_generate_dir
 );
-export const smallTalkGenerateDir = path.join(
+export const small_talk_generate_dir = path.join(
   basePath,
-  blogConfig.smallTalkGenerateDir
+  blogConfig.small_talk_generate_dir
 );
 
 const generateFileName = (fullPath: string) => {
-  const isArticle = fullPath.includes('article');
+  const isArticle = fullPath.includes("article");
   const splitFullPath = fullPath.split(/[\\/]/).slice(-2);
-  const fileName = splitFullPath[1].split('.')[0];
+  const fileName = splitFullPath[1].split(".")[0];
 
   if (isArticle) {
     return `${splitFullPath[0]}/${fileName}`;
@@ -30,7 +30,6 @@ const generateFileName = (fullPath: string) => {
 
   return fileName;
 };
-
 
 type FlagByGetContents = "preview" | "withData";
 

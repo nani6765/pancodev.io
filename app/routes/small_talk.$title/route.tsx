@@ -1,5 +1,5 @@
 import { json, Link, useLoaderData } from "@remix-run/react";
-import { smallTalkGenerateDir, getSpecificContent } from "@/api/getContent";
+import { small_talk_generate_dir, getSpecificContent } from "@/api/getContent";
 
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
@@ -17,7 +17,7 @@ import type {
 export async function loader({ params }: LoaderFunctionArgs) {
   const { title } = params;
   const file = await getSpecificContent<SmallTalk>({
-    dirPath: smallTalkGenerateDir,
+    dirPath: small_talk_generate_dir,
     title,
   });
 
