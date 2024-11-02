@@ -21,7 +21,7 @@ function Home() {
       />
       <p className={style.description}>
         {blogConfig.home.description.map((v) => (
-          <span key={v}>{v}</span>
+          <span key={v}>{v} </span>
         ))}
       </p>
 
