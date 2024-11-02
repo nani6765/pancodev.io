@@ -46,13 +46,18 @@ export const links: LinksFunction = () => [
 
 function SmallTalk() {
   const { smallTalk } = useLoaderData<typeof loader>();
-  const { created_at, prev, next, hasCloseContent } = smallTalk.metadata;
+  const { created_at, title, description, prev, next, hasCloseContent } =
+    smallTalk.metadata;
 
   return (
     <div className="root-section">
       <div className={styles.wrapper}>
         <p className={styles.metaData}>{created_at}</p>
-        <article dangerouslySetInnerHTML={{ __html: smallTalk.contentHtml }} />
+        <section>
+          <h1>{title}</h1>
+          <h4>{description}</h4>
+          <div dangerouslySetInnerHTML={{ __html: smallTalk.contentHtml }} />
+        </section>
         <Link to="/small_talk" className={styles.goList}>
           목록으로
         </Link>
