@@ -1,9 +1,9 @@
 import dayjs from "@/util/dayjs.helper";
 
 const validatePublicationDate = (createdAt: string) => {
-  const today = dayjs(new Date());
-  console.log(today.format("YYYY-MM-DD HH:mm:ss"));
-  const publish = dayjs(createdAt);
+  const today = dayjs.utc();
+  const publish = dayjs(createdAt).utc();
+
   return today.isAfter(publish);
 };
 
