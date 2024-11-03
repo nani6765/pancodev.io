@@ -29,6 +29,8 @@ const buildMarkdownFiles = async ({
       index,
     });
 
+    console.log("can i generated? : ", filePath);
+
     await writeJsonFile({
       outputFilePath: generateOutputFilePath({
         filePath,
