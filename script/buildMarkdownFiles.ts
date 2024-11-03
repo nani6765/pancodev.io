@@ -20,6 +20,7 @@ const buildMarkdownFiles = async ({
       process.env.NODE_ENV === "production" &&
       !validatePublicationDate(originMetadata["created_at"])
     ) {
+      console.log("filePath : ", filePath);
       return;
     }
 
