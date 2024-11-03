@@ -15,9 +15,9 @@ import type {
 } from "@remix-run/node";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { title } = params;
+  const { year, title } = params;
   const file = await getSpecificContent<SmallTalk>({
-    dirPath: small_talk_generate_dir,
+    dirPath: `${small_talk_generate_dir}/${year}`,
     title,
   });
 
@@ -29,7 +29,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { smallTalk } = data;
   const { metadata } = smallTalk;
-  const { title, description, path, created_at } = metadata;
+  const { title, description, path } = metadata;
 
   return generateMetaTag({
     title: [title, blogConfig.title],

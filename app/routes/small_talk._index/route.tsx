@@ -35,7 +35,10 @@ function SmallTalkList() {
 
           return (
             <li key={index} className={style.contentItem}>
-              <Link to={`/small_talk/${path}`} className={style.contentLink}>
+              <Link
+                to={`/small_talk/${dayjs(created_at).format("YYYY")}/${path}`}
+                className={style.contentLink}
+              >
                 <p className={style.contentName}>{title}</p>
                 <span className={style.contentInfo}>{description}</span>
                 <span className={style.contentDate}>

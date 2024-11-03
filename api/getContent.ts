@@ -20,15 +20,10 @@ export const small_talk_generate_dir = path.join(
 );
 
 const generateFileName = (fullPath: string) => {
-  const isArticle = fullPath.includes("article");
   const splitFullPath = fullPath.split(/[\\/]/).slice(-2);
   const fileName = splitFullPath[1].split(".")[0];
 
-  if (isArticle) {
-    return `${splitFullPath[0]}/${fileName}`;
-  }
-
-  return fileName;
+  return `${splitFullPath[0]}/${fileName}`;
 };
 
 type FlagByGetContents = "preview" | "withData";
