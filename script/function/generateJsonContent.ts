@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -20,6 +21,12 @@ const extractFileName = (filePath: string) => {
   const splitPaths = filePath.split(/[\\/]/);
   // .md제거
   return splitPaths[splitPaths.length - 1].slice(0, -3);
+};
+
+const generateClosePath = (target: JsonFile) => {
+  const path = extractFileName(target.filePath);
+  const year = dayjs(target.metadata["created_at"]).format("YYYY");
+  return `${year}/${path}`;
 };
 
 const generateJsonContent = async ({
@@ -58,11 +65,11 @@ const generateJsonContent = async ({
     metadata: {
       ...baseMetaData,
       prev: {
-        content_path: hasPrev ? extractFileName(files[index - 1].filePath) : "",
+        content_path: hasPrev ? generateClosePath(files[index - 1]) : "",
         content_title: hasPrev ? files[index - 1].metadata["title"] : "",
       },
       next: {
-        content_path: hasNext ? extractFileName(files[index + 1].filePath) : "",
+        content_path: hasNext ? generateClosePath(files[index + 1]) : "",
         content_title: hasNext ? files[index + 1].metadata["title"] : "",
       },
       hasCloseContent: hasPrev || hasNext,
