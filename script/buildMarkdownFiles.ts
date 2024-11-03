@@ -12,11 +12,12 @@ const buildMarkdownFiles = async ({
   outputPath: string;
 }) => {
   const files: JsonFile[] = prepareSortedMarkdownFiles(inputPath);
-  const generateFiles = files.filter(
-    ({ metadata }) =>
-      process.env.NODE_ENV === "production" &&
-      !validatePublicationDate(metadata["created_at"])
-  );
+  const generateFiles =
+    process.env.NODE_ENV === "production"
+      ? files.filter(({ metadata }) =>
+          validatePublicationDate(metadata["created_at"])
+        )
+      : files;
 
   for (let index = 0; index < generateFiles.length; index++) {
     const { filePath } = files[index];
