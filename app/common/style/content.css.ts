@@ -28,11 +28,33 @@ export const recentItem = style({
 });
 
 export const recentLink = style({
-  fontWeight: 400,
+  fontWeight: 200,
   textDecoration: "none",
+  display: "block",
+
   selectors: {
     [`${recentItem}:hover &`]: {
       textDecoration: "underline",
     },
   },
 });
+
+export const nextLink = style([
+  recentLink,
+  {
+    justifySelf: "end",
+  },
+]);
+
+export const prevLink = style([
+  recentLink,
+  {
+    justifySelf: "start",
+
+    selectors: {
+      [`&:has(~ ${nextLink})`]: {
+        marginBottom: "1rem",
+      },
+    },
+  },
+]);

@@ -13,6 +13,7 @@ import type {
   LinksFunction,
   LoaderFunctionArgs,
 } from "@remix-run/node";
+import CloseLink from "./CloseLink";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { year, title } = params;
@@ -46,7 +47,7 @@ export const links: LinksFunction = () => [
 
 function SmallTalk() {
   const { smallTalk } = useLoaderData<typeof loader>();
-  const { created_at, title, description, prev, next, hasCloseContent } =
+  const { created_at, title, description, prev, next, hasCloseLink } =
     smallTalk.metadata;
 
   return (
@@ -61,32 +62,7 @@ function SmallTalk() {
         <Link to="/small_talk" className={styles.goList}>
           목록으로
         </Link>
-        {hasCloseContent && (
-          <section className="recent-small-talk">
-            <ul className={styles.recentList}>
-              {prev.content_path && (
-                <li className={styles.recentItem}>
-                  <Link
-                    to={`/small_talk/${prev.content_path}`}
-                    className={styles.recentLink}
-                  >
-                    [이전글] {prev.content_title}
-                  </Link>
-                </li>
-              )}
-              {next.content_path && (
-                <li className={styles.recentItem}>
-                  <Link
-                    to={`/small_talk/${next.content_path}`}
-                    className={styles.recentLink}
-                  >
-                    [다음글] {next.content_title}
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </section>
-        )}
+        {hasCloseLink && <CloseLink prev={prev} next={next} />}
       </div>
     </div>
   );

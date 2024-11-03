@@ -72,7 +72,7 @@ const generateJsonContent = async ({
         content_path: hasNext ? generateClosePath(files[index + 1]) : "",
         content_title: hasNext ? files[index + 1].metadata["title"] : "",
       },
-      hasCloseContent: hasPrev || hasNext,
+      hasCloseLink: hasPrev || hasNext,
     },
   };
 };

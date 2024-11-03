@@ -29,7 +29,7 @@ declare type SmallTalkMetaData = Metadata & {
     content_path: string;
     content_title: string;
   }; // 빌드과정에서 주입됨
-  hasCloseContent: boolean; // 빌드과정에서 주입됨
+  hasCloseLink: boolean; // 빌드과정에서 주입됨
 };
 
 declare type Content = {
