@@ -12,6 +12,7 @@ const buildMarkdownFiles = async ({
   outputPath: string;
 }) => {
   const files: JsonFile[] = prepareSortedMarkdownFiles(inputPath);
+  console.log("files : ", files);
 
   for (let index = 0; index < files.length; index++) {
     const { filePath, metadata: originMetadata } = files[index];
@@ -20,26 +21,27 @@ const buildMarkdownFiles = async ({
       process.env.NODE_ENV === "production" &&
       !validatePublicationDate(originMetadata["created_at"])
     ) {
-      console.log("filePath : ", filePath);
       return;
     }
 
-    const { contentHtml, metadata } = await generateJsonContent({
-      files,
-      index,
-    });
+    try {
+      const { contentHtml, metadata } = await generateJsonContent({
+        files,
+        index,
+      });
 
-    console.log("can i generated? : ", filePath);
-
-    await writeJsonFile({
-      outputFilePath: generateOutputFilePath({
-        filePath,
-        inputPath,
-        outputPath,
-      }),
-      metadata,
-      contentHtml,
-    });
+      await writeJsonFile({
+        outputFilePath: generateOutputFilePath({
+          filePath,
+          inputPath,
+          outputPath,
+        }),
+        metadata,
+        contentHtml,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 
