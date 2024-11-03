@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "yarn run generate && remix vite:dev",
     "build": "yarn run clear:content && yarn run generate && remix vite:build",
-    "start": "remix-serve ./build/server/index.js",
+    "start": "yarn run generate && remix-serve ./build/server/index.js",
     "generate": "npx tsx ./script/generate_content.ts",
     "clear:content": "rm -rf _generate"
   },

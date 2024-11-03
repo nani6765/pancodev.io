@@ -12,36 +12,29 @@ const buildMarkdownFiles = async ({
   outputPath: string;
 }) => {
   const files: JsonFile[] = prepareSortedMarkdownFiles(inputPath);
-  console.log("files : ", files);
-
-  for (let index = 0; index < files.length; index++) {
-    const { filePath, metadata: originMetadata } = files[index];
-
-    if (
+  const generateFiles = files.filter(
+    ({ metadata }) =>
       process.env.NODE_ENV === "production" &&
-      !validatePublicationDate(originMetadata["created_at"])
-    ) {
-      return;
-    }
+      !validatePublicationDate(metadata["created_at"])
+  );
 
-    try {
-      const { contentHtml, metadata } = await generateJsonContent({
-        files,
-        index,
-      });
+  for (let index = 0; index < generateFiles.length; index++) {
+    const { filePath } = files[index];
 
-      await writeJsonFile({
-        outputFilePath: generateOutputFilePath({
-          filePath,
-          inputPath,
-          outputPath,
-        }),
-        metadata,
-        contentHtml,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    const { contentHtml, metadata } = await generateJsonContent({
+      files,
+      index,
+    });
+
+    await writeJsonFile({
+      outputFilePath: generateOutputFilePath({
+        filePath,
+        inputPath,
+        outputPath,
+      }),
+      metadata,
+      contentHtml,
+    });
   }
 };
 
