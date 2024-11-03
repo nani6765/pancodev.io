@@ -16,7 +16,10 @@ const buildMarkdownFiles = async ({
   for (let index = 0; index < files.length; index++) {
     const { filePath, metadata: originMetadata } = files[index];
 
-    if (!validatePublicationDate(originMetadata["created_at"])) {
+    if (
+      process.env.NODE_ENV === "production" &&
+      !validatePublicationDate(originMetadata["created_at"])
+    ) {
       return;
     }
 

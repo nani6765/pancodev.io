@@ -35,7 +35,7 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
           if (child.type === "text") {
             return {
               ...child,
-              value: child.value.replace("[break]", "\n\n"),
+              value: child.value.replace(/\[break\]/g, "\n"),
             };
           }
           return child;

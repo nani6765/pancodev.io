@@ -8,7 +8,7 @@ created_at: 2024-10-25 22:00
 
 # React 리랜더링 가이드: 모든 것을 한 번에
 
-[!note] 이 게시글은 [React re-renders guide: everything, all at once](https://www.developerway.com/posts/react-re-renders-guide)에 대한 번역 게시글입니다. 번역 작업을 주로 하진 없지만 react에서 리랜더링에 대해 가장 다양한 측면에서 고찰한 좋은 아티클이고, 한국어 번역이 없기에 저자의 허락을 구하여 작업했습니다.[break]This is a translation post about [React re-renders guide: everything, all at once](https://www.developerway.com/posts/react-re-renders-guide). I've never mainly worked on translation, but it's a good article that I've considered in the most diverse aspects of rebranding in react, and since there's no Korean translation, I worked on it with the author's permission.[break]Thank you, [Nadia Makarevich](https://www.developerway.com/author)
+[!note] 이 게시글은 [React re-renders guide: everything, all at once](https://www.developerway.com/posts/react-re-renders-guide)에 대한 번역 게시글입니다. 번역 작업을 주로 하진 없지만 react에서 리랜더링에 대해 가장 다양한 측면에서 고찰한 좋은 아티클이고, 한국어 번역이 없기에 저자의 허락을 구하여 작업했습니다.[break] [break]This is a translation post about [React re-renders guide: everything, all at once](https://www.developerway.com/posts/react-re-renders-guide). I've never mainly worked on translation, but it's a good article that I've considered in the most diverse aspects of rebranding in react, and since there's no Korean translation, I worked on it with the author's permission.[break] [break]Thank you, [Nadia Makarevich](https://www.developerway.com/author)
 
 리액트 리랜더링에 가이드. 이 가이드에서는 리액트가 무엇인지, 필요한 리랜더링과 불필요한 리랜더링, 그리고 리액트 컴포넌트의 리랜더링을 발생시키는 것에 대해 설명합니다. 또한 리랜더링을 방지하는 데에 도움이 될 수 있는 패턴과 불필요한 리랜더링 즉, 성능 저하를 유발하는 몇 가지 안티패턴을 소개합니다. 모든 패턴과 안티패턴들에는 이미지와 작동 예제 코드가 있습니다.
 
