@@ -139,7 +139,7 @@ if (current !== null) {
 1. oldProps !== newProps
 2. hasLegacyContextChanged()
    [ReactFirerContext의 hasContextChanged](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberContext.js#L113C10-L113C27) 결과값이다. 해당 로직은 Legacy Context 시스템이 비활성화된 경우 `false` 를 return, 활성화된 경우 context 작업이 수행되었는지를 추적하는 boolean 값을 반환한다.
-3. (**DEV** ? workInProgress.type !== current.type : false)
+3. (DEV ? workInProgress.type !== current.type : false)
    Dev모드일 경우 workInProgress type과 current의 type을 비교한다.
 
 위 세가지 항목 중 하나의 값이라도 `true` 라면 `didReceiveUpdate` 의 값을 `true`로 할당한다. 그렇지 않다면 변경사항이 없는 것으로 추정한다. 이후 fiber에 예약된 업데이트가 있는지 확인하거나 에러 캡처 플래그의 값을 확인하거나 Legacy Suspense에 대한 처리를 진행한다. 위 과정이 모두 끝마치고 나면 `workInProgress` 의 tag에 따라 컴포넌트의 마운트 혹은 update를 진행한다. 그 과정에서 호출되는 것이 [reconcileChildren](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberBeginWork.js#L334)이다. 이 `reconcileChildren` 은 새로운 컴포넌트의 최초 마운트 작업을 진행하거나 기존 컴포넌트의 업데이트를 담당하게 된다.
