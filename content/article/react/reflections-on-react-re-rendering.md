@@ -14,9 +14,9 @@ React의 경우 re-render에 대해서 많은 글을 쓰게 되는 것 같다. �
 
 React에서 리랜더링이 언제 발생하는가를 놓고 보자면, 최초 랜더링을 제외하면 state의 변경에 있다. 컴포넌트에서 할당된 state가 변경이 되거나, 부모의 컴포넌트에서 state가 변경이 되어 부모 컴포넌트의 리랜더링이 발생되고 자식에게 전파되는 경우다. 그런데 모든 리랜더링이 모두 같은 동작으로 이어지지는 않는다. [리엑트에서 리랜더링은 Render와 Commit으로 구분되어 있다.](https://react.dev/learn/render-and-commit)
 
-다양한 이유로 React에서 리랜더링이 발생(trigger)되면 첫 번째로 “**Render**” 단계에 진입한다. 이 Render단계는 초기 랜더링의 경우 `return` 구문에서 반환한 ReactNode에 대하여 [DOM 노드를 생성](https://developer.mozilla.org/ko/docs/Web/API/Document/createElement)하게 된다. 그리고 리랜더링의 경우는 초기 랜더링 이후 어떤 값이 변경이 되었는지 계산한다. 이것이 React에서 말하는 [reconciliation](https://legacy.reactjs.org/docs/reconciliation.html)이다. 여기서 중요한 점은 이 Render 단계에서는 Virtual-DOM을 이용하여 변경사항을 탐색을 할 뿐, 업데이트를 진행하지 않는다는 점이다.
+다양한 이유로 React에서 리랜더링이 발생(trigger)되면 첫 번째로 **Render**단계에 진입한다. 이 Render단계는 초기 랜더링의 경우 `return` 구문에서 반환한 ReactNode에 대하여 [DOM 노드를 생성](https://developer.mozilla.org/ko/docs/Web/API/Document/createElement)하게 된다. 그리고 리랜더링의 경우는 초기 랜더링 이후 어떤 값이 변경이 되었는지 계산한다. 이것이 React에서 말하는 [reconciliation](https://legacy.reactjs.org/docs/reconciliation.html)이다. 여기서 중요한 점은 이 Render 단계에서는 Virtual-DOM을 이용하여 변경사항을 탐색을 할 뿐, 업데이트를 진행하지 않는다는 점이다.
 
-두번째 단계는 “**Commit**”이다. 이 Commit 단계에서는 최초 랜더링의 경우 Render 단계에서 생성한 DOM Node를 [appendChild()](https://developer.mozilla.org/ko/docs/Web/API/Node/appendChild)를 통해 화면에 표시하는 작업을 수행한다. 리랜더링의 경우 랜더링하는 동안 계산된 차이점(= 업데이트 되어야 할 부분)을 적용하여 DOM 노드에 반영하게 된다. 즉 랜더링 결과가 이전과 동일하다면 React는 DOM을 건드리지 않는다는 뜻이다. React의 리랜더링에 필요한 비용을 Render 단계에서 수행하는 reconciliation 연산과 Commit 단계에서 수행하는 DOM update의 합이라고 정의해보자. **만약 reconciliation 연산이 매우 저렴한 가격으로 이루어진다면, 우리는 Commit을 수반하지 않는 리랜더링에 되어서는 최적화를 신경쓰지 않아도 되지 않을까?** 대표적으로는 Context에 속해있다는 이유로 Consumer가 사용하지 않는 value의 업데이트로 인한 리랜더링을 떠올려 볼 수 있을 것이다.
+두번째 단계는 **Commit**이다. 이 Commit 단계에서는 최초 랜더링의 경우 Render 단계에서 생성한 DOM Node를 [appendChild()](https://developer.mozilla.org/ko/docs/Web/API/Node/appendChild)를 통해 화면에 표시한다. 리랜더링의 경우 랜더링하는 동안 계산된 차이점(=업데이트 되어야 할 부분)을 적용하여 DOM 노드에 반영하게 된다. 즉 랜더링 결과가 이전과 동일하다면 React는 DOM을 건드리지 않는다는 뜻이다. React의 리랜더링에 필요한 비용을 Render 단계에서 수행하는 reconciliation 연산과 Commit 단계에서 수행하는 DOM update의 합이라고 정의해보자. **만약 reconciliation 연산이 매우 저렴한 가격으로 이루어진다면, 우리는 Commit을 수반하지 않는 리랜더링에 되어서는 최적화를 신경쓰지 않아도 되지 않을까?** 대표적으로는 Context에 속해있다는 이유로 Consumer가 사용하지 않는 value의 업데이트로 인한 리랜더링을 떠올려 볼 수 있을 것이다.
 
 #### Render
 
@@ -63,7 +63,7 @@ function performUnitOfWork(unitOfWork: Fiber): void {
 }
 ```
 
-가장 먼저 `ReactFiberWorkLoop.js`에서 tree를 순회하면서 diff 작업을 수행한다. 여기서 호출되는  `performUnitOfWork` 는 [beginWork](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberBeginWork.js#L3844)를 호출하며 fiber 작업을 진행한다. 다음 작업이 없을 때까지 이는 반복되어 다음 작업이 없다면 현재 fiber 노드의 작업을 완료하는 `completeUnitOfWork` 호출하는 것으로 종료된다.
+가장 먼저 `ReactFiberWorkLoop.js`에서 tree를 순회하면서 diff 작업을 수행한다. 여기서 호출되는  `performUnitOfWork` 는 [beginWork](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberBeginWork.js#L3844)를 호출하며 fiber 작업을 진행한다. 다음 작업이 없을 때까지 이는 반복되며 없다면 현재 fiber 노드의 작업을 완료하는 `completeUnitOfWork` 호출하는 것으로 종료된다.
 
 ```jsx
 function beginWork(
