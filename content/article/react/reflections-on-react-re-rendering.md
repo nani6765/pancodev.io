@@ -1,5 +1,5 @@
 ---
-title: React Re-rendering에 대한 고찰"
+title: React Re-rendering에 대한 고찰
 description: This article delves into React’s re-rendering process, focusing on the Render and Commit phases. It examines when optimization is necessary, questioning if renders without commits need attention. With insights into React’s performance costs, this guide helps developers balance efficiency and complexity in re-renders.
 keywords: ["Render", "commit", "fiber", "reconciliation"]
 category: react
