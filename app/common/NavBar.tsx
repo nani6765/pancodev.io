@@ -1,50 +1,43 @@
 import { Link, useLocation } from "@remix-run/react";
 
+import blogConfig from "@/blog.config.json";
+
 import * as styles from "./styles.css";
 
 import type { MouseEvent } from "react";
+type LinkMouseEvent = MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>;
 
 function NavBar() {
   const { pathname } = useLocation();
+  const { paths } = blogConfig;
   const isCurrentPath = (path: string) => path === pathname;
-  const linkClassName = (path: string) => {
-    if (isCurrentPath(path)) {
-      return styles.activeHeaderLink;
-    }
-    return styles.headerLink;
-  };
-  const preventLinkEventWhenCurrentPath = (
-    e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
-    path: string
-  ) => {
+  const linkClassName = (path: string) =>
+    isCurrentPath(path) ? styles.activeHeaderLink : styles.headerLink;
+  const preventLinkEventWhenCurrentPath = (e: LinkMouseEvent, path: string) => {
     if (isCurrentPath(path)) {
       e.preventDefault();
     }
   };
 
-  const linkList = [
-    {
-      label: "Home",
-      path: "/",
-    },
-    {
-      label: "Content",
-      path: "/articles",
-    },
-    { label: "Talk", path: "/small_talk" },
-  ];
+  const linkList = paths.map(({ label, path_name }) => ({
+    label,
+    path: path_name,
+    className: linkClassName(path_name),
+    onClick: (e: LinkMouseEvent) =>
+      preventLinkEventWhenCurrentPath(e, path_name),
+  }));
 
   return (
     <nav className="root-section">
       <ul className={styles.header}>
-        {linkList.map(({ label, path }) => (
+        {linkList.map(({ label, path, className, onClick }) => (
           <li key={label} className={styles.headerItem}>
             <Link
               to={path}
               prefetch="render"
+              onClick={onClick}
               preventScrollReset
-              className={linkClassName(path)}
-              onClick={(e) => preventLinkEventWhenCurrentPath(e, path)}
+              className={className}
             >
               {label}
             </Link>
