@@ -27,5 +27,8 @@ export const headerLink = style({
     ["&:active"]: {
       textDecoration: "underline",
     },
+    ["&.active"]: {
+      textDecoration: "underline",
+    },
   },
 });

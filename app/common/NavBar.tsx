@@ -1,7 +1,9 @@
-import { NavLink } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import * as styles from "./styles.css";
 
 function NavBar() {
+  const { pathname } = useLocation();
+
   const linkList = [
     {
       label: "Home",
@@ -19,9 +21,19 @@ function NavBar() {
       <ul className={styles.header}>
         {linkList.map(({ label, path }) => (
           <li key={label} className={styles.headerItem}>
-            <NavLink prefetch="render" to={path} className={styles.headerLink}>
+            <Link
+              to={path}
+              prefetch="render"
+              className={
+                pathname === path
+                  ? `${styles.headerLink} active`
+                  : styles.headerLink
+              }
+              preventScrollReset
+              onClick={(e) => e.preventDefault()}
+            >
               {label}
-            </NavLink>
+            </Link>
           </li>
         ))}
       </ul>
