@@ -1,8 +1,26 @@
 import { Link, useLocation } from "@remix-run/react";
+
 import * as styles from "./styles.css";
+
+import type { MouseEvent } from "react";
 
 function NavBar() {
   const { pathname } = useLocation();
+  const isCurrentPath = (path: string) => path === pathname;
+  const linkClassName = (path: string) => {
+    if (isCurrentPath(path)) {
+      return styles.activeHeaderLink;
+    }
+    return styles.headerLink;
+  };
+  const preventLinkEventWhenCurrentPath = (
+    e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
+    path: string
+  ) => {
+    if (isCurrentPath(path)) {
+      e.preventDefault();
+    }
+  };
 
   const linkList = [
     {
@@ -24,13 +42,9 @@ function NavBar() {
             <Link
               to={path}
               prefetch="render"
-              className={
-                pathname === path
-                  ? `${styles.headerLink} active`
-                  : styles.headerLink
-              }
               preventScrollReset
-              onClick={(e) => e.preventDefault()}
+              className={linkClassName(path)}
+              onClick={(e) => preventLinkEventWhenCurrentPath(e, path)}
             >
               {label}
             </Link>

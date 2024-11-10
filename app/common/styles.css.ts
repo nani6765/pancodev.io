@@ -27,8 +27,13 @@ export const headerLink = style({
     ["&:active"]: {
       textDecoration: "underline",
     },
-    ["&.active"]: {
-      textDecoration: "underline",
-    },
+    ["&.active"]: {},
   },
 });
+
+export const activeHeaderLink = style([
+  headerLink,
+  {
+    textDecoration: "underline",
+  },
+]);
