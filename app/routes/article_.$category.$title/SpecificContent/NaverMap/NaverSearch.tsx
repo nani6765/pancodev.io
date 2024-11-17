@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { getNaverSearchByQuery } from "./api";
+import { insertDotByPosition } from "./function";
+
 import type { KeyboardEvent } from "react";
 
 type Props = {
@@ -6,15 +9,12 @@ type Props = {
 };
 
 function NaverSearch({ naverMap }: Props) {
+  const [isLoading, setLoading] = useState(false);
+  const [query, setQuery] = useState("");
+
   const moveMapCenterByMapPosition = ({ x, y }: { x: number; y: number }) => {
     const newPosition = new naver.maps.LatLng({ x, y });
     naverMap.setCenter(newPosition);
-  };
-
-  const insertDotByPosition = (input: number, position: number) => {
-    const withDot =
-      `${input}`.slice(0, position) + "." + `${input}`.slice(position);
-    return Number(withDot);
   };
 
   const callSearchApiWhenEnterDown = async (
@@ -24,35 +24,20 @@ function NaverSearch({ naverMap }: Props) {
     if (e.code !== "Enter" || !query.trim() || !canFetch) {
       return;
     }
-    setLoading(true);
+
     try {
-      const searchHeaders = new Headers();
-      searchHeaders.append("X-Naver-Client-Id", "cMVZP9FOgL4vZYA53Q_d");
-      searchHeaders.append("X-Naver-Client-Secret", "taYKAkMQYZ");
-
-      const searchURL = "/openapi-naver/v1/search/local.json";
-      const searchResponse = await fetch(`${searchURL}?query=${query}`, {
-        method: "GET",
-        headers: searchHeaders,
-      });
-      const searchJson = await searchResponse.json();
-      const searchResult = searchJson.items[0];
-      const { mapx, mapy } = searchResult;
-
+      setLoading(true);
+      const { x, y } = await getNaverSearchByQuery(query);
       moveMapCenterByMapPosition({
-        x: insertDotByPosition(mapx, 3),
-        y: insertDotByPosition(mapy, 2),
+        x: insertDotByPosition(x, 3),
+        y: insertDotByPosition(y, 2),
       });
-    } catch (err) {
-      console.log(err);
+    } catch {
       setQuery("");
     } finally {
       setLoading(false);
     }
   };
-
-  const [isLoading, setLoading] = useState(false);
-  const [query, setQuery] = useState("");
 
   return (
     <input
