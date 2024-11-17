@@ -13,5 +13,9 @@ export function HydrateFallback() {
 }
 
 export default function Component({ path }: Props) {
-  return <>{path in componentMap ? componentMap[path] : null}</>;
+  return (
+    <div id="specific_content">
+      {path in componentMap ? componentMap[path] : null}
+    </div>
+  );
 }

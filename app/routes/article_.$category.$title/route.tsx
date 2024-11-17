@@ -63,7 +63,8 @@ function Content() {
 
   return (
     <div className="root-section">
-      <SpecificContent path={article.metadata.path} />
+      <a href="#specific_content">블라블라</a>
+
       <div className={styles.wrapper}>
         <p className={styles.metaData}>
           category : <strong>{article.metadata.category}</strong>
@@ -71,6 +72,8 @@ function Content() {
           <span>{article.metadata.readingTime}</span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+        <SpecificContent path={article.metadata.path} />
+
         {import.meta.env.VITE_SHOW_GISCUS === "show" && <Giscus />}
         <Link to="/articles" className={styles.goList}>
           목록으로

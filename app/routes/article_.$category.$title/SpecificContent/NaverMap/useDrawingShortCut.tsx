@@ -59,10 +59,8 @@ function useDrawingShortCut({ drawingManager }: Props) {
   );
 
   useEffect(() => {
-    const setSelectedOverlay = (e: naver.maps.drawing.DrawingOverlay) => {
-      console.log(e);
+    const setSelectedOverlay = (e: naver.maps.drawing.DrawingOverlay) =>
       setSelectedOverlayId(e.id);
-    };
 
     window.addEventListener("keydown", handModeShortCutEventHandler);
     const listener = drawingManager?.addListener(

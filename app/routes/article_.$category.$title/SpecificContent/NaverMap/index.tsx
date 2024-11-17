@@ -1,74 +1,45 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-import NaverSearch from "./NaverSearch";
+import MapTool from "./MapTool";
 import useDrawingShortCut from "./useDrawingShortCut";
+import { mapId, mapOptions, polygonOptions, rectangleOptions } from "./const";
+
+import * as style from "./style.css";
 
 function NaverMap() {
-  const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
-  const [drawingManager, setDrawingManager] =
-    useState<naver.maps.drawing.DrawingManager | null>(null);
-  const mapId = "drawing_naver_map";
-  useDrawingShortCut({ drawingManager });
+  const naverMap = useRef<naver.maps.Map | null>(null);
+  const drawingManager = useRef<naver.maps.drawing.DrawingManager | null>(null);
+  useDrawingShortCut({ drawingManager: drawingManager.current });
 
   const loadMap = useCallback(() => {
-    const mapOptions: naver.maps.MapOptions = {
-      zoom: 15,
-      zoomControl: true,
-      zoomControlOptions: {
-        style: naver.maps.ZoomControlStyle.LARGE,
-        position: naver.maps.Position.TOP_RIGHT,
-      },
-      maxZoom: 19,
-      tileSpare: 5,
-      mapTypeId: naver.maps.MapTypeId.NORMAL,
-      mapTypeControl: true,
-    };
-
     const newNaverMap = new naver.maps.Map(mapId, mapOptions);
-    setNaverMap(newNaverMap);
+    naverMap.current = newNaverMap;
   }, []);
 
-  const initialMapEvent = useCallback(() => {
-    naver.maps.Event.once(naverMap, "init", () => {
+  useEffect(() => {
+    naver.maps.onJSContentLoaded = function () {
       const newDrawingManager = new naver.maps.drawing.DrawingManager({
-        map: naverMap,
+        map: naverMap.current,
         drawingControl: [
           naver.maps.drawing.DrawingMode.HAND,
           naver.maps.drawing.DrawingMode.RECTANGLE,
           naver.maps.drawing.DrawingMode.POLYGON,
         ],
         drawingMode: 0,
-        rectangleOptions: {
-          fillColor: "#ff0000",
-          fillOpacity: 0.5,
-          strokeWeight: 3,
-          strokeColor: "#ff0000",
-        },
-        polygonOptions: {
-          strokeColor: "#ffd100",
-          fillColor: "#ffff00",
-          fillOpacity: 0.5,
-          strokeWeight: 3,
-        },
+        rectangleOptions: rectangleOptions,
+        polygonOptions: polygonOptions,
       });
-      setDrawingManager(newDrawingManager);
-    });
-  }, [naverMap]);
+      drawingManager.current = newDrawingManager;
+    };
 
-  useEffect(() => {
-    if (!naverMap) {
+    if (!naverMap.current) {
       loadMap();
-    } else {
-      initialMapEvent();
     }
-  }, [naverMap, loadMap, initialMapEvent]);
+  }, [naverMap.current, loadMap]);
 
   return (
-    <div
-      id={mapId}
-      style={{ width: "100%", height: "400px", position: "inherit" }}
-    >
-      {naverMap && <NaverSearch naverMap={naverMap} />}
+    <div className={style.mapWrapper} id={mapId}>
+      {naverMap && <MapTool naverMap={naverMap.current} />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { getNaverSearchByQuery } from "./api";
-import { insertDotByPosition } from "./function";
+
+import { getNaverSearchByQuery } from "../api";
+import { insertDotByPosition } from "../function";
 
 import type { KeyboardEvent } from "react";
 
@@ -8,7 +9,7 @@ type Props = {
   naverMap: naver.maps.Map;
 };
 
-function NaverSearch({ naverMap }: Props) {
+function MapSearch({ naverMap }: Props) {
   const [isLoading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -33,6 +34,7 @@ function NaverSearch({ naverMap }: Props) {
         y: insertDotByPosition(y, 2),
       });
     } catch {
+      alert("무료 사용량이 초과되었습니다.");
       setQuery("");
     } finally {
       setLoading(false);
@@ -42,11 +44,11 @@ function NaverSearch({ naverMap }: Props) {
   return (
     <input
       type="text"
-      style={{ position: "absolute", top: "10px", left: "10px", zIndex: 1 }}
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       onKeyDown={callSearchApiWhenEnterDown}
     />
   );
 }
-export default NaverSearch;
+
+export default MapSearch;
