@@ -1,7 +1,6 @@
 import * as style from "./style.css";
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
-import NaverMap from "./NaverMap";
 
 export const meta = () =>
   generateMetaTag({
@@ -14,7 +13,6 @@ export const meta = () =>
 function Home() {
   return (
     <div className="root-section">
-      <NaverMap />
       <section className={style.section}>
         <img
           className={style.profile}
