@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-type Props = {
-  dataRepoId: string;
-  dataCategoryId: string;
-};
-
-function Giscus({ dataRepoId, dataCategoryId }: Props) {
+function Giscus() {
   const ref = useRef<HTMLDivElement>(null);
 
   const createGiscusScript = useCallback(() => {
@@ -15,9 +10,12 @@ function Giscus({ dataRepoId, dataCategoryId }: Props) {
     giscusElem.crossOrigin = "anonymous";
 
     giscusElem.setAttribute("data-repo", "nani6765/pancodev.io");
-    giscusElem.setAttribute("data-repo-id", dataRepoId);
+    giscusElem.setAttribute("data-repo-id", import.meta.env.VITE_DATA_REPO_ID);
     giscusElem.setAttribute("data-category", "General");
-    giscusElem.setAttribute("data-category-id", dataCategoryId);
+    giscusElem.setAttribute(
+      "data-category-id",
+      import.meta.env.VITE_DATA_CATEGORY_ID
+    );
     giscusElem.setAttribute("data-mapping", "pathname");
     giscusElem.setAttribute("data-strict", "0");
     giscusElem.setAttribute("data-reactions-enabled", "0");
@@ -26,7 +24,7 @@ function Giscus({ dataRepoId, dataCategoryId }: Props) {
     giscusElem.setAttribute("data-theme", "noborder_dark");
     giscusElem.setAttribute("data-lang", "ko");
     return giscusElem;
-  }, [dataRepoId, dataCategoryId]);
+  }, []);
 
   useEffect(() => {
     if (!ref.current || ref.current.hasChildNodes()) return;
