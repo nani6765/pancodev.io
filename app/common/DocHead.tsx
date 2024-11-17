@@ -1,10 +1,6 @@
 import { Links, Meta } from "@remix-run/react";
 
-type Props = {
-  gaId: string;
-};
-
-function DocHead({ gaId }: Props) {
+function DocHead() {
   return (
     <head>
       <meta charSet="utf-8" />
@@ -13,7 +9,9 @@ function DocHead({ gaId }: Props) {
       {/* Google tag (gtag.js)  */}
       <script
         async
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${
+          import.meta.env.VITE_GA_TRACKING_ID
+        }`}
       />
       <script
         dangerouslySetInnerHTML={{
@@ -21,7 +19,7 @@ function DocHead({ gaId }: Props) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${gaId}');`,
+          gtag('config', '${import.meta.env.VITE_GA_TRACKING_ID}');`,
         }}
       />
       {/* Naver Maps API */}

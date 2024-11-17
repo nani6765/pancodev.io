@@ -39,5 +39,16 @@
       "url": "mailto:nani6765@gmail.com",
       "icon": "/icon/gmail.svg"
     }
+  ],
+  "paths": [
+    {
+      "label": "Home",
+      "path_name": "/"
+    },
+    {
+      "label": "Content",
+      "path_name": "/articles"
+    },
+    { "label": "Talk", "path_name": "/small_talk" }
   ]
 }
