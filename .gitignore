@@ -4,3 +4,4 @@ _generate
 .env
 public/article
 public/small_talk
+.vscode
