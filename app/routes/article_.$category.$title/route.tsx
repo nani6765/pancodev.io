@@ -6,6 +6,7 @@ import {
 } from "@/api/getContent";
 
 import blogConfig from "@/blog.config.json";
+import SpecificContent from "./SpecificContent";
 import generateMetaTag from "@/function/generateMetaTag";
 import sortingContentsByCreate from "@/function/sortingContentsByCreate";
 
@@ -62,6 +63,7 @@ function Content() {
 
   return (
     <div className="root-section">
+      <SpecificContent path={article.metadata.path} />
       <div className={styles.wrapper}>
         <p className={styles.metaData}>
           category : <strong>{article.metadata.category}</strong>

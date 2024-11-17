@@ -3,6 +3,8 @@ import { Links, Meta } from "@remix-run/react";
 function DocHead() {
   return (
     <head>
+      <Meta />
+      <Links />
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" />
@@ -27,11 +29,8 @@ function DocHead() {
         type="text/javascript"
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${
           import.meta.env.VITE_NCP_CLIENT_ID
-        }`}
+        }&submodules=drawing`}
       />
-
-      <Meta />
-      <Links />
     </head>
   );
 }
