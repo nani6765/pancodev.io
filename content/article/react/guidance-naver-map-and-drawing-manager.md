@@ -378,4 +378,4 @@ const convertLayerToGeoJSON = () => {
 };
 ```
 
-이 때까지 진행한 네이버지도의 코드는 깃헙에, 실제 랜더링된 컴포넌트는 바로 아래에서 확인할 수 있다. 아티클에서 `map`과 `drawingManager`는 `useRef` 로 관리하였는데, 랜더링을 조작하기 위해 깃헙에선 `useState` 로 변경하여 올렸음을 참조 바란다.
+이 때까지 진행한 네이버지도의 코드는 [깃헙](https://github.com/nani6765/pancodev.io/tree/develop/app/routes/article_.%24category.%24title/SpecificContent/NaverMap)에, 실제 랜더링된 컴포넌트는 바로 아래에서 확인할 수 있다. 아티클에서 `map`과 `drawingManager`는 `useRef` 로 관리하였는데, 랜더링을 조작하기 위해 깃헙에선 `useState` 로 변경하여 올렸음을 참조 바란다.
