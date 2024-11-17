@@ -1,7 +1,7 @@
 import NaverMap from "./NaverMap";
 
 const componentMap = {
-  "reflections-on-react-re-rendering": <NaverMap />,
+  "guidance-naver-map-and-drawing-manager": <NaverMap />,
 };
 
 type Props = {
