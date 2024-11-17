@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^2.13.1",
+    "@types/navermaps": "^3.7.8",
     "@types/react": "^18.3.11",
     "@vanilla-extract/vite-plugin": "^4.0.16",
     "tsx": "^4.19.1",

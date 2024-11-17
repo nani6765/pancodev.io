@@ -10,7 +10,6 @@ function DocHead({ gaId }: Props) {
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" />
-
       {/* Google tag (gtag.js)  */}
       <script
         async
@@ -24,6 +23,11 @@ function DocHead({ gaId }: Props) {
           gtag('js', new Date());
           gtag('config', '${gaId}');`,
         }}
+      />
+      {/* Naver Maps API */}
+      <script
+        type="text/javascript"
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${"pt9lnh23vv"}`}
       />
 
       <Meta />

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["@remix-run/node", "vite/client"],
+    "types": ["@remix-run/node", "vite/client", "@types/navermaps"],
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",

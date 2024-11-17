@@ -9,6 +9,15 @@ installGlobals();
 export default defineConfig({
   server: {
     port: 3000,
+    proxy: {
+      "/openapi-naver": {
+        target: "https://openapi.naver.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/openapi-naver/, ""),
+        secure: false,
+        ws: true,
+      },
+    },
   },
   plugins: [remix(), vanillaExtractPlugin(), tsconfigPaths()],
 });
