@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import MapTool from "./MapTool";
 import useDrawingShortCut from "./useDrawingShortCut";
@@ -7,19 +7,20 @@ import { mapId, mapOptions, polygonOptions, rectangleOptions } from "./const";
 import * as style from "./style.css";
 
 function NaverMap() {
-  const naverMap = useRef<naver.maps.Map | null>(null);
-  const drawingManager = useRef<naver.maps.drawing.DrawingManager | null>(null);
-  useDrawingShortCut({ drawingManager: drawingManager.current });
+  const [naverMap, setNaverMap] = useState<naver.maps.Map | null>(null);
+  const [drawingManager, setDrawingManager] =
+    useState<naver.maps.drawing.DrawingManager | null>(null);
+  useDrawingShortCut({ drawingManager: drawingManager });
 
   const loadMap = useCallback(() => {
     const newNaverMap = new naver.maps.Map(mapId, mapOptions);
-    naverMap.current = newNaverMap;
+    setNaverMap(newNaverMap);
   }, []);
 
   useEffect(() => {
     naver.maps.onJSContentLoaded = function () {
       const newDrawingManager = new naver.maps.drawing.DrawingManager({
-        map: naverMap.current,
+        map: naverMap,
         drawingControl: [
           naver.maps.drawing.DrawingMode.HAND,
           naver.maps.drawing.DrawingMode.RECTANGLE,
@@ -29,17 +30,17 @@ function NaverMap() {
         rectangleOptions: rectangleOptions,
         polygonOptions: polygonOptions,
       });
-      drawingManager.current = newDrawingManager;
+      setDrawingManager(newDrawingManager);
     };
 
-    if (!naverMap.current) {
+    if (!naverMap) {
       loadMap();
     }
-  }, [naverMap.current, loadMap]);
+  }, [loadMap, naverMap]);
 
   return (
     <div className={style.mapWrapper} id={mapId}>
-      {naverMap && <MapTool naverMap={naverMap.current} />}
+      <MapTool naverMap={naverMap} drawingManager={drawingManager} />
     </div>
   );
 }

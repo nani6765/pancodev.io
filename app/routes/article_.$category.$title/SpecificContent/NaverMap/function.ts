@@ -6,3 +6,15 @@ export const insertDotByPosition = (input: number, position: number) => {
 
 export const exceptionSnapShotEvent = (e: KeyboardEvent) =>
   e.target instanceof HTMLInputElement ? false : true;
+
+export const downloadBlobFile = (data: Blob, fileName: string) => {
+  const downloadURL = window.URL.createObjectURL(data);
+  const downloadLink = document.createElement("a");
+  downloadLink.href = downloadURL;
+  downloadLink.download = fileName;
+  downloadLink.click();
+
+  // clear memory
+  downloadLink.remove();
+  window.URL.revokeObjectURL(downloadURL);
+};

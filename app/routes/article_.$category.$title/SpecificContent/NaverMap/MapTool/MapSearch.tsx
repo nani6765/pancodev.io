@@ -43,6 +43,7 @@ function MapSearch({ naverMap }: Props) {
 
   return (
     <input
+      disabled={!naverMap}
       type="text"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
