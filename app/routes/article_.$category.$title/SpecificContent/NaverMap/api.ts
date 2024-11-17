@@ -1,5 +1,6 @@
 export const getNaverSearchByQuery = async (
-  query: string
+  query: string,
+  secret: string
 ): Promise<{ x: number; y: number }> => {
   const searchURL = "/openapi-naver/v1/search/local.json";
   const searchHeaders = new Headers();
@@ -7,10 +8,7 @@ export const getNaverSearchByQuery = async (
     "X-Naver-Client-Id",
     import.meta.env.VITE_X_NAVER_CLIENT_ID
   );
-  searchHeaders.append(
-    "X-Naver-Client-Secret",
-    import.meta.env.VITE_X_NAVER_CLIENT_SECRET
-  );
+  searchHeaders.append("X-Naver-Client-Secret", secret);
 
   const searchResponse = await fetch(`${searchURL}?query=${query}`, {
     method: "GET",

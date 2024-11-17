@@ -36,6 +36,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
       .filter((v) => v.metadata.index !== currentIndex)
       .slice(0, 5),
     category,
+    ENV: {
+      X_NAVER_CLIENT_SECRET: process.env.X_NAVER_CLIENT_SECRET,
+    },
   });
 }
 

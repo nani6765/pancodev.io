@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLoaderData } from "@remix-run/react";
 
 import { getNaverSearchByQuery } from "../api";
 import { insertDotByPosition } from "../function";
@@ -10,6 +11,8 @@ type Props = {
 };
 
 function MapSearch({ naverMap }: Props) {
+  const { ENV } = useLoaderData<{ ENV: { X_NAVER_CLIENT_SECRET: string } }>();
+
   const [isLoading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -28,7 +31,10 @@ function MapSearch({ naverMap }: Props) {
 
     try {
       setLoading(true);
-      const { x, y } = await getNaverSearchByQuery(query);
+      const { x, y } = await getNaverSearchByQuery(
+        query,
+        ENV.X_NAVER_CLIENT_SECRET
+      );
       moveMapCenterByMapPosition({
         x: insertDotByPosition(x, 3),
         y: insertDotByPosition(y, 2),

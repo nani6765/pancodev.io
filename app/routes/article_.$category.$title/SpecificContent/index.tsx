@@ -1,9 +1,5 @@
 import NaverMap from "./NaverMap";
 
-const componentMap = {
-  "guidance-naver-map-and-drawing-manager": <NaverMap />,
-};
-
 type Props = {
   path: string;
 };
@@ -13,6 +9,10 @@ export function HydrateFallback() {
 }
 
 export default function Component({ path }: Props) {
+  const componentMap = {
+    "guidance-naver-map-and-drawing-manager": <NaverMap />,
+  };
+
   return (
     <div id="specific_content">
       {path in componentMap ? componentMap[path] : null}
