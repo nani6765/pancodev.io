@@ -291,7 +291,7 @@ function useDrawingShortCut({ drawingManager }: Props) {
     (e: KeyboardEvent) => {
 	    /* ... */
       switch (true) {
-				/* ... */
+	/* ... */
         case key === "backspace":
           (
             drawingManager as naver.maps.drawing.DrawingManager & {
