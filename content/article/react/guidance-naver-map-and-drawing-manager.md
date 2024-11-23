@@ -26,7 +26,7 @@ import { useRef, useCallback, useEffect } from "react";
 
 function NaverMap() {
   const mapId = "drawing_naver_map";
-  const naverMap = (useRef < naver.maps.Map) | (null > null);
+  const naverMap = useRef<naver.maps.Map|null>(null);
 
   const loadMap = useCallback(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -291,7 +291,7 @@ function useDrawingShortCut({ drawingManager }: Props) {
     (e: KeyboardEvent) => {
 	    /* ... */
       switch (true) {
-				/* ... */
+	/* ... */
         case key === "backspace":
           (
             drawingManager as naver.maps.drawing.DrawingManager & {
