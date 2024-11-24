@@ -13,16 +13,27 @@ export const mapOptions: naver.maps.MapOptions = {
   mapTypeControl: true,
 };
 
-export const rectangleOptions = {
+const rectangleOptions = {
   fillColor: "#ff0000",
   fillOpacity: 0.5,
   strokeWeight: 3,
   strokeColor: "#ff0000",
 };
 
-export const polygonOptions = {
+const polygonOptions = {
   strokeColor: "#ffd100",
   fillColor: "#ffff00",
   fillOpacity: 0.5,
   strokeWeight: 3,
+};
+
+export const drawingOptions = {
+  drawingControl: [
+    0, // naver.maps.drawing.DrawingMode.HAND,
+    1, // naver.maps.drawing.DrawingMode.RECTANGLE,
+    5, // naver.maps.drawing.DrawingMode.POLYGON,
+  ],
+  drawingMode: 0,
+  rectangleOptions: rectangleOptions,
+  polygonOptions: polygonOptions,
 };
