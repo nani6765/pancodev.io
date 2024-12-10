@@ -8,6 +8,8 @@ created_at: 2024-12-10 21:00
 
 # Chart.js 커스텀 플러그인으로 구현하는 X-Axis Range Selector
 
+[데모(DEMO)](#specific_content)
+
 ## Draw Line Chart
 
 이번 게시글에선 React에서 ChartJS를 사용하여 X축의 Range Selector 기능을 가진 Line Chart를 만들어보고자 한다. Chart.js를 사용해보았다면 알겠지만 React의 LifeCycle과 독립적으로 Chart 내부 데이터가 관리되기에 고민해볼 거리가 많다. 일단 LineChart를 먼저 그려보자.

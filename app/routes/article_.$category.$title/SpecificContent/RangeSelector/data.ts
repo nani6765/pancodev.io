@@ -1,8 +1,12 @@
 const MAX_VALUE = 950;
-const ARRAY_LENGTH = 100;
+const ARRAY_LENGTH = 101;
 const PEEK = 70;
 
 const calculateValue = (index: number) => {
+  if (index === ARRAY_LENGTH - 1) {
+    return 0;
+  }
+
   if (index <= PEEK) {
     return Math.round(MAX_VALUE * Math.sin((Math.PI / 2) * (index / PEEK)));
   }
