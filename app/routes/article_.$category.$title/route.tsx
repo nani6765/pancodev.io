@@ -20,6 +20,7 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import Giscus from "@/app/common/Giscus";
+import { ClientOnly } from "remix-utils/client-only";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
@@ -73,7 +74,9 @@ function Content() {
           <span>{article.metadata.readingTime}</span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
-        <SpecificContent path={article.metadata.path} />
+        <ClientOnly fallback={null}>
+          {() => <SpecificContent path={article.metadata.path} />}
+        </ClientOnly>
         {import.meta.env.VITE_SHOW_GISCUS === "show" && <Giscus />}
         <Link to="/articles" className={styles.goList}>
           목록으로
