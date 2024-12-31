@@ -59,7 +59,7 @@ Error: Failed to parse build specification:
       caches:
         - node
       script:
-        - export GOOGLE_APPLICATION_CREDENTIALS="./loplat-dmp-799f4-8fee5e4297e7.json"
+        - export GOOGLE_APPLICATION_CREDENTIALS="./YOUR-KEY-FILE.json"
         - firebase experiments:enable webframeworks
         - firebase use your-project-alias
         - firebase deploy --only hosting:your-hosting-alias
