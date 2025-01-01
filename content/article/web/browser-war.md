@@ -32,11 +32,11 @@ created_at: 2024-07-20 23:40
 
 [!note]적어도 난 공인인증서를 위한 activeX를 100번도 넘게 지웠다가 깔았으며 새로운 activeX가 설치될 때 기존의 activeX와 충돌을 일으키는 상황을 10번도 넘게 봤을 것이다.
 
-![usage-share-of-web-browsers.png](image//browser-war/usage-share-of-web-browsers.png)
+![usage-share-of-web-browsers.png](image/browser-war/usage-share-of-web-browsers.png)
 
 [이미지 출처](<https://en.wikipedia.org/wiki/File:Usage_share_of_web_browsers_(Source_StatCounter).svg>) 이 때 사파리의 가벼운 웹키트 엔진을 기반으로 발전시켜 Blink Browser 엔진을 만들고 Javascript 호환성까지 해결한 v8 엔진을 도입한 Chromium Project를 오픈소스로 발표한 회사가 있었으니 바로 구글이다. 그리고 그 구글이 발표한 브라우저가 바로 Chrome이다. 모질라가 2000년부터 2010년까지 꾸준히 쌓아왔던 30%의 점유율은 크롬이 등장한지 불과 3년 만에 돌파했고, 2012년 5월을 기점으로 IE의 점유율마저 따라잡게 된다. 이는 IE와 비교하여 압도적으로 높인 편의성과 속도를 제공했기 때문이다. ~~개인적인 감정으론 개발자 도구를 등장시켜준 크롬이 더 압도적으로 승리했어야 한다고 생각한다.~~ 2014년 8월, MS는 IE의 지원 중단을 선언하고 야심차게 새로운 브라우저인 Edge를 공개했으나, 윈도우 10에서만 사용할 수 있는 문제와 기존 브라우저와의 호환성 실패로 세대 교체의 실패로 평가받고 2차 브라우저의 승자는 크롬이 차지하게 되었다. 여담으로 2020년 9월 3일, 당시 시점으로 시장에 등장한지 3년이 된 [네이버의 웨일이 IE의 국내 점유율을 앞서는 것](https://news.heraldcorp.com/view.php?ud=20200903000579)으로 국내에서도 IE는 구 시대의 유물이 되었다. 이와 함께 한때는 편의성의 상징에서 “인터넷 오류”가 된 ActiveX도 함께 사라졌다. 아래는 [소니의 고객지원 캡쳐](https://www.sony.co.kr/electronics/support/articles/S500077927)이다.
 
-![sony-support-capture.png](image//browser-war/sony-support-capture.png)
+![sony-support-capture.png](image/browser-war/sony-support-capture.png)
 
 #### 3차 브라우저 전쟁?
 

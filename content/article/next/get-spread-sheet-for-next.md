@@ -3,7 +3,7 @@ title: "NextJS Google Spread Sheet 불러오기"
 description: "A guide on integrating Google Sheets with Next.js to manage SEO dynamically, including fetching and structuring data via Google Sheets API."
 keywords: ["GCP", "Spread Sheet", "SEO"]
 category: next
-created_at: 2024-12-28 14:00
+created_at: 2024-12-21 19:00
 ---
 
 # NextJS Google Spread Sheet 불러오기
