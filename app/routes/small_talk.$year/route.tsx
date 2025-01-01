@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { json } from "@remix-run/node";
+import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import blogConfig from "@/blog.config.json";
@@ -9,10 +9,13 @@ import { small_talk_generate_dir, getContentsInDir } from "@/api/getContent";
 
 import * as style from "@commonStyle/list.css";
 
-export const loader = async () => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const { year } = params;
+
   const response = await getContentsInDir<SmallTalk>({
-    dirPath: small_talk_generate_dir,
+    dirPath: `${small_talk_generate_dir}/${year}`,
   });
+
   return json(sortingContentsByCreate(response));
 };
 
