@@ -18,7 +18,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const response = await getContentsInDir<SmallTalk>({
-    dirPath: `${small_talk_generate_dir}/${2024}`,
+    dirPath: `${small_talk_generate_dir}/${selectedYear ?? currentYear}`,
   });
 
   return json({

@@ -23,6 +23,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   });
 
   return json({
+    year,
     smallTalk: file,
   });
 }
@@ -46,7 +47,7 @@ export const links: LinksFunction = () => [
 ];
 
 function SmallTalk() {
-  const { smallTalk } = useLoaderData<typeof loader>();
+  const { year, smallTalk } = useLoaderData<typeof loader>();
   const { created_at, title, description, prev, next, hasCloseLink } =
     smallTalk.metadata;
 
@@ -59,7 +60,7 @@ function SmallTalk() {
           <h4>{description}</h4>
           <div dangerouslySetInnerHTML={{ __html: smallTalk.contentHtml }} />
         </section>
-        <Link to="/small_talk" className={styles.goList}>
+        <Link to={`/small_talk?year=${year}`} className={styles.goList}>
           목록으로
         </Link>
         {hasCloseLink && <CloseLink prev={prev} next={next} />}
