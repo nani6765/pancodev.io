@@ -9,11 +9,11 @@ import { small_talk_generate_dir, getContentsInDir } from "@/api/getContent";
 
 import * as style from "@commonStyle/list.css";
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const { year } = params;
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const year = new URL(request.url).searchParams.get("year");
 
   const response = await getContentsInDir<SmallTalk>({
-    dirPath: `${small_talk_generate_dir}/${year}`,
+    dirPath: `${small_talk_generate_dir}/${year ?? 2024}`,
   });
 
   return json(sortingContentsByCreate(response));
