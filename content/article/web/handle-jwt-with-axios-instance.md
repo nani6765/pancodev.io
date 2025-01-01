@@ -133,12 +133,7 @@ instance.interceptors.response.use(
       const decoded = jwtDecode(refreshToken);
       if (decoded.exp < current) throw new Error("Refresh Token expired");
 
-      const response = await axios.post("https://YOUR-API-END-POINT", {
-        refreshToken,
-      });
-      const newAccessToken = response.data;
-      saveAccessToken(newAccessToken);
-
+      const newAccessToken = await getNewAccessToken(refreshToken);
       originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
       return axiosAuthInstance(originalRequest);
     } catch {
