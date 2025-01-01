@@ -33,16 +33,16 @@ export const contentLink = style({
       color: "inherit",
     },
   },
-  
-  '@media': {
-    'screen and (max-width: 768px)': {
+
+  "@media": {
+    "screen and (max-width: 768px)": {
       gridTemplateAreas: `
       "date"
       "name" 
       "info"
     `,
-      gridTemplateColumns: '1fr',
-      rowGap: '0.5rem',
+      gridTemplateColumns: "1fr",
+      rowGap: "0.5rem",
     },
   },
 });
@@ -63,9 +63,9 @@ export const contentDate = style({
   color: "#c6c6c6",
   textAlign: "right",
 
-  '@media': {
-    'screen and (max-width: 768px)': {
-      textAlign: 'left',
+  "@media": {
+    "screen and (max-width: 768px)": {
+      textAlign: "left",
     },
   },
 });
@@ -76,3 +76,38 @@ export const contentInfo = style({
   color: "#c9c9c9",
   wordBreak: "keep-all",
 });
+
+export const yearLinkList = style({
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: "1rem",
+  marginBottom: "2rem",
+});
+
+export const yearLinkItem = style({
+  padding: "0.5rem",
+  borderRadius: "1rem",
+  background: "rgb(58, 68, 85)",
+  height: "1.2rem",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export const yearLink = style({
+  color: "#fff",
+  textDecoration: "none",
+  fontSize: "1rem",
+  lineHeight: "1rem",
+  userSelect: "none",
+});
+
+export const disabledYearLink = style([
+  yearLink,
+  {
+    pointerEvents: "none",
+    textDecoration: "underline",
+  },
+]);

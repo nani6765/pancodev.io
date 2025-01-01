@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { redirect } from "@remix-run/node";
 
 import blogConfig from "@/blog.config.json";
 import generateMetaTag from "@/function/generateMetaTag";
@@ -10,13 +11,21 @@ import { small_talk_generate_dir, getContentsInDir } from "@/api/getContent";
 import * as style from "@commonStyle/list.css";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const year = new URL(request.url).searchParams.get("year");
+  const currentYear = dayjs().year();
+  const selectedYear = Number(new URL(request.url).searchParams.get("year"));
+  if (!selectedYear) {
+    return redirect(`/small_talk?year=${currentYear}`);
+  }
 
   const response = await getContentsInDir<SmallTalk>({
-    dirPath: `${small_talk_generate_dir}/${year ?? 2024}`,
+    dirPath: `${small_talk_generate_dir}/${2024}`,
   });
 
-  return json(sortingContentsByCreate(response));
+  return json({
+    smallTalks: sortingContentsByCreate(response),
+    currentYear,
+    selectedYear,
+  });
 };
 
 export const meta = () =>
@@ -28,10 +37,30 @@ export const meta = () =>
   });
 
 function SmallTalkList() {
-  const smallTalks = useLoaderData<typeof loader>();
+  const { smallTalks, currentYear, selectedYear } =
+    useLoaderData<typeof loader>();
+
+  const yearList = Array.from(
+    new Array(currentYear - blogConfig.small_talk_start + 1),
+    (_, index) => currentYear - index
+  );
 
   return (
     <div className="root-section">
+      <ul className={style.yearLinkList}>
+        {yearList.map((year) => (
+          <li className={style.yearLinkItem} key={year}>
+            <Link
+              to={`?year=${year}`}
+              className={
+                year === selectedYear ? style.disabledYearLink : style.yearLink
+              }
+            >
+              {year}
+            </Link>
+          </li>
+        ))}
+      </ul>
       <ul className={style.contentList}>
         {smallTalks.map(({ metadata }) => {
           const { index, title, description, created_at, path } = metadata;

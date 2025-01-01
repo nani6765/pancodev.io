@@ -23,6 +23,7 @@
   "article_generate_dir": "_generate/_article",
   "small_talk_dir": "content/small_talk",
   "small_talk_generate_dir": "_generate/_small_talk",
+  "small_talk_start": 2024,
   "links": [
     {
       "type": "github",
