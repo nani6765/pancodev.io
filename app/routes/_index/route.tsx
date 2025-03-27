@@ -55,6 +55,7 @@ function Home() {
           ))}
         </ul>
       </section>
+      <p>OZ 멘티님들.. 열심히 좀 하세여..</p>
     </div>
   );
 }
