@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { json, Link, useLoaderData } from "@remix-run/react";
 import {
   article_generate_dir,
@@ -73,6 +74,10 @@ function Content() {
           category : <strong>{article.metadata.category}</strong>
           <span> / </span>
           <span>{article.metadata.readingTime}</span>
+          <span> / </span>
+          <span>
+            {dayjs(article.metadata.created_at).format("YYYY-MM-DD HH:mm")} 발행
+          </span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
         <ClientOnly fallback={null}>

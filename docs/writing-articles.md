@@ -118,7 +118,29 @@ public/article/react/image/react-redux-ecosystem/flux-architecture.png
 - 렌더링 시 `💡` 이모지가 붙은 `callout` 스타일 블록으로 변환됩니다.
 - 문단 안에서 줄바꿈이 필요하면 `[break]` 토큰을 사용하면 개행으로 치환됩니다.
 
-## 6. 특수 인터랙티브 컴포넌트 (선택)
+## 6. 다이어그램 (Mermaid)
+
+코드 펜스에 `mermaid` 언어를 붙이면 시퀀스·플로우차트 등 [mermaid](https://mermaid.js.org/) 다이어그램을 그릴 수 있습니다.
+
+````markdown
+```mermaid
+sequenceDiagram
+    participant App as App (Client)
+    participant OP
+    App ->> OP: /authorize
+    OP -->> App: authorization code
+```
+````
+
+동작 방식과 유의점:
+
+- **클라이언트에서 렌더링된다.** 빌드 파이프라인(`generateJsonContent`)은 mermaid를 처리하지 않는다. `rehype-highlight`는 `mermaid`를 모르는 언어로 보고 `<pre><code class="block language-mermaid">` 코드블록으로 그대로 통과시킨다. 실제 도형 변환은 아티클 상세 라우트의 클라이언트 전용 컴포넌트(`app/routes/article_.$category.$title/Mermaid.tsx`)가 담당한다. 이 컴포넌트가 `code.language-mermaid` 블록을 찾아 `mermaid.render()`로 SVG를 만들고 코드블록을 교체한다.
+- **mermaid 번들은 필요할 때만 로드된다.** 페이지에 mermaid 블록이 하나라도 있을 때만 `import("mermaid")`가 실행되도록 되어 있어, 다이어그램이 없는 글에는 로딩 비용이 없다.
+- **다크 테마로 그려진다.** 블로그 배경(`#2c2c2c`)에 맞춰 `theme: "dark"`로 초기화된다. 기본(라이트) 테마를 쓰면 글자·선이 배경에 묻힌다.
+- **초기 깜빡임이 있다.** SSR 단계에서는 코드블록 텍스트로 보였다가, 클라이언트에서 SVG로 치환된다. (검색엔진/JS 비활성 환경에서는 다이어그램 원본 텍스트가 노출된다.)
+- 렌더에 실패하면 원본 코드블록을 그대로 남긴다. 문법이 틀리면 도형 대신 mermaid 소스가 보이므로, 로컬 `yarn dev`로 확인한다.
+
+## 7. 특수 인터랙티브 컴포넌트 (선택)
 
 일부 글은 본문 하단에 지도/차트 같은 클라이언트 전용 인터랙티브 컴포넌트를 함께 렌더링합니다. 이 매핑은 `app/routes/article_.$category.$title/SpecificContent/index.tsx`의 `componentMap`에 **파일 슬러그(path)** 를 키로 등록되어 있습니다.
 
@@ -132,7 +154,7 @@ const componentMap = {
 - 일반 글에는 필요 없습니다. 등록된 슬러그가 아니면 아무것도 렌더링되지 않습니다.
 - 새 인터랙티브 컴포넌트를 붙이려면 컴포넌트를 만들고 위 맵에 슬러그를 추가하면 됩니다.
 
-## 7. 작성 후 확인
+## 8. 작성 후 확인
 
 ```bash
 yarn dev
