@@ -8,15 +8,11 @@ import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 const basePath = path.resolve();
 export const defaultGenerateDir = path.join(
   basePath,
-  blogConfig.default_generate_dir
+  blogConfig.default_generate_dir,
 );
 export const article_generate_dir = path.join(
   basePath,
-  blogConfig.article_generate_dir
-);
-export const small_talk_generate_dir = path.join(
-  basePath,
-  blogConfig.small_talk_generate_dir
+  blogConfig.article_generate_dir,
 );
 
 const generateFileName = (fullPath: string) => {
@@ -37,7 +33,7 @@ async function getContentByPaths<T>(paths: string[], flag: FlagByGetContents) {
 
       const fileData: T = await fs.readJSON(path);
       return fileData;
-    })
+    }),
   );
 }
 

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { unified } from "unified";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -23,12 +22,6 @@ const extractFileName = (filePath: string) => {
   return splitPaths[splitPaths.length - 1].slice(0, -3);
 };
 
-const generateClosePath = (target: JsonFile) => {
-  const path = extractFileName(target.filePath);
-  const year = dayjs(target.metadata["created_at"]).format("YYYY");
-  return `${year}/${path}`;
-};
-
 const generateJsonContent = async ({
   files,
   index,
@@ -42,37 +35,15 @@ const generateJsonContent = async ({
   const processedContent = await processor.process(content);
   const contentHtml = processedContent.toString();
 
-  const baseMetaData = {
-    ...metadata,
-    index,
-    path: extractFileName(filePath),
-  };
-
-  const isArticleProcess = filePath.includes("article");
-  if (isArticleProcess) {
-    const { text } = readingTimeGenerator(contentHtml);
-    return {
-      contentHtml,
-      metadata: { ...baseMetaData, readingTime: text },
-    };
-  }
-
-  const hasPrev = index !== 0;
-  const hasNext = index !== files.length - 1;
+  const { text } = readingTimeGenerator(contentHtml);
 
   return {
     contentHtml,
     metadata: {
-      ...baseMetaData,
-      prev: {
-        content_path: hasPrev ? generateClosePath(files[index - 1]) : "",
-        content_title: hasPrev ? files[index - 1].metadata["title"] : "",
-      },
-      next: {
-        content_path: hasNext ? generateClosePath(files[index + 1]) : "",
-        content_title: hasNext ? files[index + 1].metadata["title"] : "",
-      },
-      hasCloseLink: hasPrev || hasNext,
+      ...metadata,
+      index,
+      path: extractFileName(filePath),
+      readingTime: text,
     },
   };
 };

@@ -2,7 +2,6 @@
   "title": "Panco",
   "description": "Is a tech blog for software developer Jaewon a.k.a Panco, who is mainly developing the Frontend domain.",
   "article_description": "Explore a curated collection of articles on development. Discover insights, tutorials, and best practices for modern front-end development.",
-  "small_talk_description": "A space for candid thoughts and everyday experiences from a developer's life. Join in for quick insights, reflections, and stories beyond the code.",
 
   "author": "판다코딩(panco)",
   "siteUrl": "https://www.pancodev.io",
@@ -21,9 +20,6 @@
   "default_generate_dir": "_generate",
   "article_dir": "content/article",
   "article_generate_dir": "_generate/_article",
-  "small_talk_dir": "content/small_talk",
-  "small_talk_generate_dir": "_generate/_small_talk",
-  "small_talk_start": 2024,
   "links": [
     {
       "type": "github",
@@ -49,7 +45,6 @@
     {
       "label": "Content",
       "path_name": "/articles"
-    },
-    { "label": "Talk", "path_name": "/small_talk" }
+    }
   ]
 }

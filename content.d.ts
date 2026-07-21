@@ -20,29 +20,12 @@ declare type ArticleMetadata = Metadata & {
   readingTime: string; // 빌드과정에서 주입됨
 };
 
-declare type SmallTalkMetaData = Metadata & {
-  prev: {
-    content_path: string;
-    content_title: string;
-  }; // 빌드과정에서 주입됨
-  next: {
-    content_path: string;
-    content_title: string;
-  }; // 빌드과정에서 주입됨
-  hasCloseLink: boolean; // 빌드과정에서 주입됨
-};
-
 declare type Content = {
-  metadata: ArticleMetadata | SmallTalkMetaData;
+  metadata: ArticleMetadata;
   contentHtml: string;
 };
 
 declare type Article = {
   metadata: ArticleMetadata;
-  contentHtml: string;
-};
-
-declare type SmallTalk = {
-  metadata: SmallTalkMetaData;
   contentHtml: string;
 };

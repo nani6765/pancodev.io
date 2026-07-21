@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-function sortingContentsByCreate(contents: SmallTalk[] | Article[]) {
+function sortingContentsByCreate(contents: Article[]) {
   return contents.sort((prev, next) => {
     const prevCreatedAt = dayjs(prev.metadata.created_at);
     const nextCreatedAt = dayjs(next.metadata.created_at);

@@ -8,16 +8,12 @@ export const loader: LoaderFunction = async () => {
   try {
     const contents = await getContentsInDir({
       dirPath: defaultGenerateDir,
-      flag: 'preview',
+      flag: "preview",
     });
 
     const sitemap = toXmlSitemap([
-      'articles',
-      'small_talk',
-      ...contents.map((path) => {
-        const isArticle = path.includes('/');
-        return isArticle ? `article/${path}` : `small_talk/${path}`;
-      }),
+      "articles",
+      ...contents.map((path) => `article/${path}`),
     ]);
 
     return new Response(sitemap, {
