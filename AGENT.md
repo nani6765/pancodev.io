@@ -68,3 +68,8 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+## 특기사항
+
+docs폴더에 이 리포지토리를 구성하는 일련의 문서가 있습니다.
+docs/index.md를 참조하시오.
