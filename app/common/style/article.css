@@ -114,3 +114,36 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  display: block;
+  overflow-x: auto;
+}
+
+thead {
+  border-bottom: 2px solid rgba(135, 131, 120, 0.3);
+}
+
+th {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.6rem 1rem;
+  font-weight: 100;
+  border-bottom: 1px solid rgba(135, 131, 120, 0.15);
+  vertical-align: top;
+  word-break: break-word;
+}
+
+tbody tr:hover {
+  background: rgba(135, 131, 120, 0.08);
+}
