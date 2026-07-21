@@ -1,7 +1,7 @@
 # 📑 아티클 책갈피
 
 > pancodev.io에 발행된 글을 한눈에 보는 인덱스입니다.
-> 마지막 업데이트: 2026-07-21 · 총 **23개** 글
+> 마지막 업데이트: 2026-07-22 · 총 **23개** 글
 
 ## 한눈에 보기
 
@@ -10,10 +10,10 @@
 | 전체       | 23   |
 | react      | 7    |
 | web        | 5    |
-| develop    | 3    |
 | next       | 3    |
 | remix      | 3    |
-| ai         | 1    |
+| ai         | 2    |
+| develop    | 2    |
 | typescript | 1    |
 
 발행 추이: 2024년 15편 · 2025년 6편 · 2026년 2편
@@ -24,7 +24,7 @@
 | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 2026-05-12 | ai         | [Claude Code 시스템 프롬프트 분석](https://pancodev.io/article/ai/claude-code-system-prompt-analysis)                                                     |
 | 2026-04-05 | typescript | [TypeScript 7.0](https://pancodev.io/article/typescript/typescript-7)                                                                                     |
-| 2025-12-04 | develop    | [도구의 시대](https://pancodev.io/article/develop/what-remains-for-developers-in-the-age-of-ai)                                                           |
+| 2025-12-04 | ai         | [도구의 시대](https://pancodev.io/article/ai/what-remains-for-developers-in-the-age-of-ai)                                                                |
 | 2025-11-15 | remix      | [마크다운 블로그, 그 다음 — 코드 하이라이팅부터 살아있는 컴포넌트까지](https://pancodev.io/article/remix/beyond-markdown-to-json-running-a-blog)          |
 | 2025-07-13 | react      | [React Server Component에 대한 고찰 : page router에서 app router로](https://pancodev.io/article/react/react-server-component-mental-shift)                |
 | 2025-06-18 | develop    | [node_modules는 왜 이 모양인가](https://pancodev.io/article/develop/why-node-modules-looks-like-this)                                                     |
@@ -48,13 +48,13 @@
 
 ## 카테고리별 목록
 
-### ai (1)
+### ai (2)
 
 - 2026-05-12 · [Claude Code 시스템 프롬프트 분석](https://pancodev.io/article/ai/claude-code-system-prompt-analysis)
+- 2025-12-04 · [도구의 시대](https://pancodev.io/article/ai/what-remains-for-developers-in-the-age-of-ai)
 
-### develop (3)
+### develop (2)
 
-- 2025-12-04 · [도구의 시대](https://pancodev.io/article/develop/what-remains-for-developers-in-the-age-of-ai)
 - 2025-06-18 · [node_modules는 왜 이 모양인가](https://pancodev.io/article/develop/why-node-modules-looks-like-this)
 - 2024-09-28 · [주니어 개발자를 벗어나며 내가 배운 것들, 3년 6개월의 회고록](https://pancodev.io/article/develop/what-i-learned-out-of-junior)
 

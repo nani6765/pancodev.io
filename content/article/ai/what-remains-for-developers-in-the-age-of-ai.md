@@ -2,7 +2,7 @@
 title: 도구의 시대
 description: A year-end reflection written at the close of 2025. As AI tools and agents improve at a frightening pace, I step back to ask what a developer is actually left holding, and land on the ability to define and reframe problems, and on treating an AI agent less as a tool than as a partner for testing and disproving my own hypotheses.
 keywords: ["AI", "AI agent", "개발자 성장", "문제 정의", "도메인 지식"]
-category: develop
+category: ai
 created_at: 2025-12-04 02:40
 ---
 
