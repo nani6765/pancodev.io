@@ -10,7 +10,7 @@ keywords:
     "single sign-out",
   ]
 category: web
-created_at: 2026-05-16 20:00
+created_at: 2025-05-16 20:00
 ---
 
 # Authentication ManageMent : Silent Authentication & Shared Session

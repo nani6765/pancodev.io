@@ -22,7 +22,17 @@ function Mermaid({ contentKey }: Props) {
       }
 
       const { default: mermaid } = await import("mermaid");
-      mermaid.initialize({ startOnLoad: false, securityLevel: "strict" });
+      // 블로그가 다크 테마(#2c2c2c)라 기본 라이트 테마는 글자/선이 묻힌다.
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: "strict",
+        theme: "dark",
+        themeVariables: {
+          background: "#2c2c2c",
+          textColor: "#f5f5f5",
+          lineColor: "#c9c9c9",
+        },
+      });
 
       for (let index = 0; index < blocks.length; index++) {
         if (cancelled) {
