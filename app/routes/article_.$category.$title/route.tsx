@@ -6,6 +6,7 @@ import {
 } from "@/api/getContent";
 
 import blogConfig from "@/blog.config.json";
+import Mermaid from "./Mermaid";
 import SpecificContent from "./SpecificContent";
 import generateMetaTag from "@/function/generateMetaTag";
 import sortingContentsByCreate from "@/function/sortingContentsByCreate";
@@ -74,6 +75,9 @@ function Content() {
           <span>{article.metadata.readingTime}</span>
         </p>
         <article dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+        <ClientOnly fallback={null}>
+          {() => <Mermaid contentKey={article.metadata.path} />}
+        </ClientOnly>
         <ClientOnly fallback={null}>
           {() => <SpecificContent path={article.metadata.path} />}
         </ClientOnly>

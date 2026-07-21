@@ -103,3 +103,14 @@ img {
 .callout .emoji {
   margin-top: 4px;
 }
+
+.mermaid-diagram {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0px;
+}
+
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
