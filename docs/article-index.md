@@ -1,27 +1,28 @@
 # 📑 아티클 책갈피
 
 > pancodev.io에 발행된 글을 한눈에 보는 인덱스입니다.
-> 마지막 업데이트: 2026-07-22 · 총 **23개** 글
+> 마지막 업데이트: 2026-08-22 · 총 **24개** 글
 
 ## 한눈에 보기
 
 | 구분       | 개수 |
 | ---------- | ---- |
-| 전체       | 23   |
+| 전체       | 24   |
 | react      | 7    |
 | web        | 5    |
-| next       | 3    |
+| next       | 4    |
 | remix      | 3    |
 | ai         | 2    |
 | develop    | 2    |
 | typescript | 1    |
 
-발행 추이: 2024년 15편 · 2025년 6편 · 2026년 2편
+발행 추이: 2024년 15편 · 2025년 6편 · 2026년 3편
 
 ## 발행순 전체 목록 (최신순)
 
 | 발행일     | 카테고리   | 제목                                                                                                                                                      |
 | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-08-22 | next       | [Vercel Fast Data Transfer 비용 추적 : 배럴 export가 번들에 남긴 13.5MB](https://pancodev.io/article/next/vercel-fast-data-transfer-barrel-export)        |
 | 2026-05-12 | ai         | [Claude Code 시스템 프롬프트 분석](https://pancodev.io/article/ai/claude-code-system-prompt-analysis)                                                     |
 | 2026-04-05 | typescript | [TypeScript 7.0](https://pancodev.io/article/typescript/typescript-7)                                                                                     |
 | 2025-12-04 | ai         | [도구의 시대](https://pancodev.io/article/ai/what-remains-for-developers-in-the-age-of-ai)                                                                |
@@ -58,8 +59,9 @@
 - 2025-06-18 · [node_modules는 왜 이 모양인가](https://pancodev.io/article/develop/why-node-modules-looks-like-this)
 - 2024-09-28 · [주니어 개발자를 벗어나며 내가 배운 것들, 3년 6개월의 회고록](https://pancodev.io/article/develop/what-i-learned-out-of-junior)
 
-### next (3)
+### next (4)
 
+- 2026-08-22 · [Vercel Fast Data Transfer 비용 추적 : 배럴 export가 번들에 남긴 13.5MB](https://pancodev.io/article/next/vercel-fast-data-transfer-barrel-export)
 - 2024-12-21 · [NextJS Google Spread Sheet 불러오기](https://pancodev.io/article/next/get-spread-sheet-for-next)
 - 2024-09-14 · [Firebase로 Next 프로젝트 배포하기 : GCP setting / CI/CD](https://pancodev.io/article/next/next-deploy-with-firebase-2)
 - 2024-08-25 · [Firebase로 Next 프로젝트 배포하기 : page router / next-auth / next-i18next](https://pancodev.io/article/next/next-deploy-with-firebase-1)

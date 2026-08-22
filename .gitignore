@@ -4,3 +4,4 @@ _generate
 .env
 public/article
 .vscode
+.kiro/settings/mcp.json
