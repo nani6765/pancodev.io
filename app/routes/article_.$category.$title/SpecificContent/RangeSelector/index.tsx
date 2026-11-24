@@ -10,11 +10,7 @@ import {
 } from "chart.js";
 
 import { dummy } from "./data";
-import {
-  LineChartOptions,
-  rangeSelectorPlugin,
-  type RangeSelectorPlugin,
-} from "./chart";
+import { LineChartOptions, rangeSelectorPlugin } from "./chart";
 
 import * as style from "./style.css";
 
@@ -26,9 +22,13 @@ ChartJS.register(
   Filler
 );
 
+const INITIAL_VERTICAL_LINE = 70;
+
 function SimilarityLineChart() {
   const chartRef = useRef<ChartJS<"line", number[], number>>(null);
-  const [state, setState] = useState(70);
+  const [state, setState] = useState(INITIAL_VERTICAL_LINE);
+  // react-chartjs-2는 차트 생성 시점의 plugins만 사용하므로 플러그인은 한 번만 만든다.
+  const [plugin] = useState(() => rangeSelectorPlugin(INITIAL_VERTICAL_LINE));
   const data = {
     labels: dummy.map((labelAndValue) => labelAndValue[0]),
     datasets: [
@@ -42,31 +42,19 @@ function SimilarityLineChart() {
     ],
   };
 
-  const setStateFunction = (nextState: number | ((prev: number) => number)) => {
-    const newState =
-      typeof nextState === "function" ? nextState(state) : nextState;
+  const moveVerticalLine = (nextState: number) => {
     const chart = chartRef.current;
     if (!chart) {
       return;
     }
 
-    const plugin = chart.config.plugins?.find(
-      (plugin) => plugin.id === "rangeSelectorPlugin"
-    );
-    if (!plugin) {
-      return;
-    }
-
-    const rangeSelectorPlugin = plugin as RangeSelectorPlugin;
-    if (rangeSelectorPlugin.verticalLine !== newState) {
-      rangeSelectorPlugin.verticalLine = newState;
-    }
-    setState(newState);
+    plugin.verticalLine = nextState;
+    setState(nextState);
     chart.update();
   };
 
   const changeSimilarity = (trigger: "up" | "down") => {
-    setStateFunction((prev) => (trigger === "up" ? prev + 1 : prev - 1));
+    moveVerticalLine(trigger === "up" ? state + 1 : state - 1);
   };
 
   useEffect(() => {
@@ -95,7 +83,7 @@ function SimilarityLineChart() {
             className={style.input}
             type="text"
             value={state}
-            onChange={(e) => setStateFunction(Number(e.target.value))}
+            onChange={(e) => moveVerticalLine(Number(e.target.value))}
           />
           <div className={style.nav}>
             <div className={style.upBtn} onClick={() => changeSimilarity("up")}>
@@ -125,7 +113,7 @@ function SimilarityLineChart() {
           ref={chartRef}
           data={data}
           options={LineChartOptions}
-          plugins={[rangeSelectorPlugin(state)]}
+          plugins={[plugin]}
         />
       </div>
     </div>
