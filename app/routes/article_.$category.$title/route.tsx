@@ -27,10 +27,10 @@ import { ClientOnly } from "remix-utils/client-only";
 export async function loader({ params }: LoaderFunctionArgs) {
   const { category, title } = params;
   const dirPath = `${article_generate_dir}/${category}`;
-  const file = await getSpecificContent<Article>({ dirPath, title });
-  const categoryFiles = await getContentsInDir<Article>({
-    dirPath,
-  });
+  const [file, categoryFiles] = await Promise.all([
+    getSpecificContent<Article>({ dirPath, title }),
+    getContentsInDir<Article>({ dirPath }),
+  ]);
 
   const currentIndex = file.metadata.index;
   return json({

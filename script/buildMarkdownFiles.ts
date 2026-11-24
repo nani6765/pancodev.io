@@ -19,24 +19,24 @@ const buildMarkdownFiles = async ({
         )
       : files;
 
-  for (let index = 0; index < generateFiles.length; index++) {
-    const { filePath } = generateFiles[index];
+  await Promise.all(
+    generateFiles.map(async ({ filePath }, index) => {
+      const { contentHtml, metadata } = await generateJsonContent({
+        files: generateFiles,
+        index,
+      });
 
-    const { contentHtml, metadata } = await generateJsonContent({
-      files: generateFiles,
-      index,
-    });
-
-    await writeJsonFile({
-      outputFilePath: generateOutputFilePath({
-        filePath,
-        inputPath,
-        outputPath,
-      }),
-      metadata,
-      contentHtml,
-    });
-  }
+      await writeJsonFile({
+        outputFilePath: generateOutputFilePath({
+          filePath,
+          inputPath,
+          outputPath,
+        }),
+        metadata,
+        contentHtml,
+      });
+    })
+  );
 };
 
 export default buildMarkdownFiles;
