@@ -24,13 +24,6 @@ function DocHead() {
           gtag('config', '${import.meta.env.VITE_GA_TRACKING_ID}');`,
         }}
       />
-      {/* Naver Maps API */}
-      <script
-        type="text/javascript"
-        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${
-          import.meta.env.VITE_NCP_CLIENT_ID
-        }&submodules=drawing`}
-      ></script>
     </head>
   );
 }

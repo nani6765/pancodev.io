@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import MapTool from "./MapTool";
 import useDrawingShortCut from "./useDrawingShortCut";
+import loadNaverMapScript from "./loadNaverMapScript";
 import { mapId, mapOptions, drawingOptions } from "./const";
 
 import * as style from "./style.css";
@@ -13,19 +14,37 @@ function NaverMap() {
   useDrawingShortCut({ drawingManager: drawingManager });
 
   useEffect(() => {
-    if (!naverMap) {
-      const initialMap = new naver.maps.Map(mapId, mapOptions);
-      setNaverMap(initialMap);
-    } else if (naverMap && !drawingManager) {
-      naver.maps.Event.once(naverMap, "init_stylemap", () => {
-        const newDrawingManager = new naver.maps.drawing.DrawingManager({
-          map: naverMap,
-          ...drawingOptions,
+    let cancelled = false;
+
+    loadNaverMapScript()
+      .then(() => {
+        if (cancelled) {
+          return;
+        }
+
+        const initialMap = new naver.maps.Map(mapId, mapOptions);
+        setNaverMap(initialMap);
+
+        naver.maps.Event.once(initialMap, "init_stylemap", () => {
+          if (cancelled) {
+            return;
+          }
+          setDrawingManager(
+            new naver.maps.drawing.DrawingManager({
+              map: initialMap,
+              ...drawingOptions,
+            })
+          );
         });
-        setDrawingManager(newDrawingManager);
+      })
+      .catch(() => {
+        // 스크립트를 받지 못하면 지도 영역을 비워 둔다.
       });
-    }
-  }, [drawingManager, naverMap]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className={style.mapWrapper} id={mapId}>
