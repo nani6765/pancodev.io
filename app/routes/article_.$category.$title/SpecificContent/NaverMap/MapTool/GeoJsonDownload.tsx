@@ -25,6 +25,7 @@ function GeoJsonDownload({ drawingManager }: Props) {
     const currentLayer = drawingManager.getDrawings();
     if (Object.keys(currentLayer).length < 1) {
       alert("사용자가 그린 드로잉이 없습니다.");
+      return;
     }
 
     try {
