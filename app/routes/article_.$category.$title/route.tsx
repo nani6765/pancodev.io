@@ -54,7 +54,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     title: [title, blogConfig.title],
     description: description,
     author: blogConfig.author,
-    url: `${blogConfig.siteUrl}/${category}/${path}`,
+    url: `${blogConfig.siteUrl}/article/${category}/${path}`,
     keywords: [category, ...keywords],
   });
 };
