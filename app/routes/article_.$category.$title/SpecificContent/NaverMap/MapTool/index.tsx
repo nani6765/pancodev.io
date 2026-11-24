@@ -11,8 +11,10 @@ type Props = {
 function MapTool({ naverMap, drawingManager }: Props) {
   return (
     <div className={style.mapTool}>
-      {naverMap && <MapSearch naverMap={naverMap} />}
-      {drawingManager && <GeoJsonDownload drawingManager={drawingManager} />}
+      {naverMap ? <MapSearch naverMap={naverMap} /> : null}
+      {drawingManager ? (
+        <GeoJsonDownload drawingManager={drawingManager} />
+      ) : null}
     </div>
   );
 }

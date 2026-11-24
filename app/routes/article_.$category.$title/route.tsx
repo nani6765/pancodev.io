@@ -86,11 +86,11 @@ function Content() {
         <ClientOnly fallback={null}>
           {() => <SpecificContent path={article.metadata.path} />}
         </ClientOnly>
-        {import.meta.env.VITE_SHOW_GISCUS === "show" && <Giscus />}
+        {import.meta.env.VITE_SHOW_GISCUS === "show" ? <Giscus /> : null}
         <Link to="/articles" className={styles.goList}>
           목록으로
         </Link>
-        {recentFiles.length > 0 && (
+        {recentFiles.length > 0 ? (
           <section className="recent-category">
             <strong>{category} 카테고리의 최신글</strong>
             <ul className={styles.recentList}>
@@ -107,7 +107,7 @@ function Content() {
               ))}
             </ul>
           </section>
-        )}
+        ) : null}
       </div>
     </div>
   );
