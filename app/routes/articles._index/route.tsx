@@ -38,6 +38,7 @@ function ArticleList() {
             <li key={index} className={style.contentItem}>
               <Link
                 to={`/article/${category}/${path}`}
+                prefetch="intent"
                 className={style.contentLink}
               >
                 <p className={style.contentName}>{title}</p>

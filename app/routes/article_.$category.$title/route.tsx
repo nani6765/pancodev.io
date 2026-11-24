@@ -95,6 +95,7 @@ function Content() {
                 <li key={metadata.index} className={styles.recentItem}>
                   <Link
                     to={`/article/${category}/${metadata.path}`}
+                    prefetch="intent"
                     className={styles.recentLink}
                   >
                     {metadata.title}
