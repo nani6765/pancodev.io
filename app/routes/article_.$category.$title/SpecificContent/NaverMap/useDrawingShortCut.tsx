@@ -1,34 +1,39 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { exceptionSnapShotEvent } from "./function";
 
 type Props = { drawingManager: naver.maps.drawing.DrawingManager | null };
 
 function useDrawingShortCut({ drawingManager }: Props) {
-  const [selectedOverlayId, setSelectedOverlayId] = useState("");
+  // 선택된 오버레이 id는 키보드 핸들러에서만 읽으므로 리렌더링을 일으키지 않는 ref에 둔다.
+  const selectedOverlayIdRef = useRef("");
 
-  const handModeShortCutEventHandler = useCallback(
-    (e: KeyboardEvent) => {
-      if (!drawingManager || !exceptionSnapShotEvent(e)) {
+  useEffect(() => {
+    if (!drawingManager) {
+      return;
+    }
+
+    const toggleMode = (
+      target:
+        | naver.maps.drawing.DrawingMode.RECTANGLE
+        | naver.maps.drawing.DrawingMode.POLYGON
+    ) => {
+      const currentMode = drawingManager.getOptions("drawingMode");
+      if (currentMode === target) {
+        drawingManager.setOptions({
+          drawingMode: naver.maps.drawing.DrawingMode.HAND,
+        });
+      } else {
+        drawingManager.setOptions({
+          drawingMode: target,
+        });
+      }
+    };
+
+    const handModeShortCutEventHandler = (e: KeyboardEvent) => {
+      if (!exceptionSnapShotEvent(e)) {
         return;
       }
       const key = e.key.toLowerCase();
-
-      const toggleMode = (
-        target:
-          | naver.maps.drawing.DrawingMode.RECTANGLE
-          | naver.maps.drawing.DrawingMode.POLYGON
-      ) => {
-        const currentMode = drawingManager.getOptions("drawingMode");
-        if (currentMode === target) {
-          drawingManager.setOptions({
-            drawingMode: naver.maps.drawing.DrawingMode.HAND,
-          });
-        } else {
-          drawingManager.setOptions({
-            drawingMode: target,
-          });
-        }
-      };
 
       switch (true) {
         case key === "a" || key === "ㅁ":
@@ -49,31 +54,27 @@ function useDrawingShortCut({ drawingManager }: Props) {
                 overlayOrId: naver.maps.drawing.DrawingOverlay | string
               ) => void;
             }
-          ).removeDrawing(selectedOverlayId);
+          ).removeDrawing(selectedOverlayIdRef.current);
           return;
         default:
           return;
       }
-    },
-    [selectedOverlayId, drawingManager]
-  );
+    };
 
-  useEffect(() => {
-    const setSelectedOverlay = (e: naver.maps.drawing.DrawingOverlay) =>
-      setSelectedOverlayId(e.id);
+    const setSelectedOverlay = (e: naver.maps.drawing.DrawingOverlay) => {
+      selectedOverlayIdRef.current = e.id;
+    };
 
     window.addEventListener("keydown", handModeShortCutEventHandler);
-    const listener = drawingManager?.addListener(
+    const listener = drawingManager.addListener(
       naver.maps.drawing.DrawingEvents.SELECT,
       setSelectedOverlay
     );
     return () => {
       window.removeEventListener("keydown", handModeShortCutEventHandler);
-      if (listener && drawingManager) {
-        drawingManager.removeListener(listener);
-      }
+      drawingManager.removeListener(listener);
     };
-  }, [drawingManager, handModeShortCutEventHandler]);
+  }, [drawingManager]);
 }
 
 export default useDrawingShortCut;

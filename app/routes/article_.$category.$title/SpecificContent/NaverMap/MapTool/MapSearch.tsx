@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { getNaverSearchByQuery } from "../api";
 import { insertDotByPosition } from "../function";
@@ -10,7 +10,8 @@ type Props = {
 };
 
 function MapSearch({ naverMap }: Props) {
-  const [isLoading, setLoading] = useState(false);
+  // 요청 중 여부는 화면에 그리지 않고 중복 요청 방지에만 쓰므로 ref에 둔다.
+  const isLoadingRef = useRef(false);
   const [query, setQuery] = useState("");
 
   const moveMapCenterByMapPosition = ({ x, y }: { x: number; y: number }) => {
@@ -21,13 +22,13 @@ function MapSearch({ naverMap }: Props) {
   const callSearchApiWhenEnterDown = async (
     e: KeyboardEvent<HTMLInputElement>
   ) => {
-    const canFetch = !isLoading && naverMap;
+    const canFetch = !isLoadingRef.current && naverMap;
     if (e.code !== "Enter" || !query.trim() || !canFetch) {
       return;
     }
 
     try {
-      setLoading(true);
+      isLoadingRef.current = true;
       const { x, y } = await getNaverSearchByQuery(query);
       moveMapCenterByMapPosition({
         x: insertDotByPosition(x, 3),
@@ -37,7 +38,7 @@ function MapSearch({ naverMap }: Props) {
       alert("무료 사용량이 초과되었습니다.");
       setQuery("");
     } finally {
-      setLoading(false);
+      isLoadingRef.current = false;
     }
   };
 
