@@ -1,5 +1,9 @@
-import { Chart as ChartJS } from "chart.js/auto";
-import type { CoreScaleOptions, Scale, Plugin } from "chart.js/auto";
+import type {
+  Chart as ChartJS,
+  CoreScaleOptions,
+  Plugin,
+  Scale,
+} from "chart.js";
 
 export interface RangeSelectorPlugin extends Plugin<"line"> {
   isDragging: boolean;

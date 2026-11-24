@@ -1,6 +1,13 @@
 import { Line } from "react-chartjs-2";
 import { useEffect, useRef, useState } from "react";
-import { Chart as ChartJS, LineElement } from "chart.js/auto";
+import {
+  Chart as ChartJS,
+  Filler,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+} from "chart.js";
 
 import { dummy } from "./data";
 import {
@@ -11,7 +18,13 @@ import {
 
 import * as style from "./style.css";
 
-ChartJS.register(LineElement);
+ChartJS.register(
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Filler
+);
 
 function SimilarityLineChart() {
   const chartRef = useRef<ChartJS<"line", number[], number>>(null);
