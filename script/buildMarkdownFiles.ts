@@ -20,10 +20,10 @@ const buildMarkdownFiles = async ({
       : files;
 
   for (let index = 0; index < generateFiles.length; index++) {
-    const { filePath } = files[index];
+    const { filePath } = generateFiles[index];
 
     const { contentHtml, metadata } = await generateJsonContent({
-      files,
+      files: generateFiles,
       index,
     });
 
