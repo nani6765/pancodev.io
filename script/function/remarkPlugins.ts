@@ -13,6 +13,8 @@ type RemarkCalloutOptions = {
   emoji?: string;
 };
 
+const BREAK_TOKEN = /\[break\]/g;
+
 export function remarkCallout(options: RemarkCalloutOptions = {}) {
   const {
     prefix = "[!note]",
@@ -35,7 +37,7 @@ export function remarkCallout(options: RemarkCalloutOptions = {}) {
           if (child.type === "text") {
             return {
               ...child,
-              value: child.value.replace(/\[break\]/g, "\n"),
+              value: child.value.replace(BREAK_TOKEN, "\n"),
             };
           }
           return child;

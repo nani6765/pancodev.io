@@ -18,6 +18,11 @@ export interface RangeSelectorPlugin extends Plugin<"line"> {
   verticalImage: HTMLImageElement;
 }
 
+const compactNumberFormat = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
 export const LineChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -85,11 +90,7 @@ export const LineChartOptions = {
           if (Number(value) < 1 && Number(value) !== 0) {
             return;
           }
-          const compactNumeric = new Intl.NumberFormat("en-US", {
-            notation: "compact",
-            maximumFractionDigits: 1,
-          }).format(Number(value));
-          return compactNumeric;
+          return compactNumberFormat.format(Number(value));
         },
         beginAtZero: true,
       },
