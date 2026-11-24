@@ -1,14 +1,14 @@
 # 📑 아티클 책갈피
 
 > pancodev.io에 발행된 글을 한눈에 보는 인덱스입니다.
-> 마지막 업데이트: 2026-08-22 · 총 **24개** 글
+> 마지막 업데이트: 2026-11-24 · 총 **28개** 글
 
 ## 한눈에 보기
 
 | 구분       | 개수 |
 | ---------- | ---- |
-| 전체       | 24   |
-| react      | 7    |
+| 전체       | 28   |
+| react      | 11   |
 | web        | 5    |
 | next       | 4    |
 | remix      | 3    |
@@ -16,13 +16,17 @@
 | develop    | 2    |
 | typescript | 1    |
 
-발행 추이: 2024년 15편 · 2025년 6편 · 2026년 3편
+발행 추이: 2024년 15편 · 2025년 6편 · 2026년 7편
 
 ## 발행순 전체 목록 (최신순)
 
 | 발행일     | 카테고리   | 제목                                                                                                                                                      |
 | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-14 | react      | [React 18 마이그레이션 4/4 번외: 티키타카 with Claude](https://pancodev.io/article/react/react-18-migration-extra-claude) |
+| 2026-09-02 | react      | [React 18 마이그레이션 3/4 검증편: 장애는 찾아온다.](https://pancodev.io/article/react/react-18-migration-3-verification) |
 | 2026-08-22 | next       | [Vercel Fast Data Transfer 비용 추적 : 배럴 export가 번들에 남긴 13.5MB](https://pancodev.io/article/next/vercel-fast-data-transfer-barrel-export)        |
+| 2026-08-18 | react      | [React 18 마이그레이션 2/4 실행편: “migration 해줘”라고 할 수 없는 이유](https://pancodev.io/article/react/react-18-migration-2-execution) |
+| 2026-07-28 | react      | [React 18 마이그레이션 1/4 계획편: react만 18로 올리면 끝인 줄 알았습니다](https://pancodev.io/article/react/react-18-migration-1-plan) |
 | 2026-05-12 | ai         | [Claude Code 시스템 프롬프트 분석](https://pancodev.io/article/ai/claude-code-system-prompt-analysis)                                                     |
 | 2026-04-05 | typescript | [TypeScript 7.0](https://pancodev.io/article/typescript/typescript-7)                                                                                     |
 | 2025-12-04 | ai         | [도구의 시대](https://pancodev.io/article/ai/what-remains-for-developers-in-the-age-of-ai)                                                                |
@@ -66,8 +70,12 @@
 - 2024-09-14 · [Firebase로 Next 프로젝트 배포하기 : GCP setting / CI/CD](https://pancodev.io/article/next/next-deploy-with-firebase-2)
 - 2024-08-25 · [Firebase로 Next 프로젝트 배포하기 : page router / next-auth / next-i18next](https://pancodev.io/article/next/next-deploy-with-firebase-1)
 
-### react (7)
+### react (11)
 
+- 2026-09-14 · [React 18 마이그레이션 4/4 번외: 티키타카 with Claude](https://pancodev.io/article/react/react-18-migration-extra-claude)
+- 2026-09-02 · [React 18 마이그레이션 3/4 검증편: 장애는 찾아온다.](https://pancodev.io/article/react/react-18-migration-3-verification)
+- 2026-08-18 · [React 18 마이그레이션 2/4 실행편: “migration 해줘”라고 할 수 없는 이유](https://pancodev.io/article/react/react-18-migration-2-execution)
+- 2026-07-28 · [React 18 마이그레이션 1/4 계획편: react만 18로 올리면 끝인 줄 알았습니다](https://pancodev.io/article/react/react-18-migration-1-plan)
 - 2025-07-13 · [React Server Component에 대한 고찰 : page router에서 app router로](https://pancodev.io/article/react/react-server-component-mental-shift)
 - 2024-12-10 · [Chart.js 커스텀 플러그인으로 구현하는 X-Axis Range Selector](https://pancodev.io/article/react/x-axis-range-selector)
 - 2024-11-17 · [Naver Map & Drawing Manager 길라잡이](https://pancodev.io/article/react/guidance-naver-map-and-drawing-manager)
