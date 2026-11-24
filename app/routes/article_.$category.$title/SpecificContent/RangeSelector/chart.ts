@@ -276,10 +276,11 @@ const mouseMoveEvent = (
   if (!xAxis || !yAxis) return;
 
   const { verticalLine } = context;
+  const rect = chart.canvas.getBoundingClientRect();
 
   if (
     isMouseOverAtVerticalImage({
-      rect: chart.canvas.getBoundingClientRect(),
+      rect,
       event,
       axisLeft: xAxis.left,
       axisWidth: xAxis.width,
@@ -295,7 +296,6 @@ const mouseMoveEvent = (
   if (!context.isDragging) {
     return;
   }
-  const rect = chart.canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const newPosition = Math.round(((x - context.offset) / rect.width) * 100);
 
