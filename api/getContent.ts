@@ -2,7 +2,6 @@ import fs from "fs-extra";
 import path from "node:path";
 
 import blogConfig from "@/blog.config.json";
-import hasFileWithName from "@/function/hasFileWithName";
 import getFilePathsByExtension from "@/function/getFilePathsByExtension";
 
 const basePath = path.resolve();
@@ -70,6 +69,9 @@ export async function getContentsInDir<T>({
     });
     return getContentByPaths<T>(paths, flag);
   } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      throw new Response("This directory does not exist.", { status: 404 });
+    }
     console.log(error);
     throw new Response("Failed to load JSON files", { status: 500 });
   }
@@ -84,20 +86,17 @@ export async function getSpecificContent<T>({
   dirPath,
   title,
 }: GetSpecificContentParams) {
+  const filePath = path.resolve(dirPath, `${title}.json`);
+  if (!filePath.startsWith(defaultGenerateDir + path.sep)) {
+    throw new Response("This file does not exist.", { status: 404 });
+  }
+
   try {
-    const hasFile = await hasFileWithName({
-      dirPath,
-      name: `${title}.json`,
-    });
-    if (!hasFile) {
-      throw new Error("no File");
-    }
-    const path = `${dirPath}/${title}.json`;
-    const fileData: T = await fs.readJSON(path);
+    const fileData: T = await fs.readJSON(filePath);
     return fileData;
   } catch (error) {
-    if (error instanceof Error && error.message === "no File") {
-      throw new Response("This file does not exist.", { status: 500 });
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      throw new Response("This file does not exist.", { status: 404 });
     }
     throw new Response("Failed to load JSON file", { status: 500 });
   }
