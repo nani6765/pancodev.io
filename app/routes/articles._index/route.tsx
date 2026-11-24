@@ -13,7 +13,9 @@ export const loader = async () => {
   const response = await getContentsInDir<Article>({
     dirPath: article_generate_dir,
   });
-  return json(sortingContentsByCreate(response));
+  return json(
+    sortingContentsByCreate(response).map(({ metadata }) => ({ metadata })),
+  );
 };
 
 export const meta = () =>

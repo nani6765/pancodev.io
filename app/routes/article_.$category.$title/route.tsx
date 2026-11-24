@@ -37,7 +37,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
     article: file,
     recentFiles: sortingContentsByCreate(categoryFiles)
       .filter((v) => v.metadata.index !== currentIndex)
-      .slice(0, 5),
+      .slice(0, 5)
+      .map(({ metadata: { index, title, path } }) => ({
+        metadata: { index, title, path },
+      })),
     category,
   });
 }
