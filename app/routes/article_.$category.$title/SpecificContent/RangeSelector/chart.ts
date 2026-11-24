@@ -333,7 +333,6 @@ export const rangeSelectorPlugin = (initialVerticalLine: number) => ({
   isDragging: false,
   verticalLine: initialVerticalLine,
   offset: 0,
-  isEventHandlersRegistered: false,
   animationFrame: null as null | number,
   eventHandlers: [] as {
     type: keyof HTMLElementEventMap;
@@ -344,22 +343,17 @@ export const rangeSelectorPlugin = (initialVerticalLine: number) => ({
   },
   verticalImage: new Image(),
   /**
+   * afterRender는 차트를 다시 그릴 때마다 호출되므로, 리스너는 차트 생성 시 한 번만 등록합니다.
    * @see: https://github.com/chartjs/Chart.js/blob/47245a7/src/types/index.d.ts#L2234
    */
-  afterRender(chart: ChartJS<"line">) {
-    const { ctx, canvas } = chart;
-    if (!canvas || !ctx) return;
+  afterInit(chart: ChartJS<"line">) {
+    const { canvas } = chart;
+    if (!canvas) return;
 
     const mouseDownHandler = (e: MouseEvent) => mouseClickEvent(e, chart, this);
     const mouseMoveHandler = (e: MouseEvent) => mouseMoveEvent(e, chart, this);
     const mouseUpHandler = () => mouseEndEvent(this);
     const mouseLeaveHandler = () => mouseEndEvent(this);
-
-    // 이벤트 등록
-    canvas.addEventListener("mousedown", mouseDownHandler);
-    canvas.addEventListener("mousemove", mouseMoveHandler);
-    canvas.addEventListener("mouseup", mouseUpHandler);
-    canvas.addEventListener("mouseleave", mouseLeaveHandler);
 
     this.eventHandlers = [
       { type: "mousedown", handler: mouseDownHandler },
@@ -367,6 +361,15 @@ export const rangeSelectorPlugin = (initialVerticalLine: number) => ({
       { type: "mouseup", handler: mouseUpHandler },
       { type: "mouseleave", handler: mouseLeaveHandler },
     ];
+    this.eventHandlers.forEach(({ type, handler }) =>
+      canvas.addEventListener(type, handler as EventListener)
+    );
+  },
+  beforeDestroy(chart: ChartJS<"line">) {
+    this.eventHandlers.forEach(({ type, handler }) =>
+      chart.canvas?.removeEventListener(type, handler as EventListener)
+    );
+    this.eventHandlers = [];
   },
   /**
    * 차트를 그리기 이전에 drawRange를 호출합니다.
