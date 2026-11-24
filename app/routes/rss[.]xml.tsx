@@ -64,7 +64,7 @@ export function generateRss({
       <link>${link}</link>
       <language>en-us</language>
       <ttl>60</ttl>
-      <atom:link href="https://YOUR_SITE_HERE.com/rss.xml" rel="self" type="application/rss+xml" />
+      <atom:link href="${link}/rss.xml" rel="self" type="application/rss+xml" />
       ${entries
         .map(
           (entry) => `
