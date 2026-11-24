@@ -1,125 +1,149 @@
 # pancodev.io
 
-프론트엔드 개발자 판다코딩(panco)의 기술 블로그입니다. 마크다운으로 글을 작성하면 빌드 시점에 JSON으로 변환하고, Remix가 이 JSON을 읽어 정적 페이지로 렌더링합니다.
+프론트엔드 개발자 판다코딩(panco)의 기술 블로그입니다. → https://www.pancodev.io
 
-- **Framework**: Remix (Vite 기반) + React 18
-- **Styling**: vanilla-extract (`*.css.ts`)
-- **Content**: 로컬 마크다운 → 빌드 타임 JSON 변환
-- **Deploy**: Vercel
-- **Comments**: Giscus
+마크다운으로 글을 쓰면 빌드 시점에 HTML이 담긴 JSON으로 변환하고, Remix loader가 그 JSON을 읽어 페이지를 렌더링합니다. 런타임에는 마크다운을 파싱하지 않습니다.
 
-## 핵심 아키텍처
+| 구분      | 사용 기술                                                       |
+| --------- | --------------------------------------------------------------- |
+| Framework | Remix 2 (Vite 플러그인) + React 18                              |
+| Styling   | vanilla-extract (`*.css.ts`) + 일부 전역 CSS                    |
+| Content   | 로컬 마크다운 → unified(remark/rehype) → JSON                   |
+| 클라이언트 렌더링 | mermaid(다이어그램), Chart.js, 네이버 지도 API           |
+| 댓글/분석 | Giscus, Google Analytics(gtag)                                  |
+| Deploy    | Vercel (`main` push → Production)                               |
 
-이 프로젝트의 특징은 런타임에 마크다운을 파싱하지 않는다는 점입니다. 대신 빌드/개발 서버 실행 전에 `generate` 스크립트가 모든 마크다운을 HTML이 포함된 JSON으로 미리 변환합니다.
+## 빠른 시작
+
+```bash
+yarn install
+yarn dev        # generate 실행 후 개발 서버 (http://localhost:3000)
+```
+
+| 스크립트             | 동작                                                     |
+| -------------------- | -------------------------------------------------------- |
+| `yarn dev`           | `generate` → `remix vite:dev`                            |
+| `yarn build`         | `clear:content` → `generate` → `remix vite:build`        |
+| `yarn start`         | `generate` → `remix-serve ./build/server/index.js`       |
+| `yarn generate`      | 마크다운 → JSON 변환과 이미지 복사만 실행                |
+| `yarn clear:content` | `_generate/` 삭제                                        |
+
+`dev`/`build`/`start` 모두 실행 전에 `generate`가 먼저 돕니다. 개발 서버는 마크다운 변경을 감지하지 않으므로, 글을 수정한 뒤에는 서버를 다시 띄우거나 `yarn generate`를 실행해야 반영됩니다.
+
+## 아키텍처
 
 ```
-content/**/*.md   ──(generate 스크립트)──▶   _generate/**/*.json   ──(Remix loader)──▶   페이지 렌더링
-   (원본 글)          remark/rehype 파이프라인       (전처리된 결과물)         fs-extra로 JSON 읽기
+content/article/<category>/*.md
+        │  yarn generate (script/generate_content.ts)
+        ▼
+_generate/_article/<category>/*.json   +   public/article/**/이미지 사본
+        │  Remix loader (api/getContent.ts, fs-extra로 JSON 읽기)
+        ▼
+SSR HTML  →  브라우저에서 mermaid / 지도 / 차트를 추가로 렌더링
 ```
 
 ### 콘텐츠 생성 파이프라인
 
-`yarn generate` (= `script/generate_content.ts`)가 실행하는 흐름입니다.
+1. `prepareSortedMarkdownFiles` — `content/article/` 하위 `.md`를 재귀 수집하고 `gray-matter`로 front-matter를 분리한 뒤 `created_at` 오름차순 정렬
+2. 예약 발행 필터 — `NODE_ENV === "production"`일 때만 `validatePublicationDate`로 발행 시각(KST 기준)이 지난 글만 남김
+3. `generateJsonContent` — 마크다운을 HTML로 변환하고 `index`, `path`(파일명 slug), `readingTime`을 메타데이터에 주입
+   - `remark-parse` → `remark-gfm` → `remark-rehype`(`allowDangerousHtml`) → `remarkCallout`(커스텀) → `rehype-highlight` → `rehype-stringify`
+4. `writeJsonFile` — 원본과 같은 디렉토리 구조로 `_generate/_article/`에 `{ metadata, contentHtml }` 저장
+5. `copyImageToPublic` — `content/` 아래 png/jpg/jpeg를 같은 하위 경로로 `public/`에 복사 (예: `public/article/react/image/...`)
 
-1. `prepareSortedMarkdownFiles` — `content/` 하위의 `.md`를 재귀 수집하고 `gray-matter`로 front-matter를 분리한 뒤 `created_at` 기준 정렬
-2. `generateJsonContent` — `unified` 파이프라인으로 마크다운을 HTML로 변환
-   - `remark-parse` → `remark-gfm` → `remark-rehype` → `remarkCallout`(커스텀 플러그인) → `rehype-highlight` → `rehype-stringify`
-   - `reading-time`으로 읽기 시간을 계산해 메타데이터에 주입
-3. `writeJsonFile` — `_generate/` 하위에 원본과 동일한 디렉토리 구조로 JSON 저장
-4. `copyImageToPublic` — `content/` 내 이미지(png/jpg/jpeg)를 `public/`으로 복사
+`_generate/`와 `public/article/`은 빌드 산출물이라 git에 커밋하지 않습니다.
 
-> 프로덕션 빌드(`NODE_ENV === "production"`)에서는 `validatePublicationDate`로 예약 발행일이 지난 글만 생성됩니다.
+### 클라이언트 전용 렌더링
 
-### 콘텐츠 타입
+빌드 결과 HTML에 포함되지 않고 브라우저에서 `ClientOnly`로 마운트되는 요소입니다.
 
-| 타입        | 원본                          | 생성                  | 라우트                      | 특징                             |
-| ----------- | ----------------------------- | --------------------- | --------------------------- | -------------------------------- |
-| **article** | `content/article/<category>/` | `_generate/_article/` | `/article/:category/:title` | 카테고리 분류, 읽기 시간, 키워드 |
+- **Mermaid** (`article_.$category.$title/Mermaid.tsx`) — 본문의 `code.language-mermaid` 블록을 찾아 SVG로 교체합니다. 블록이 있을 때만 `import("mermaid")`를 실행합니다.
+- **SpecificContent** — 글 slug를 키로 특정 글에만 인터랙티브 컴포넌트를 붙입니다.
+  - `guidance-naver-map-and-drawing-manager` → 네이버 지도 + 그리기 도구
+  - `x-axis-range-selector` → Chart.js X축 범위 선택기
 
-타입 정의는 루트의 `content.d.ts`(`ArticleMetadata`)에 전역 선언되어 있습니다. `// 빌드과정에서 주입됨` 주석이 붙은 필드는 원본 front-matter가 아니라 생성 파이프라인에서 채워집니다.
+### 라우트
 
-> 과거 운영하던 `small_talk`(스몰토크) 콘텐츠는 블로그에서 제외되었으며, 원본 마크다운과 이미지는 루트의 `archive/small_talk/`에 보관되어 있습니다.
+| 파일                                    | URL                         | 역할                                              |
+| --------------------------------------- | --------------------------- | ------------------------------------------------- |
+| `app/routes/_index/`                    | `/`                         | 홈 (프로필, 이력서, 소셜 링크)                    |
+| `app/routes/articles._index/`           | `/articles`                 | 전체 아티클 목록 (최신순)                         |
+| `app/routes/article_.$category.$title/` | `/article/:category/:title` | 아티클 상세 + 같은 카테고리 최신글 5개 + Giscus   |
+| `app/routes/rss[.]xml.tsx`              | `/rss.xml`                  | RSS 피드                                          |
+| `app/routes/sitemap[.]xml.tsx`          | `/sitemap.xml`              | 사이트맵                                          |
+| `app/routes/robots[.]txt.tsx`           | `/robots.txt`               | robots 규칙                                       |
 
 ## 디렉토리 구조
 
 ```
 pancodev.io/
-├── app/                        # Remix 애플리케이션
-│   ├── root.tsx                # 루트 레이아웃 (NavBar, ErrorBoundary, 폰트/파비콘 링크)
+├── app/                         # Remix 애플리케이션
+│   ├── root.tsx                 # 루트 레이아웃 (NavBar, ErrorBoundary, 폰트/파비콘/RSS 링크)
 │   ├── global.css, reset.css
-│   ├── common/                 # 공용 컴포넌트
-│   │   ├── NavBar.tsx
-│   │   ├── DocHead.tsx         # <head> 메타
-│   │   ├── Giscus.tsx          # 댓글 위젯
-│   │   ├── faviconLinks.ts
-│   │   └── style/              # 공용 vanilla-extract 스타일 (content/list/article/code)
-│   └── routes/                 # 파일 기반 라우팅
-│       ├── _index/                        # 홈 (/)
-│       ├── articles._index/               # 아티클 목록 (/articles)
-│       ├── article_.$category.$title/     # 아티클 상세
-│       │   └── SpecificContent/           # 글 안에 삽입되는 인터랙티브 컴포넌트
-│       │       ├── NaverMap/              #  - 네이버 지도 + 그리기 도구
-│       │       └── RangeSelector/         #  - 차트 x축 범위 선택기
-│       ├── rss[.]xml.tsx                   # RSS 피드
-│       ├── sitemap[.]xml.tsx               # 사이트맵
-│       └── robots[.]txt.tsx                # robots.txt
-│
-├── api/
-│   └── getContent.ts           # 생성된 JSON 조회 (목록/개별/미리보기)
-│
-├── function/                   # 런타임 공용 유틸
-│   ├── getFilePathsByExtension.ts   # 확장자 기준 재귀 파일 수집
-│   ├── generateMetaTag.ts           # SEO 메타 태그 생성
-│   ├── hasFileWithName.ts
-│   └── sortingContentsByCreate.ts
-│
-├── script/                     # 빌드 타임 콘텐츠 생성
-│   ├── generate_content.ts     # 엔트리포인트
-│   ├── buildMarkdownFiles.ts   # 디렉토리 단위 변환 오케스트레이션
-│   ├── copyImageToPublic.ts    # 이미지 → public 복사
-│   └── function/
-│       ├── prepareSortedMarkdownFiles.ts
-│       ├── generateJsonContent.ts      # unified 마크다운→HTML 변환
-│       ├── remarkPlugins.ts            # remarkCallout 커스텀 플러그인
-│       ├── generateOutputFilePath.ts
-│       ├── validatePublicationDate.ts
-│       └── writeJsonFile.ts
-│
-├── content/                    # 원본 마크다운 (article/)
-├── _generate/                  # 생성된 JSON (빌드 산출물, git 무시 대상)
-├── public/                     # 정적 자산 (이미지, 폰트, 아이콘, 파비콘)
-├── archive/                    # 블로그에서 제외된 보관 콘텐츠 (small_talk 원본)
+│   ├── common/                  # NavBar, DocHead(GA·네이버 지도 스크립트), Giscus, 공용 스타일
+│   └── routes/                  # 파일 기반 라우팅 (위 표 참고)
+│       └── article_.$category.$title/
+│           ├── Mermaid.tsx
+│           └── SpecificContent/ # NaverMap/, RangeSelector/
+├── api/getContent.ts            # 생성된 JSON 조회 (목록 / 개별 / slug 미리보기)
+├── function/                    # 런타임·빌드 공용 유틸 (파일 수집, 메타 태그, 정렬)
+├── script/                      # 빌드 타임 콘텐츠 생성
+│   ├── generate_content.ts      # 엔트리포인트
+│   ├── buildMarkdownFiles.ts
+│   ├── copyImageToPublic.ts
+│   └── function/                # 수집·변환·저장·발행일 검증·remarkCallout
 ├── util/dayjs.helper.ts
 │
-├── blog.config.json            # 블로그 전역 설정 (제목, 경로, 링크, 프로필 등)
-├── content.d.ts                # 콘텐츠/메타데이터 전역 타입 선언
-├── vite.config.ts              # Vite + Remix + vanilla-extract + 네이버 프록시
-├── vercel.json                 # Vercel rewrites (네이버 API 프록시)
-└── tsconfig.json               # 경로 별칭 (@/, @app/, @commonStyle/)
+├── content/article/<category>/  # 원본 마크다운과 이미지 (image/<slug>/)
+├── archive/small_talk/          # 블로그에서 제외한 과거 스몰토크 원본
+├── docs/                        # 프로젝트 문서 (아래 참고)
+├── public/                      # 정적 자산 (아이콘, 폰트, 파비콘, 프로필)
+│
+├── .claude/skills/, .kiro/skills/  # 글쓰기 보조 에이전트 스킬 (explore-topic, write-article)
+├── AGENT.md                     # 코딩 에이전트 공통 지침
+│
+├── blog.config.json             # 제목, 작성자, 경로, 홈 소개, 링크, 네비게이션
+├── content.d.ts                 # ArticleMetadata / Article 전역 타입
+├── vite.config.ts               # Remix + vanilla-extract + tsconfig paths, /openapi-naver 프록시
+├── vercel.json                  # /openapi-naver rewrite (프로덕션 프록시)
+└── tsconfig.json                # 경로 별칭 @/*, @app/*, @commonStyle/*
 ```
 
-## 데이터 흐름 (라우트 예시)
+## 글 작성 요약
 
-`article_.$category.$title/route.tsx`가 대표적인 패턴을 보여줍니다.
+- 위치: `content/article/<category>/<slug>.md` — 폴더명이 카테고리, 파일명이 URL slug입니다.
+- front-matter: `title`, `description`, `keywords`, `category`, `created_at`(`YYYY-MM-DD HH:mm`, KST)
+- 이미지: `content/article/<category>/image/<slug>/`에 두고 상대 경로로 참조
+- 확장 문법: `[!note]` 콜아웃, ` ```mermaid ` 다이어그램
+- `created_at`을 미래 시각으로 두면 프로덕션에서는 그 시각 이후 빌드부터 노출됩니다. 로컬에서는 필터 없이 모두 보입니다.
 
-- `loader`는 `getSpecificContent`로 해당 글 JSON을, `getContentsInDir`로 같은 카테고리 글 목록을 읽어 최근글 5개를 함께 반환
-- `meta`는 `generateMetaTag`로 SEO 태그를 구성
-- 본문은 `dangerouslySetInnerHTML`로 미리 만들어진 `contentHtml`을 그대로 렌더링
-- 지도/차트 같은 인터랙티브 요소는 `SpecificContent`에서 `ClientOnly`로 클라이언트에서만 마운트
+자세한 규칙은 [아티클 작성 가이드](./docs/writing-articles.md)를 참고하세요.
 
-## 설정 포인트
+## 환경 변수
 
-- **경로 별칭** (`tsconfig.json`): `@/*`(루트), `@app/*`(app), `@commonStyle/*`(공용 스타일)
-- **네이버 지도 API 프록시**: 개발은 `vite.config.ts`의 `/openapi-naver`, 배포는 `vercel.json`의 rewrite로 처리
-- **블로그 메타 정보**: 제목/설명/작성자/소셜 링크/네비게이션 경로는 모두 `blog.config.json`에서 관리
+로컬은 `.env`(git 무시 대상), 배포는 Vercel 프로젝트 설정에 등록합니다.
 
-## 개발 / 빌드
+| 변수                    | 사용 위치                        | 용도                                  |
+| ----------------------- | -------------------------------- | ------------------------------------- |
+| `VITE_GA_TRACKING_ID`   | `app/common/DocHead.tsx`         | Google Analytics 측정 ID              |
+| `VITE_NCP_CLIENT_ID`    | `app/common/DocHead.tsx`         | 네이버 지도 JS API 키 (`ncpKeyId`)    |
+| `VITE_X_NAVER_CLIENT_ID`| `SpecificContent/NaverMap/api.ts`| 네이버 검색 Open API Client ID        |
+| `X_NAVER_CLIENT_SECRET` | 아티클 상세 loader               | 네이버 검색 Open API Client Secret    |
+| `VITE_SHOW_GISCUS`      | 아티클 상세 route                | `"show"`일 때만 Giscus 댓글 노출      |
+| `VITE_DATA_REPO_ID`     | `app/common/Giscus.tsx`          | Giscus repo ID                        |
+| `VITE_DATA_CATEGORY_ID` | `app/common/Giscus.tsx`          | Giscus category ID                    |
 
-```bash
-yarn dev      # generate 실행 후 개발 서버 (http://localhost:3000)
-yarn build    # _generate 초기화 → generate → 프로덕션 빌드
-yarn start    # generate 실행 후 프로덕션 서버 구동
-yarn generate # 마크다운 → JSON 변환만 단독 실행
-```
+`NODE_ENV`는 별도로 설정하지 않습니다. 프로덕션 빌드에서 `production`으로 잡히며, 이때 예약 발행 필터가 동작합니다.
 
-핵심은 `dev`/`build`/`start` 모두 실행 전에 `generate`가 선행된다는 점입니다. 즉 마크다운 원본을 수정하면 서버를 다시 띄워 콘텐츠를 재생성해야 반영됩니다.
+## 배포
+
+Vercel Git 연동을 사용합니다. `main`에 push하면 Production, 그 외 브랜치와 PR은 Preview로 배포됩니다. 배포 빌드에서 `yarn build`가 실행되므로 JSON 생성과 이미지 복사도 매번 새로 이뤄집니다. 네이버 Open API 호출은 개발 환경에서는 Vite 프록시, 프로덕션에서는 `vercel.json` rewrite로 `/openapi-naver/*` 경로를 통해 나갑니다.
+
+## 문서
+
+| 문서                                           | 내용                                                       |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| [docs/index.md](./docs/index.md)               | 문서 목록                                                  |
+| [docs/writing-articles.md](./docs/writing-articles.md) | 폴더 구조, front-matter, 이미지, 콜아웃, mermaid, 체크리스트 |
+| [docs/build-and-deploy.md](./docs/build-and-deploy.md) | 생성 파이프라인, 라우트 구성, Vercel 배포 흐름        |
+| [docs/article-index.md](./docs/article-index.md) | 발행된 전체 글 목록 (카테고리·연도별)                    |
