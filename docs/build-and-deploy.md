@@ -122,7 +122,7 @@ yarn start   # generate 후 프로덕션 서버 구동
 ```
 
 - 개발 서버 포트는 `3000` (`vite.config.ts`)
-- 네이버 지도 오픈 API는 개발 시 `/openapi-naver` 프록시(`vite.config.ts`)로 우회
+- 네이버 검색 Open API는 `/api/naver-search` 서버 라우트(`app/routes/api.naver-search.tsx`)가 호출. `vite.config.ts`의 `/openapi-naver` 프록시는 앱 코드에서 더 이상 사용하지 않음
 
 ## 4. Vercel 배포 (main 브랜치)
 

@@ -72,6 +72,7 @@ SSR HTML  →  브라우저에서 mermaid / 지도 / 차트를 추가로 렌더�
 | `app/routes/rss[.]xml.tsx`              | `/rss.xml`                  | RSS 피드                                          |
 | `app/routes/sitemap[.]xml.tsx`          | `/sitemap.xml`              | 사이트맵                                          |
 | `app/routes/robots[.]txt.tsx`           | `/robots.txt`               | robots 규칙                                       |
+| `app/routes/api.naver-search.tsx`      | `/api/naver-search`         | 네이버 지역 검색 프록시 (지도 글의 장소 검색용)   |
 
 ## 디렉토리 구조
 
@@ -80,7 +81,7 @@ pancodev.io/
 ├── app/                         # Remix 애플리케이션
 │   ├── root.tsx                 # 루트 레이아웃 (NavBar, ErrorBoundary, 폰트/파비콘/RSS 링크)
 │   ├── global.css, reset.css
-│   ├── common/                  # NavBar, DocHead(GA·네이버 지도 스크립트), Giscus, 공용 스타일
+│   ├── common/                  # NavBar, DocHead(GA 스크립트), Giscus, 공용 스타일
 │   └── routes/                  # 파일 기반 라우팅 (위 표 참고)
 │       └── article_.$category.$title/
 │           ├── Mermaid.tsx
@@ -104,8 +105,8 @@ pancodev.io/
 │
 ├── blog.config.json             # 제목, 작성자, 경로, 홈 소개, 링크, 네비게이션
 ├── content.d.ts                 # ArticleMetadata / Article 전역 타입
-├── vite.config.ts               # Remix + vanilla-extract + tsconfig paths, /openapi-naver 프록시
-├── vercel.json                  # /openapi-naver rewrite (프로덕션 프록시)
+├── vite.config.ts               # Remix + vanilla-extract + tsconfig paths, /openapi-naver 프록시 (현재 앱 코드에서는 미사용)
+├── vercel.json                  # /openapi-naver rewrite (현재 앱 코드에서는 미사용)
 └── tsconfig.json                # 경로 별칭 @/*, @app/*, @commonStyle/*
 ```
 
@@ -126,7 +127,7 @@ pancodev.io/
 | 변수                    | 사용 위치                        | 용도                                  |
 | ----------------------- | -------------------------------- | ------------------------------------- |
 | `VITE_GA_TRACKING_ID`   | `app/common/DocHead.tsx`         | Google Analytics 측정 ID              |
-| `VITE_NCP_CLIENT_ID`    | `app/common/DocHead.tsx`         | 네이버 지도 JS API 키 (`ncpKeyId`)    |
+| `VITE_NCP_CLIENT_ID`    | `NaverMap/loadNaverMapScript.ts` | 네이버 지도 JS API 키 (`ncpKeyId`)    |
 | `VITE_X_NAVER_CLIENT_ID`| `app/routes/api.naver-search.tsx` | 네이버 검색 Open API Client ID        |
 | `X_NAVER_CLIENT_SECRET` | `app/routes/api.naver-search.tsx` | 네이버 검색 Open API Client Secret    |
 | `VITE_SHOW_GISCUS`      | 아티클 상세 route                | `"show"`일 때만 Giscus 댓글 노출      |
@@ -137,7 +138,7 @@ pancodev.io/
 
 ## 배포
 
-Vercel Git 연동을 사용합니다. `main`에 push하면 Production, 그 외 브랜치와 PR은 Preview로 배포됩니다. 배포 빌드에서 `yarn build`가 실행되므로 JSON 생성과 이미지 복사도 매번 새로 이뤄집니다. 네이버 Open API 호출은 개발 환경에서는 Vite 프록시, 프로덕션에서는 `vercel.json` rewrite로 `/openapi-naver/*` 경로를 통해 나갑니다.
+Vercel Git 연동을 사용합니다. `main`에 push하면 Production, 그 외 브랜치와 PR은 Preview로 배포됩니다. 배포 빌드에서 `yarn build`가 실행되므로 JSON 생성과 이미지 복사도 매번 새로 이뤄집니다. 네이버 검색 Open API는 `/api/naver-search` 서버 라우트가 호출하며 Client Secret은 서버에서만 사용합니다. `vite.config.ts`와 `vercel.json`의 `/openapi-naver` 프록시 설정은 남아 있지만 앱 코드에서는 더 이상 쓰지 않습니다.
 
 ## 문서
 
