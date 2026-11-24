@@ -23,6 +23,24 @@ const generateFileName = (fullPath: string) => {
 
 type FlagByGetContents = "preview" | "withData";
 
+// 생성된 JSON은 빌드 이후 바뀌지 않으므로 프로덕션에서는 읽은 결과를 요청 간에 재사용한다.
+// 개발 중에는 `yarn generate` 재실행 결과가 바로 보이도록 매번 다시 읽는다.
+const contentCache = new Map<string, Promise<unknown>>();
+
+function readContent<T>(filePath: string): Promise<T> {
+  if (process.env.NODE_ENV !== "production") {
+    return fs.readJSON(filePath);
+  }
+
+  let content = contentCache.get(filePath);
+  if (!content) {
+    content = fs.readJSON(filePath);
+    contentCache.set(filePath, content);
+    content.catch(() => contentCache.delete(filePath));
+  }
+  return content as Promise<T>;
+}
+
 async function getContentByPaths<T>(paths: string[], flag: FlagByGetContents) {
   return await Promise.all(
     paths.map(async (path) => {
@@ -30,8 +48,7 @@ async function getContentByPaths<T>(paths: string[], flag: FlagByGetContents) {
         return generateFileName(path);
       }
 
-      const fileData: T = await fs.readJSON(path);
-      return fileData;
+      return readContent<T>(path);
     }),
   );
 }
@@ -92,8 +109,7 @@ export async function getSpecificContent<T>({
   }
 
   try {
-    const fileData: T = await fs.readJSON(filePath);
-    return fileData;
+    return await readContent<T>(filePath);
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       throw new Response("This file does not exist.", { status: 404 });
