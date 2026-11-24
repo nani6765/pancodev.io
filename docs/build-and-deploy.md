@@ -157,7 +157,7 @@ yarn start   # generate 후 프로덕션 서버 구동
 빌드/런타임에서 참조하는 값은 Vercel 프로젝트 설정의 Environment Variables에 등록해야 합니다. 코드에서 확인되는 항목:
 
 - `NODE_ENV` — `production`일 때 예약 발행 필터가 활성화됨 (Vercel Production 빌드에서 자동 설정)
-- `X_NAVER_CLIENT_SECRET` — 상세 라우트 loader에서 클라이언트로 전달되는 네이버 API용 값
+- `X_NAVER_CLIENT_SECRET` — 네이버 검색 Open API Client Secret. `/api/naver-search` 서버 라우트에서만 사용하며 클라이언트로 전달하지 않음
 - `VITE_SHOW_GISCUS` — `"show"`일 때 Giscus 댓글 노출
 
 > 실제 배포 트리거 브랜치, 빌드 커맨드 오버라이드, 환경 변수 값 등은 Vercel 대시보드 설정에 따라 달라질 수 있습니다. 저장소에서 확인 가능한 사실(빌드 스크립트 체인과 `vercel.json`)을 기준으로 정리했습니다.

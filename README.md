@@ -127,8 +127,8 @@ pancodev.io/
 | ----------------------- | -------------------------------- | ------------------------------------- |
 | `VITE_GA_TRACKING_ID`   | `app/common/DocHead.tsx`         | Google Analytics 측정 ID              |
 | `VITE_NCP_CLIENT_ID`    | `app/common/DocHead.tsx`         | 네이버 지도 JS API 키 (`ncpKeyId`)    |
-| `VITE_X_NAVER_CLIENT_ID`| `SpecificContent/NaverMap/api.ts`| 네이버 검색 Open API Client ID        |
-| `X_NAVER_CLIENT_SECRET` | 아티클 상세 loader               | 네이버 검색 Open API Client Secret    |
+| `VITE_X_NAVER_CLIENT_ID`| `app/routes/api.naver-search.tsx` | 네이버 검색 Open API Client ID        |
+| `X_NAVER_CLIENT_SECRET` | `app/routes/api.naver-search.tsx` | 네이버 검색 Open API Client Secret    |
 | `VITE_SHOW_GISCUS`      | 아티클 상세 route                | `"show"`일 때만 Giscus 댓글 노출      |
 | `VITE_DATA_REPO_ID`     | `app/common/Giscus.tsx`          | Giscus repo ID                        |
 | `VITE_DATA_CATEGORY_ID` | `app/common/Giscus.tsx`          | Giscus category ID                    |

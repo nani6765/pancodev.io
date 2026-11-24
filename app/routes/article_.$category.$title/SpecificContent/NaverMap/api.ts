@@ -1,25 +1,12 @@
 export const getNaverSearchByQuery = async (
-  query: string,
-  secret: string
+  query: string
 ): Promise<{ x: number; y: number }> => {
-  const searchURL = "/openapi-naver/v1/search/local.json";
-  const searchHeaders = new Headers();
-  searchHeaders.append(
-    "X-Naver-Client-Id",
-    import.meta.env.VITE_X_NAVER_CLIENT_ID
+  const searchResponse = await fetch(
+    `/api/naver-search?query=${encodeURIComponent(query)}`
   );
-  searchHeaders.append("X-Naver-Client-Secret", secret);
+  if (!searchResponse.ok) {
+    throw new Error("Failed to search");
+  }
 
-  const searchResponse = await fetch(`${searchURL}?query=${query}`, {
-    method: "GET",
-    headers: searchHeaders,
-  });
-  const searchJson = await searchResponse.json();
-  const searchResult = searchJson.items[0];
-  const { mapx, mapy } = searchResult;
-
-  return {
-    x: mapx,
-    y: mapy,
-  };
+  return searchResponse.json();
 };
